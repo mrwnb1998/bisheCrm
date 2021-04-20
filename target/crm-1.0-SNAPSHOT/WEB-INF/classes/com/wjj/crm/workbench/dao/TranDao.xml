@@ -4,7 +4,119 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wjj.crm.workbench.dao.TranDao">
+<insert id="save">
+    insert into tbl_tran(
+id,
+owner,
+money,
+name,
+expectedDate,
+customerId,
+stage,
+type,
+source,
+activityId,
+contactsId,
+createBy,
+createTime,
+description,
+contactSummary,
+nextContactTime
 
+    )values (
+#{id},
+#{owner},
+#{money},
+#{name},
+#{expectedDate},
+#{customerId},
+#{stage},
+#{type},
+#{source},
+#{activityId},
+#{contactsId},
+#{createBy},
+#{createTime},
+#{description},
+#{contactSummary},
+#{nextContactTime}
+
+    )
+</insert>
+    <select id="getTotalByCondition" resultType="int">
+        select count(*)
+        from tbl_tran a
+        join tbl_user u
+        on a.owner=u.id
+        <where>
+            <if test="name!=null and name!=''">
+                a.name like '%' #{name} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="type!=null and type!=''">
+                and a.type like '%' #{type} '%'
+            </if>
+            <if test="source!=null and source!=''">
+                and a.source like '%' #{source} '%'
+            </if>
+            <if test="stage!=null and stage!=''">
+                and a.stage like '%' #{stage} '%'
+            </if>
+
+        </where>
+    </select>
+    <select id="getTranListByCondition" resultType="Tran">
+        select
+        a.id,a.name,u.name as owner,a.type,a.source,a.stage,c.name as customerId,t.fullname as contactsId
+        from tbl_tran a
+        join tbl_user u
+        on a.owner=u.id
+        join tbl_customer c
+        on a.customerId=c.id
+        join tbl_contacts t
+        on a.contactsId=t.id
+        <where>
+            <if test="name!=null and name!=''">
+                a.name like '%' #{name} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="type!=null and type!=''">
+                and a.type like '%' #{type} '%'
+            </if>
+            <if test="source!=null and source!=''">
+                and a.source like '%' #{source} '%'
+            </if>
+            <if test="stage!=null and stage!=''">
+                and a.stage like '%' #{stage} '%'
+            </if>
+            <if test="customerName!=null and customerName!=''">
+                and c.name like '%' #{customerName} '%'
+            </if>
+            <if test="contactsName!=null and contactsName!=''">
+                and t.fullname like '%' #{contactsName} '%'
+            </if>
+        </where>
+        limit #{skipCount},#{pageSize}
+    </select>
+    <select id="detail" resultType="Tran">
+         select
+        a.id,a.name,u.name as owner,a.type,a.source,a.stage,c.name as customerId,t.fullname as contactsId,a.money,a.expectedDate,a.createBy,
+        a.createTime,a.editBy,a.editTime,a.description,a.contactSummary,a.nextContactTime,act.name as activityId
+        from tbl_tran a
+        join tbl_user u
+        on a.owner=u.id
+        join tbl_customer c
+        on a.customerId=c.id
+        join tbl_activity act
+        on a.activityId=act.id
+        join tbl_contacts t
+        on a.contactsId=t.id
+        where a.id=#{id}
+    </select>
 
 </mapper>
 

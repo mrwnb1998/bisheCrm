@@ -152,7 +152,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			    if(confirm("确定删除所选择的记录吗")){
                     var param ="";
                     for(var i=0;i<$xz.length;i++){
-                        param+="id="+$.trim($($xz[i]).val());
+                        param+="id="+$($($xz[i])).val();
                         //如果不是最后一个元素，需要在最后追加一个&符
                         if(i<$xz.length-1){
                             param+="&";

@@ -15,6 +15,7 @@ public class LoginFilter  implements Filter {
        // HttpServletRequest req = req;
       // servletRequest= req;
         //父子之间转换，上转下需要强制转换，下转上不需要，例如省长降为市长，需要强制，市长升省长不需要转
+
         HttpServletRequest req= (HttpServletRequest) servletRequest;
         HttpServletResponse rep=(HttpServletResponse) servletResponse;
         String path = req.getServletPath();

@@ -4,6 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wjj.crm.workbench.dao.ClueDao">
+    <delete id="delete">
+        delete from tbl_clue where id=#{clueId}
+    </delete>
 <insert id="save">
     insert into tbl_clue(
 id,
@@ -110,7 +113,13 @@ address
         limit #{skipCount},#{pageSize}
     </select>
     <select id="getById" resultType="Clue">
-        select * from tbl_clue where id=#{id};
+        select
+        a.id,a.fullname,u.name as owner,a.company,a.source,a.state,a.phone,a.mphone,a.appellation,
+        a.job,a.email,a.website,a.createBy,a.createTime,a.editBy,a.editTime,a.description,a.contactSummary,a.nextContactTime,a.address
+        from tbl_clue a
+        join tbl_user u
+        on a.owner=u.id
+        where a.id=#{id};
     </select>
     <update id="update">
 update tbl_clue set
@@ -134,6 +143,15 @@ address=#{address}
 where id=#{id}
 
     </update>
+    <select id="detail" resultType="Clue">
+       select
+        a.id,a.fullname,u.name as owner,a.company,a.source,a.state,a.phone,a.mphone,a.appellation,
+        a.job,a.email,a.website,a.createBy,a.createTime,a.editBy,a.editTime,a.description,a.contactSummary,a.nextContactTime,a.address
+        from tbl_clue a
+        join tbl_user u
+        on a.owner=u.id
+        where a.id=#{id};
+    </select>
 
 
 </mapper>

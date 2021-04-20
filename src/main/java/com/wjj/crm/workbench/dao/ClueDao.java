@@ -21,4 +21,8 @@ public interface ClueDao {
     Clue getById(String id);
 
     int update(Clue clue);
+
+    Clue detail(String id);
+
+    int delete(String clueId);
 }

@@ -8,9 +8,7 @@ import com.wjj.crm.utils.ServiceFactory;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author wjj
@@ -42,6 +40,27 @@ public class SysInitListener implements ServletContextListener {
         for(String key:set){
             application.setAttribute(key,map.get(key));
         }
+
+          //数据字典处理完毕后，处理Stage2Possibility.properties文件：
+          //1.解析该文件，将属性文件中的键值对关系处理成为java中键值对关系(map)
+          /*
+          * Map<String(阶段stage),String(可能性)> pmap
+            pmap.put("01资质生茶"，10)
+            * 将pmap放入服务器缓存中
+            * application.setAttribute("pmap",pmap);
+          * */
+          //处理properties文件
+        Map<String,String> pmap=new HashMap<String, String>();
+        ResourceBundle rb=ResourceBundle.getBundle("Stage2Possibility");
+        Enumeration<String> e=rb.getKeys();
+        while(e.hasMoreElements()){
+            //阶段
+           String key= e.nextElement();
+           //可能性
+           String value=rb.getString(key);
+           pmap.put(key,value);
+        }
+        application.setAttribute("pmap",pmap);
 
 
 

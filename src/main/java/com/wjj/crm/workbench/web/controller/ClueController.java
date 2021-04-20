@@ -8,8 +8,13 @@ import com.wjj.crm.utils.PrintJson;
 import com.wjj.crm.utils.ServiceFactory;
 import com.wjj.crm.utils.UUIDUtil;
 import com.wjj.crm.vo.PaginationVo;
+import com.wjj.crm.workbench.domain.Activity;
 import com.wjj.crm.workbench.domain.Clue;
+import com.wjj.crm.workbench.domain.ClueRemark;
+import com.wjj.crm.workbench.domain.Tran;
+import com.wjj.crm.workbench.service.ActivityService;
 import com.wjj.crm.workbench.service.ClueService;
+import com.wjj.crm.workbench.service.impl.ActivityServiceImpl;
 import com.wjj.crm.workbench.service.impl.ClueServiceImpl;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -18,6 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Array;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +46,189 @@ public class ClueController extends HttpServlet {
             getUserListAndClue(request, response);
         }else if ("/workbench/clue/update.do".equals(path)) {
             update(request, response);
+        }else if ("/workbench/clue/detail.do".equals(path)) {
+            detail(request, response);
+        }else if ("/workbench/clue/getRemarkListByCid.do".equals(path)) {
+            getRemarkListByCid(request, response);
+        }else if ("/workbench/clue/deleteRemark.do".equals(path)) {
+            deleteRemark(request, response);
+        }else if ("/workbench/clue/updateRemark.do".equals(path)) {
+            updateRemark(request, response);
+        }else if ("/workbench/clue/saveRemark.do".equals(path)) {
+            saveRemark(request, response);
+        }else if ("/workbench/clue/getActivityListByClueId.do".equals(path)) {
+            getActivityListByClueId(request, response);
+        }else if ("/workbench/clue/unbund.do".equals(path)) {
+            unbund(request, response);
+        }else if ("/workbench/clue/getActivityList.do".equals(path)) {
+            getActivityList(request, response);
+        }else if ("/workbench/clue/bund.do".equals(path)) {
+            bund(request, response);
+        }else if ("/workbench/clue/getActivityListByName.do".equals(path)) {
+            getActivityListByName(request, response);
+        }else if ("/workbench/clue/convert.do".equals(path)) {
+            convert(request, response);
         }
+    }
+
+    private void convert(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("执行线索转换的操作");
+        String clueId=request.getParameter("clueId");
+        //接收是否需要创建交易的标记
+        String flag=request.getParameter("flag");
+        Tran t=null;
+        String createBy=((User)request.getSession().getAttribute("user")).getname();
+        if("a".equals(flag)){
+            t=new Tran();
+            //如果需要创建交易,接收交易表单的参数
+            String money=request.getParameter("money");
+            String name=request.getParameter("name");
+            String expectedDate=request.getParameter("expectedDate");
+            String stage=request.getParameter("stage");
+            String activityId=request.getParameter("activityId");
+            String id=UUIDUtil.getUUID();
+
+            String createTime= DateTimeUtil.getSysTime();
+             t.setId(id);
+             t.setMoney(money);
+             t.setName(name);
+             t.setExpectedDate(expectedDate);
+             t.setStage(stage);
+             t.setActivityId(activityId);
+             t.setCreateBy(createBy);
+             t.setCreateTime(createTime);
+
+        }
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        /*为业务层传递的参数
+        1.必须传递的参数clueId,有了clueId我们才知道要转换那条记录
+        2.必须传递的参数t,因为在线索转换的过程中，有可能会临时创建交易，也有可能为空
+        * */
+        boolean flag1=clueService.convert(clueId,t,createBy);
+        if(flag1){
+            response.sendRedirect(request.getContextPath()+"/workbench/clue/index.jsp");
+        }
+
+
+    }
+
+    private void getActivityListByName(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("转换线索活动，根据名称模糊查询市场活动");
+        String aname="%"+request.getParameter("aname")+"%";
+        ActivityService activityService= (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        List<Activity> aList=activityService.getActivityListByName(aname);
+        PrintJson.printJsonObj(response,aList);
+    }
+
+    private void bund(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("执行添加关联市场活动的操作");
+        String cid=request.getParameter("cid");
+        System.out.println(cid);
+        String aids[] =request.getParameterValues("aid");
+        System.out.println(aids);
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+       boolean flag= clueService.bund(cid,aids);
+       PrintJson.printJsonFlag(response,flag);
+    }
+
+    private void getActivityList(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("关联活动模态窗口，根据名称,线索id模糊查询市场活动");
+        String aname=request.getParameter("aname");
+        String clueId=request.getParameter("clueId");
+        Map<String,String> map=new HashMap<String, String>();
+        map.put("aname","%"+aname+"%");
+        map.put("clueId",clueId);
+        ActivityService activityService= (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        List<Activity> aList=activityService.getActivityList(map);
+        PrintJson.printJsonObj(response,aList);
+
+
+    }
+
+    private void unbund(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入解除关联操作");
+        String id=request.getParameter("id");
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        boolean flag=clueService.unbund(id);
+        PrintJson.printJsonFlag(response,flag);
+    }
+
+    private void getActivityListByClueId(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("根据线索id查询关联的市场活动列表");
+        String clueId=request.getParameter("clueId");
+        ActivityService activityService= (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        List<Activity> aList=activityService.getActivityListByClueId(clueId);
+        PrintJson.printJsonObj(response,aList);
+    }
+
+    private void saveRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入添加备注的操作");
+        String noteContent =request.getParameter("noteContent");
+        String clueId =request.getParameter("clueId");
+        String id=UUIDUtil.getUUID();
+        String createTime= DateTimeUtil.getSysTime();//获取当前时间
+        String createBy=((User)request.getSession().getAttribute("user")).getname();
+        String editFlag="0";
+        ClueRemark ar=new ClueRemark();
+        ar.setId(id);
+        ar.setClueId(clueId);
+        ar.setCreateBy(createBy);
+        ar.setCreateTime(createTime);
+        ar.setNoteContent(noteContent);
+        ar.setEditFlag(editFlag);
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        boolean flag=clueService.saveRemark(ar);
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("success",flag);
+        map.put("ar",ar);
+        PrintJson.printJsonObj(response,map);
+    }
+
+    private void updateRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入修改备注的操作");
+        String noteContent = request.getParameter("noteContent");
+        String id = request.getParameter("id");
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        String editTime = DateTimeUtil.getSysTime();//获取当前时间
+        String editBy = ((User) request.getSession().getAttribute("user")).getname();
+        String editFlag = "1";
+        ClueRemark ar = new ClueRemark();
+        ar.setId(id);
+        ar.setEditBy(editBy);
+        ar.setEditTime(editTime);
+        ar.setNoteContent(noteContent);
+        ar.setEditFlag(editFlag);
+        boolean flag = clueService.updateRemark(ar);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("success", flag);
+        map.put("ar", ar);
+        PrintJson.printJsonObj(response, map);
+    }
+
+    private void deleteRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入删除备注操作");
+        String id=request.getParameter("id");
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        boolean flag=clueService.deleteRemark(id);
+        PrintJson.printJsonFlag(response,flag);
+    }
+
+    private void getRemarkListByCid(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到线索备注信息列表");
+        String clueId =request.getParameter("clueId");
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        List<ClueRemark> arList=clueService.getRemarkListByCid(clueId);
+        PrintJson.printJsonObj(response,arList);
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("进入线索详情操作");
+        String id = request.getParameter("id");
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+       Clue a=clueService.detail(id);
+        request.setAttribute("a",a);
+        request.getRequestDispatcher("/workbench/clue/detail.jsp").forward(request,response);
+
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) {

@@ -5,16 +5,38 @@
 
 <mapper namespace="com.wjj.crm.workbench.dao.ActivityRemarkDao">
 <select id="getCountByAids" resultType="int">
-    select count(*) from tbl_activity_remark where activityId in
-    <if test="array != null and array.size()>0">
-        <foreach collection="array" item="aid" open="(" close=")" separator=",">#{aid}</foreach>
-    </if>
+<!--    select count(*) from tbl_activity_remark where activityId in-->
+<!--    <if test="array!=null and array.size()>0">-->
+<!--        <foreach collection="array" item="aid" open="(" close=")" separator=",">#{aid}</foreach>-->
+<!--    </if>-->
+    select count(*)
+
+    from tbl_activity_remark
+
+    where activityId in
+
+    <foreach collection="array" item="ids" open="(" close=")" separator=",">
+
+        #{ids}
+
+    </foreach>
 </select>
    <delete id="deleteByAids">
-       delete from tbl_activity_remark where activityId in
-       <if test="array!=null and array.size()>0">
-           <foreach collection="array" item="aid" open="(" close=")" separator=",">#{aid}</foreach>
-       </if>
+<!--       delete from tbl_activity_remark where activityId in-->
+<!--       <if test="array!=null and array.size()>0">-->
+<!--           <foreach collection="array" item="aid" open="(" close=")" separator=",">#{aid}</foreach>-->
+<!--       </if>-->
+       delete
+
+       from tbl_activity_remark
+
+       where activityId in
+
+       <foreach collection="array" item="ids" open="(" close=")" separator=",">
+
+           #{ids}
+
+       </foreach>
 
    </delete>
     <select id="getRemarkListByAid" resultType="ActivityRemark">

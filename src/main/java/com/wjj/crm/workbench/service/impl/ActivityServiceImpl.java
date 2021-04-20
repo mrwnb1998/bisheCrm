@@ -49,9 +49,9 @@ vo.setDataList(dataList);
     public boolean delete(String[] ids) {
         boolean flag=true;
         //查询出需要删除的备注的数量
-           int count1=activityDaoRemark.getCountByAids();
+           int count1=activityDaoRemark.getCountByAids(ids);
         //杀出备注，返回收到影响的条数（实际删除的数量）
-           int count2=activityDaoRemark.deleteByAids();
+           int count2=activityDaoRemark.deleteByAids(ids);
            if(count1!=count2){
                flag=false;
            }
@@ -126,6 +126,24 @@ vo.setDataList(dataList);
             flag=false;
         }
         return flag;
+    }
+
+    @Override
+    public List<Activity> getActivityListByClueId(String clueId) {
+      List<Activity> aList= activityDao.getActivityListByClueId(clueId);
+      return aList;
+    }
+
+    @Override
+    public List<Activity> getActivityList(Map<String, String> map) {
+        List<Activity> aList=activityDao.getActivityList(map);
+        return aList;
+    }
+
+    @Override
+    public List<Activity> getActivityListByName(String aname) {
+        List<Activity> aList=activityDao.getActivityListByName(aname);
+        return aList;
     }
 
 
