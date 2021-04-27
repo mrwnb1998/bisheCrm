@@ -1,15 +1,20 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 	request.getServerPort() + request.getContextPath() + "/";
+%>
 <!DOCTYPE html>
 <html>
 <head>
+	<base href="<%=basePath%>">
 <meta charset="UTF-8">
 
-<link href="../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-<link href="../../jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+<link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
 
-<script type="text/javascript" src="../../jquery/jquery-1.11.1-min.js"></script>
-<script type="text/javascript" src="../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript" src="../../jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
+<script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
 
 <script type="text/javascript">
 	$(function(){
@@ -25,7 +30,7 @@
 </head>
 <body>
 
-	<!-- 查找联系人 -->	
+	<!-- 查找联系人 -->
 	<div class="modal fade" id="findContacts" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 80%;">
 			<div class="modal-content">
@@ -75,7 +80,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div style="position:  relative; left: 30px;">
 		<h3>修改任务</h3>
 	  	<div style="position: relative; top: -40px; left: 70%;">
@@ -110,7 +115,7 @@
 				<input type="text" class="form-control" id="create-contacts" value="李四">
 			</div>
 		</div>
-	
+
 		<div class="form-group">
 			<label for="create-state" class="col-sm-2 control-label">状态</label>
 			<div class="col-sm-10" style="width: 300px;">
@@ -135,20 +140,20 @@
 				</select>
 			</div>
 		</div>
-		
+
 		<div class="form-group">
 			<label for="create-describe" class="col-sm-2 control-label">描述</label>
 			<div class="col-sm-10" style="width: 70%;">
 				<textarea class="form-control" rows="3" id="create-describe">任务描述信息</textarea>
 			</div>
 		</div>
-		
+
 		<div style="position: relative; left: 103px;">
 			<span><b>提醒时间</b></span>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="checkbox" id="reminderTime" checked>
 		</div>
-		
+
 		<div id="reminderTimeDiv" style="width: 500px; height: 180px; background-color: #EEEEEE; position: relative; left: 185px; top: 20px;">
 			<div class="form-group" style="position: relative; top: 10px;">
 				<label for="create-startTime" class="col-sm-2 control-label">开始日期</label>
@@ -156,7 +161,7 @@
 					<input type="text" class="form-control" id="create-startTime" value="2017-02-16 16:00">
 				</div>
 			</div>
-			
+
 			<div class="form-group" style="position: relative; top: 15px;">
 				<label for="create-repeatType" class="col-sm-2 control-label">重复类型</label>
 				<div class="col-sm-10" style="width: 300px;">
@@ -169,7 +174,7 @@
 					</select>
 				</div>
 			</div>
-			
+
 			<div class="form-group" style="position: relative; top: 20px;">
 				<label for="create-noticeType" class="col-sm-2 control-label">通知类型</label>
 				<div class="col-sm-10" style="width: 300px;">
@@ -182,7 +187,7 @@
 			</div>
 		</div>
 	</form>
-	
+
 	<div style="height: 200px;"></div>
 </body>
 </html>

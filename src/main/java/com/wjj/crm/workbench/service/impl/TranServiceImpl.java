@@ -1,16 +1,11 @@
 package com.wjj.crm.workbench.service.impl;
 
+import com.wjj.crm.utils.DateTimeUtil;
 import com.wjj.crm.utils.SqlSessionUtil;
 import com.wjj.crm.utils.UUIDUtil;
 import com.wjj.crm.vo.PaginationVo;
-import com.wjj.crm.workbench.dao.ContactsDao;
-import com.wjj.crm.workbench.dao.CustomerDao;
-import com.wjj.crm.workbench.dao.TranDao;
-import com.wjj.crm.workbench.dao.TranHistoryDao;
-import com.wjj.crm.workbench.domain.Contacts;
-import com.wjj.crm.workbench.domain.Customer;
-import com.wjj.crm.workbench.domain.Tran;
-import com.wjj.crm.workbench.domain.TranHistory;
+import com.wjj.crm.workbench.dao.*;
+import com.wjj.crm.workbench.domain.*;
 import com.wjj.crm.workbench.service.TranService;
 
 import java.util.HashMap;
@@ -25,6 +20,7 @@ public class TranServiceImpl implements TranService {
           private TranHistoryDao tranHistoryDao= SqlSessionUtil.getSqlSession().getMapper(TranHistoryDao.class);
           private CustomerDao customerDao=SqlSessionUtil.getSqlSession().getMapper(CustomerDao.class);
           private ContactsDao contactsDao=SqlSessionUtil.getSqlSession().getMapper(ContactsDao.class);
+    private TranRemarkDao tranRemarkDao= SqlSessionUtil.getSqlSession().getMapper(TranRemarkDao.class);
 
     @Override
     public boolean save(Tran t, String customerName) {
@@ -95,5 +91,93 @@ public class TranServiceImpl implements TranService {
     public Tran detail(String id) {
         Tran t=tranDao.detail(id);
         return t;
+    }
+
+    @Override
+    public List<TranHistory> getHistoryListByTranId(String tranId) {
+       List<TranHistory> thList= tranHistoryDao.getHistoryListByTranId(tranId);
+        return thList;
+    }
+
+    @Override
+    public boolean changeStage(Tran t) {
+        boolean flag=true;
+        int count=tranDao.changeStage(t);
+        if(count!=1){
+            flag=false;
+        }
+        //交易阶段改变后成城交易历史
+        TranHistory th=new TranHistory();
+        th.setId(UUIDUtil.getUUID());
+        th.setStage(t.getStage());
+        th.setCreateBy(t.getEditBy());
+        th.setCreateTime(DateTimeUtil.getSysTime());
+        th.setExpectedDate(t.getExpectedDate());
+        th.setMoney(t.getMoney());
+        th.setTranId(t.getId());
+        //th.setPossibility(t.getPossibility());
+        //添加交易历史
+        int count2=tranHistoryDao.save(th);
+        if(count2!=1){
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public Map<String, Object> getCharts() {
+        //取得total
+          int total=tranDao.getTotal();
+        //取得dataList
+         List<Map<String,Object>> dataList= tranDao.getCharts();
+
+        //将total和dataList保存在map中
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("total",total);
+        map.put("dataList",dataList);
+
+        return map;
+    }
+
+    @Override
+    public List<Map<String, Object>> getSourceCharts() {
+        List<Map<String,Object>> dataList= tranDao.getSourceCharts();
+        return dataList;
+    }
+
+    @Override
+    public List<TranRemark> getRemarkListByCid(String tranId) {
+        List<TranRemark> arList=tranRemarkDao.getRemarkListByCid(tranId);
+        return arList;
+    }
+
+    @Override
+    public boolean deleteRemark(String id) {
+        boolean flag=true;
+        int count=tranRemarkDao.deleteRemarkById(id);
+        if(count!=1){
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean updateRemark(TranRemark ar) {
+        boolean flag=true;
+        int count=tranRemarkDao.updateRemark(ar);
+        if(count!=1){
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean saveRemark(TranRemark ar) {
+        boolean flag=true;
+        int count=tranRemarkDao.saveRemark(ar);
+        if(count!=1){
+            flag=false;
+        }
+        return flag;
     }
 }

@@ -114,7 +114,7 @@ address
     </select>
     <select id="getById" resultType="Clue">
         select
-        a.id,a.fullname,u.name as owner,a.company,a.source,a.state,a.phone,a.mphone,a.appellation,
+        a.id,a.fullname,a.owner,a.company,a.source,a.state,a.phone,a.mphone,a.appellation,
         a.job,a.email,a.website,a.createBy,a.createTime,a.editBy,a.editTime,a.description,a.contactSummary,a.nextContactTime,a.address
         from tbl_clue a
         join tbl_user u

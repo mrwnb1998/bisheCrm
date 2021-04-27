@@ -8,9 +8,7 @@ import com.wjj.crm.utils.PrintJson;
 import com.wjj.crm.utils.ServiceFactory;
 import com.wjj.crm.utils.UUIDUtil;
 import com.wjj.crm.vo.PaginationVo;
-import com.wjj.crm.workbench.domain.Activity;
-import com.wjj.crm.workbench.domain.Contacts;
-import com.wjj.crm.workbench.domain.Tran;
+import com.wjj.crm.workbench.domain.*;
 import com.wjj.crm.workbench.service.ActivityService;
 import com.wjj.crm.workbench.service.ContactsService;
 import com.wjj.crm.workbench.service.CustomerService;
@@ -20,6 +18,7 @@ import com.wjj.crm.workbench.service.impl.ContactsServiceImpl;
 import com.wjj.crm.workbench.service.impl.CustomerServiceImpl;
 import com.wjj.crm.workbench.service.impl.TranServiceImpl;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +54,147 @@ public class TranController extends HttpServlet {
             edit(request, response);
         }else if("/workbench/transaction/detail.do".equals(path)) {
             detail(request, response);
+        }else if("/workbench/transaction/getHistoryListByTranId.do".equals(path)) {
+            getHistoryListByTranId(request, response);
+        }else if("/workbench/transaction/changeStage.do".equals(path)) {
+            changeStage(request, response);
+        }else if("/workbench/transaction/getCharts.do".equals(path)) {
+            getCharts(request, response);
         }
+        else if("/workbench/transaction/getSourceCharts.do".equals(path)) {
+            getSourceCharts(request, response);
+        }else if("/workbench/transaction/getRemarkListByCid.do".equals(path)) {
+            getRemarkListByCid(request, response);
+        }else if("/workbench/transaction/deleteRemark.do".equals(path)) {
+            deleteRemark(request, response);
+        }else if("/workbench/transaction/updateRemark.do".equals(path)) {
+            updateRemark(request, response);
+        }else if("/workbench/transaction/saveRemark.do".equals(path)) {
+            saveRemark(request, response);
+        }
+    }
+
+    private void saveRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入添加备注的操作");
+        String noteContent =request.getParameter("noteContent");
+        String tranId =request.getParameter("tranId");
+        String id=UUIDUtil.getUUID();
+        String createTime= DateTimeUtil.getSysTime();//获取当前时间
+        String createBy=((User)request.getSession().getAttribute("user")).getname();
+        String editFlag="0";
+        TranRemark ar = new TranRemark();
+        ar.setId(id);
+        ar.setTranId(tranId);
+        ar.setCreateBy(createBy);
+        ar.setCreateTime(createTime);
+        ar.setNoteContent(noteContent);
+        ar.setEditFlag(editFlag);
+        TranService tranService= (TranService) ServiceFactory.getService(new TranServiceImpl());
+        boolean flag=tranService.saveRemark(ar);
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("success",flag);
+        map.put("ar",ar);
+        PrintJson.printJsonObj(response,map);
+    }
+
+    private void updateRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入修改备注的操作");
+        String noteContent = request.getParameter("noteContent");
+        String id = request.getParameter("id");
+        TranService tranService= (TranService) ServiceFactory.getService(new TranServiceImpl());
+        String editTime = DateTimeUtil.getSysTime();//获取当前时间
+        String editBy = ((User) request.getSession().getAttribute("user")).getname();
+        String editFlag = "1";
+        TranRemark ar = new TranRemark();
+        ar.setId(id);
+        ar.setEditBy(editBy);
+        ar.setEditTime(editTime);
+        ar.setNoteContent(noteContent);
+        ar.setEditFlag(editFlag);
+        boolean flag = tranService.updateRemark(ar);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("success", flag);
+        map.put("ar", ar);
+        PrintJson.printJsonObj(response, map);
+    }
+
+    private void deleteRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入删除备注操作");
+        String id=request.getParameter("id");
+        TranService tranService= (TranService) ServiceFactory.getService(new TranServiceImpl());
+        boolean flag=tranService.deleteRemark(id);
+        PrintJson.printJsonFlag(response,flag);
+    }
+
+    private void getRemarkListByCid(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到线索备注信息列表");
+        String tranId =request.getParameter("tranId");
+        TranService tranService= (TranService) ServiceFactory.getService(new TranServiceImpl());
+        List<TranRemark> arList=tranService.getRemarkListByCid(tranId);
+        PrintJson.printJsonObj(response,arList);
+    }
+
+    private void getSourceCharts(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("取得交易来源统计图表的数据");
+        TranService tranService= (TranService) ServiceFactory.getService(new TranServiceImpl());
+        List<Map<String,Object>> dataList=tranService.getSourceCharts();
+        PrintJson.printJsonObj(response,dataList);
+    }
+
+    private void getCharts(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("取得交易阶段数量统计图表的数据");
+        TranService tranService= (TranService) ServiceFactory.getService(new TranServiceImpl());
+        /*
+        *业务层为我们返回
+        * total
+        * dataList
+        *通过map打包
+        * */
+        Map<String,Object> map=tranService.getCharts();
+        PrintJson.printJsonObj(response,map);
+
+    }
+
+    private void changeStage(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("执行改变阶段的操作");
+        String id=request.getParameter("id");
+        String stage=request.getParameter("stage");
+        String money=request.getParameter("money");
+        String expectedDate=request.getParameter("expectedDate");
+        String editTime=DateTimeUtil.getSysTime();
+        String editBy=((User)request.getSession().getAttribute("user")).getname();
+        Tran t=new Tran();
+        t.setId(id);
+        t.setStage(stage);
+        t.setMoney(money);
+        t.setExpectedDate(expectedDate);
+        t.setEditTime(editTime);
+        t.setEditBy(editBy);
+        TranService tranService= (TranService) ServiceFactory.getService(new TranServiceImpl());
+        boolean flag=tranService.changeStage(t);
+        ServletContext application=request.getServletContext();//获取上下文域对象
+        Map<String,String> pmap= (Map<String, String>) application.getAttribute("pmap");
+        t.setPossibility(pmap.get(stage));
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("success",flag);
+        map.put("t",t);
+        PrintJson.printJsonObj(response,map);
+    }
+
+    private void getHistoryListByTranId(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到获取交易历史列表的操作");
+        String tranId=request.getParameter("tranId");
+        TranService tranService= (TranService) ServiceFactory.getService(new TranServiceImpl());
+        List<TranHistory> thList=tranService.getHistoryListByTranId(tranId);
+        //将交易历史遍历，取得每个历史的阶段，来处理可能性
+        ServletContext application=request.getServletContext();//获取上下文域对象
+        Map<String,String> pmap= (Map<String, String>) application.getAttribute("pmap");
+        for(TranHistory th:thList){
+            String stage=th.getStage();
+            String possibility=pmap.get(stage);
+            th.setPossibility(possibility);
+        }
+        PrintJson.printJsonObj(response,thList);
     }
 
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -63,11 +202,15 @@ public class TranController extends HttpServlet {
         String id=request.getParameter("id");
         TranService tranService= (TranService) ServiceFactory.getService(new TranServiceImpl());
         Tran t=tranService.detail(id);
+        //处理可能性
+        String stage=t.getStage();
+        ServletContext application=request.getServletContext();//获取上下文域对象
+        Map<String,String> pmap= (Map<String, String>) application.getAttribute("pmap");
+        String possibility=pmap.get(stage);
+        t.setPossibility(possibility);
         request.setAttribute("t",t);
+        //request.setAttribute("possibility",possibility);
         request.getRequestDispatcher("/workbench/transaction/detail.jsp").forward(request,response);
-    }
-
-    private void edit(HttpServletRequest request, HttpServletResponse response) {
     }
 
     private void pageList(HttpServletRequest request, HttpServletResponse response) {
@@ -196,6 +339,14 @@ public class TranController extends HttpServlet {
         request.setAttribute("uList",uList);
         request.getRequestDispatcher("/workbench/transaction/save.jsp").forward(request,response);
 
+    }
+    private void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("到跳转到交易修改页的操作");
+        UserService us= (UserService) ServiceFactory.getService(new UserServiceImpl());
+        List<User> uList=us.getUserList();
+        //之前是ajax请求，传递json格式，现在是点击事件的传统请求，传值，打转发
+        request.setAttribute("uList",uList);
+        request.getRequestDispatcher("/workbench/transaction/edit.jsp").forward(request,response);
     }
 
 }

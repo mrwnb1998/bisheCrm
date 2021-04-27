@@ -13,6 +13,13 @@ public class DateTimeUtil {
 		String dateStr = sdf.format(date);
 
 		return dateStr;
+		//将createtime格式更改为timestamp
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String dateString = dateFormat.format(new Date());
+//        System.out.println(dateString);
+//        Timestamp ts = new Timestamp(System.currentTimeMillis());
+//        ts =  Timestamp.valueOf(dateString);
+
 
 	}
 

@@ -165,14 +165,15 @@ $("#create-owner").val(id);
 						 *
 						 */
 								//处理修改模态窗口的拥有者下拉框的值
-						var html ="<option></option>";
+						var html ="";
 						$.each(data.uList,function (i,n) {
 							html+="<option value='"+n.id+"'>"+n.name+"</option>";
 						});
+
 						$("#edit-owner").html(html);
 						//处理修改模态窗口的活动信息的值
-						$("#edit-fullname").val(data.a.fullname);
 						$("#edit-owner").val(data.a.owner);
+						$("#edit-fullname").val(data.a.fullname);
 						$("#edit-company").val(data.a.company);
 						$("#edit-appellation").val(data.a.appellation);
 						$("#edit-description").val(data.a.description);
@@ -186,6 +187,7 @@ $("#create-owner").val(id);
 						$("#edit-nextContactTime").val(data.a.nextContactTime);
 						$("#edit-job").val(data.a.job);
 						$("#edit-id").val(data.a.id);
+						$("#edit-address").val(data.a.address);
 						$("#editClueModal").modal("show");
 
 
@@ -237,7 +239,6 @@ $("#create-owner").val(id);
 						}else{
 							alert("修改失败");
 						}
-
 
 					}
 
@@ -513,6 +514,7 @@ function pageList(pageNo,pageSize){
 									<c:forEach items="${appellationList}" var="a">
 									<option value="${a.value}">${a.text}</option>
 									</c:forEach>
+								</select>
 							</div>
 							<label for="edit-fullname" class="col-sm-2 control-label">姓名<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
@@ -523,29 +525,29 @@ function pageList(pageNo,pageSize){
 						<div class="form-group">
 							<label for="edit-job" class="col-sm-2 control-label">职位</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-job" value="CTO">
+								<input type="text" class="form-control" id="edit-job">
 							</div>
 							<label for="edit-email" class="col-sm-2 control-label">邮箱</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-email" value="lisi@bjpowernode.com">
+								<input type="text" class="form-control" id="edit-email">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="edit-phone" class="col-sm-2 control-label">公司座机</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-phone" value="010-84846003">
+								<input type="text" class="form-control" id="edit-phone" >
 							</div>
 							<label for="edit-website" class="col-sm-2 control-label">公司网站</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-website" value="http://www.bjpowernode.com">
+								<input type="text" class="form-control" id="edit-website" >
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="edit-mphone" class="col-sm-2 control-label">手机</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-mphone" value="12345678901">
+								<input type="text" class="form-control" id="edit-mphone" >
 							</div>
 							<label for="edit-state" class="col-sm-2 control-label">线索状态</label>
 							<div class="col-sm-10" style="width: 300px;">

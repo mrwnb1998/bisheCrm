@@ -4,6 +4,51 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wjj.crm.workbench.dao.CustomerDao">
+     <select id="getTotalByCondition" resultType="int">
+          select count(*)
+          from tbl_customer a
+          join tbl_user u
+          on a.owner=u.id
+          <where>
+               <if test="name!=null and name!=''">
+                    a.name like '%' #{name} '%'
+               </if>
+               <if test="owner!=null and owner!=''">
+                    and u.name like '%' #{owner} '%'
+               </if>
+               <if test="phone!=null and phone!=''">
+                    and a.phone like '%' #{phone} '%'
+               </if>
+               <if test="website!=null and website!=''">
+                    and a.website like '%' #{website} '%'
+               </if>
+          </where>
+
+     </select>
+     <select id="getCustomerListByCondition" resultType="Customer">
+          select
+          a.id,a.name,u.name as owner,a.phone,a.website
+          from tbl_customer a
+          join tbl_user u
+          on a.owner=u.id
+          <where>
+               <if test="name!=null and name!=''">
+                    a.name like '%' #{name} '%'
+               </if>
+               <if test="owner!=null and owner!=''">
+                    and u.name like '%' #{owner} '%'
+               </if>
+               <if test="phone!=null and phone!=''">
+                    and a.phone like '%' #{phone} '%'
+               </if>
+               <if test="website!=null and website!=''">
+                    and a.website like '%' #{website} '%'
+               </if>
+          </where>
+          order by a.createTime desc
+          limit #{skipCount},#{pageSize}
+
+     </select>
 <select id="getCustomerByName" resultType="Customer">
     select * from tbl_customer where name=#{company}
 </select>
@@ -19,7 +64,10 @@
      contactSummary,
      nextContactTime,
      description,
-     address
+     address,
+     label,
+     level,
+     department
      )values (
      #{id},
      #{owner},
@@ -31,7 +79,10 @@
      #{contactSummary},
      #{nextContactTime},
      #{description},
-     #{address}
+     #{address},
+     #{label},
+     #{level},
+     #{department}
      )
 </insert>
      <select id="getCustomerName" resultType="String">

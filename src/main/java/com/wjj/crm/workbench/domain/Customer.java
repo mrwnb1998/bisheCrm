@@ -15,7 +15,51 @@ public class Customer {
 	private String nextContactTime;
 	private String description;
 	private String address;
+	private String label;
+	private String level;
+	private String department;
+	private String dreamSale;
+	private String trueSale;
 
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+
+	public String getDreamSale() {
+		return dreamSale;
+	}
+
+	public void setDreamSale(String dreamSale) {
+		this.dreamSale = dreamSale;
+	}
+
+	public String getTrueSale() {
+		return trueSale;
+	}
+
+	public void setTrueSale(String trueSale) {
+		this.trueSale = trueSale;
+	}
 	public String getId() {
 		return id;
 	}

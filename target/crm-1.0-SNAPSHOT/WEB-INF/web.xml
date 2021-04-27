@@ -99,6 +99,37 @@
     <url-pattern>/workbench/transaction/edit.do</url-pattern>
     <url-pattern>/workbench/transaction/pageList.do</url-pattern>
     <url-pattern>/workbench/transaction/detail.do</url-pattern>
+    <url-pattern>/workbench/transaction/getHistoryListByTranId.do</url-pattern>
+    <url-pattern>/workbench/transaction/changeStage.do</url-pattern>
+    <url-pattern>/workbench/transaction/getCharts.do</url-pattern>
+    <url-pattern>/workbench/transaction/getSourceCharts.do</url-pattern>
+    <url-pattern>/workbench/transaction/getRemarkListByCid.do</url-pattern>
+    <url-pattern>/workbench/transaction/deleteRemark.do</url-pattern>
+    <url-pattern>/workbench/transaction/updateRemark.do</url-pattern>
+    <url-pattern>/workbench/transaction/saveRemark.do</url-pattern>
+
+  </servlet-mapping>
+
+  <!--客户控制器-->
+  <servlet>
+    <servlet-name>CustomerController</servlet-name>
+    <servlet-class>com.wjj.crm.workbench.web.controller.CustomerController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CustomerController</servlet-name>
+    <url-pattern>/workbench/customer/pageList.do</url-pattern>
+    <url-pattern>/workbench/customer/save.do</url-pattern>
+
+  </servlet-mapping>
+
+  <!--客户控制器-->
+  <servlet>
+    <servlet-name>ChannelController</servlet-name>
+    <servlet-class>com.wjj.crm.workbench.web.controller.ChannelController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChannelController</servlet-name>
+    <url-pattern>/workbench/channel/save.do</url-pattern>
 
   </servlet-mapping>
 </web-app>

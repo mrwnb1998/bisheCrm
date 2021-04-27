@@ -4,6 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wjj.crm.workbench.dao.TranDao">
+    <select id="getSourceCharts" resultType="Map">
+        select
+        count(*) as value ,source as name
+        from tbl_tran
+        group by source
+    </select>
+    <select id="getCharts" resultType="Map">
+        select
+        count(*) as value ,stage as name
+        from tbl_tran
+        group by stage
+    </select>
+    <select id="getTotal" resultType="int">
+         select count(*) from tbl_tran
+    </select>
+    <update id="changeStage">
+        update tbl_tran set stage=#{stage},editBy=#{editBy},editTime=#{editTime}
+        where id=#{id}
+    </update>
 <insert id="save">
     insert into tbl_tran(
 id,
@@ -111,9 +130,9 @@ nextContactTime
         on a.owner=u.id
         join tbl_customer c
         on a.customerId=c.id
-        join tbl_activity act
+        left join tbl_activity act
         on a.activityId=act.id
-        join tbl_contacts t
+        left join tbl_contacts t
         on a.contactsId=t.id
         where a.id=#{id}
     </select>

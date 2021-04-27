@@ -17,4 +17,12 @@ public interface TranDao {
     List<Tran> getTranListByCondition(Map<String, Object> map);
 
     Tran detail(String id);
+
+    int changeStage(Tran t);
+
+    int getTotal();
+
+    List<Map<String, Object>> getCharts();
+
+    List<Map<String, Object>> getSourceCharts();
 }
