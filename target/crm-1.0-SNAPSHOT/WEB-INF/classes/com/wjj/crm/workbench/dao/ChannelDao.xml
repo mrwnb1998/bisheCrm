@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wjj.crm.workbench.dao.ChannelDao">
+
+    <select id="getChannelListByCid" resultType="Channel">
+        select id,name,type ,
+department,
+platform,
+address,
+dream_sale,
+true_sale
+        from tbl_channel
+        where customer_id=#{id}
+        order by true_sale desc
+
+    </select>
+    <resultMap id="getById" type="com.wjj.crm.workbench.domain.Channel">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="department" property="department"/>
+        <result column="platform" property="platform"/>
+        <result column="address" property="address"/>
+        <result column="dream_sale" property="dream_sale"/>
+        <result column="true_sale" property="true_sale"/>
+        <association property="customer" javaType="com.wjj.crm.workbench.domain.Customer">
+            <result column="cname" property="name"/>
+            <result column="uid" property="id"/>
+        </association>
+        <association property="contacts" javaType="com.wjj.crm.workbench.domain.Contacts">
+            <result column="fullname" property="fullname"/>
+            <result column="cid" property="id"/>
+        </association>
+    </resultMap>
+    <select id="getChannelById" resultMap="getById">
+         select
+        a.id,u.id uid,c.id cid,a.name,u.name cname,c.fullname fullname,a.type,a.department,a.platform,a.address,a.dream_sale,a.true_sale
+        from tbl_channel a
+        join tbl_customer u
+        on a.customer_id=u.id
+        join tbl_contacts c
+        on a.contacts_id=c.id
+        where a.id=#{id}
+    </select>
+    <select id="getTotalByCondition" resultType="int">
+        select count(*)
+        from tbl_channel
+        <where>
+            <if test="name!=null and name!=''">
+                name like '%' #{name} '%'
+            </if>
+            <if test="department!=null and department!=''">
+                and department like '%' #{department} '%'
+            </if>
+            <if test="type!=null and type!=''">
+                and type like '%' #{type} '%'
+            </if>
+            <if test="platform!=null and platform!=''">
+                and platform like '%' #{platform} '%'
+            </if>
+        </where>
+    </select>
+    <resultMap id="getChannel" type="com.wjj.crm.workbench.domain.Channel">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="department" property="department"/>
+        <result column="platform" property="platform"/>
+        <result column="address" property="address"/>
+        <result column="dream_sale" property="dream_sale"/>
+        <result column="true_sale" property="true_sale"/>
+        <association property="customer" javaType="com.wjj.crm.workbench.domain.Customer">
+            <result column="cname" property="name"/>
+            <result column="uid" property="id"/>
+        </association>
+        <association property="contacts" javaType="com.wjj.crm.workbench.domain.Contacts">
+            <result column="fullname" property="fullname"/>
+            <result column="cid" property="id"/>
+        </association>
+    </resultMap>
+    <select id="getChannelListByCondition" resultMap="getChannel">
+        select
+        a.id,u.id uid,c.id cid,a.name,u.name cname,c.fullname fullname,a.type,a.department,a.platform,a.address,a.dream_sale,a.true_sale
+        from tbl_channel a
+        join tbl_customer u
+        on a.customer_id=u.id
+        join tbl_contacts c
+        on a.contacts_id=c.id
+        <where>
+            <if test="name!=null and name!=''">
+                a.name like '%' #{name} '%'
+            </if>
+            <if test="department!=null and department!=''">
+                and a.department like '%' #{department} '%'
+            </if>
+            <if test="type!=null and type!=''">
+                and a.type like '%' #{type} '%'
+            </if>
+            <if test="platform!=null and platform!=''">
+                and a.platform like '%' #{platform} '%'
+            </if>
+        </where>
+        limit #{skipCount},#{pageSize}
+    </select>
+<insert id="save">
+    insert into tbl_channel(
+name,
+customer_id,
+contacts_id,
+type,
+department,
+platform,
+address,
+dream_sale,
+true_sale
+
+    )values(
+#{name},
+#{customer_id},
+#{contacts_id},
+#{type},
+#{department},
+#{platform},
+#{address},
+#{dream_sale},
+#{true_sale}
+    )
+
+</insert>
+    <update id="update">
+        update tbl_channel set
+        name=#{name},
+customer_id=#{customer_id},
+contacts_id=#{contacts_id},
+type=#{type},
+department=#{department},
+platform=#{platform},
+address=#{address},
+dream_sale=#{dream_sale},
+true_sale=#{true_sale}
+where id=#{id}
+    </update>
+    <delete id="delete">
+        delete from tbl_channel
+        where id in
+        <foreach collection="array" item="ids" open="(" close=")" separator=",">
+
+            #{ids}
+
+        </foreach>
+    </delete>
+    <select id="sum" resultType="Customer">
+SELECT u.id,u.name,u.department,u.dreamSale,SUM(c.true_sale) AS trueSale
+FROM tbl_customer u
+JOIN tbl_channel c
+ON u.id=c.customer_id
+        <where>
+            <if test="department!=null and department!=''">
+                u.department like  '%' #{department} '%'
+            </if>
+            <if test="type!=null and type!=''">
+                and u.level like '%' #{type} '%'
+            </if>
+        </where>
+GROUP BY u.name
+ORDER BY SUM(c.true_sale) desc
+limit #{skipCount},#{pageSize}
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

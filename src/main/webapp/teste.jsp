@@ -1,5 +1,6 @@
 <%@ page import="com.wjj.crm.utils.DateTimeUtil" %>
-<%@ page import="com.wjj.crm.settings.domain.User" %><%--
+<%@ page import="com.wjj.crm.settings.domain.User" %>
+<%@ page import="java.sql.Timestamp" %><%--
   Created by IntelliJ IDEA.
   User: HS
   Date: 2021/3/11
@@ -8,7 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    String createTime= DateTimeUtil.getSysTime();//获取当前时间
+    //Timestamp createTime= DateTimeUtil.getSysTime();//获取当前时间
     String createBy=((User)request.getSession().getAttribute("user")).getname();
 %>
 <html>

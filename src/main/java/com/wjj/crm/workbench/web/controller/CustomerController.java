@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingDeque;
@@ -37,7 +38,7 @@ public class CustomerController extends HttpServlet {
 
     private void save(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("进入到新建客户操作");
-        String id= UUIDUtil.getUUID();
+        //String id= UUIDUtil.getUUID();
         String name=request.getParameter("name");
         //System.out.println(name);
         String owner=request.getParameter("owner");
@@ -53,7 +54,7 @@ public class CustomerController extends HttpServlet {
         String createTime= DateTimeUtil.getSysTime();//获取当前时间
         String createBy=((User)request.getSession().getAttribute("user")).getname();
         Customer c=new Customer();
-        c.setId(id);
+        //c.setId(id);
         c.setOwner(owner);
         c.setName(name);
         c.setPhone(phone);

@@ -122,7 +122,7 @@
 
   </servlet-mapping>
 
-  <!--客户控制器-->
+  <!--渠道控制器-->
   <servlet>
     <servlet-name>ChannelController</servlet-name>
     <servlet-class>com.wjj.crm.workbench.web.controller.ChannelController</servlet-class>
@@ -130,7 +130,35 @@
   <servlet-mapping>
     <servlet-name>ChannelController</servlet-name>
     <url-pattern>/workbench/channel/save.do</url-pattern>
+    <url-pattern>/workbench/channel/add.do</url-pattern>
+    <url-pattern>/workbench/channel/edit.do</url-pattern>
+    <url-pattern>/workbench/channel/update.do</url-pattern>
+    <url-pattern>/workbench/channel/delete.do</url-pattern>
+    <url-pattern>/workbench/channel/pageList.do</url-pattern>
+    <url-pattern>/workbench/channel/getCustomerListByName.do</url-pattern>
+    <url-pattern>/workbench/channel/sum.do</url-pattern>
+    <url-pattern>/workbench/channel/rank.do</url-pattern>
 
+  </servlet-mapping>
+
+  <!--任务控制器-->
+  <servlet>
+    <servlet-name>TaskController</servlet-name>
+    <servlet-class>com.wjj.crm.workbench.web.controller.TaskController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TaskController</servlet-name>
+    <url-pattern>/workbench/task/pageList.do</url-pattern>
+    <url-pattern>/workbench/task/detail.do</url-pattern>
+    <url-pattern>/workbench/task/save.do</url-pattern>
+    <url-pattern>/workbench/task/add.do</url-pattern>
+    <url-pattern>/workbench/task/update.do</url-pattern>
+    <url-pattern>/workbench/task/delete.do</url-pattern>
+    <url-pattern>/workbench/task/getRemarkListByTid.do</url-pattern>
+    <url-pattern>/workbench/task/deleteRemark.do</url-pattern>
+    <url-pattern>/workbench/task/saveRemark.do</url-pattern>
+    <url-pattern>/workbench/task/updateRemark.do</url-pattern>
+    <url-pattern>/workbench/task/getTaskById.do</url-pattern>
   </servlet-mapping>
 </web-app>
 

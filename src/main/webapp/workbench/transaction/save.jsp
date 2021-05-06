@@ -117,7 +117,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				return false;
 			}
 
-		})
+		});
 
 		//w为提交市场活动源绑定事件，填充市场活动源，填写市场活动的名字和把id填给隐藏域
 		$("#submitBtn").click(function () {
@@ -132,7 +132,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			//将模态窗口关闭
 			$("#findMarketActivity").modal("hide");
 
-		})
+		});
 
 		//为搜索窗口的搜索框绑定事件，执行搜索并展现联系人列表的
 		$("#cname").keydown(function (event) {
@@ -160,7 +160,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				return false;
 			}
 
-		})
+		});
 
 		//w为提交联系人源绑定事件，填充联系人，填写市场活动的名字和把id填给隐藏域
 		$("#submitContactsBtn").click(function () {

@@ -1,33 +1,33 @@
 package com.wjj.crm.workbench.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.wjj.crm.utils.DateTimeUtil;
+
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class Task {
-   private String id;
-   private String owner;
+   private long id;
    private String name;
-   private String startDate;
-   private String endDate;
-   private String createBy;
-   private String createTime;
-   private String editBy;
-   private String editTime;
+   private Date start_date;
+   private Date end_date;
+   private String create_by;
+   private Timestamp create_time;
+   private String edit_by;
+   private Timestamp edit_time;
    private String description;
    private String area;
+    private String target;
+    private String status;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
 
     public String getName() {
         return name;
@@ -37,52 +37,56 @@ public class Task {
         this.name = name;
     }
 
-    public String getStartDate() {
-        return startDate;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    public Date getStart_date() {
+        return start_date;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    public void setStart_date(Date start_date) {
+        this.start_date = start_date;
     }
 
-    public String getEndDate() {
-        return endDate;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    public Date getEnd_date() {
+        return end_date;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    public void setEnd_date(Date end_date) {
+        this.end_date = end_date;
     }
 
-    public String getCreateBy() {
-        return createBy;
+    public String getCreate_by() {
+        return create_by;
     }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
+    public void setCreate_by(String create_by) {
+        this.create_by = create_by;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public Timestamp getCreate_time() {
+        return create_time;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setCreate_time(Timestamp create_time) {
+        this.create_time = create_time;
     }
 
-    public String getEditBy() {
-        return editBy;
+    public String getEdit_by() {
+        return edit_by;
     }
 
-    public void setEditBy(String editBy) {
-        this.editBy = editBy;
+    public void setEdit_by(String edit_by) {
+        this.edit_by = edit_by;
     }
 
-    public String getEditTime() {
-        return editTime;
+    public Timestamp getEdit_time() {
+        return edit_time;
     }
 
-    public void setEditTime(String editTime) {
-        this.editTime = editTime;
+    public void setEdit_time(Timestamp edit_time) {
+        this.edit_time = edit_time;
     }
 
     public String getDescription() {
@@ -116,8 +120,4 @@ public class Task {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    private String target;
-   private String status;
-
 }

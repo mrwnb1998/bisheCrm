@@ -12,4 +12,6 @@ public interface CustomerService {
     PaginationVo<Customer> pageList(Map<String, Object> map);
 
     boolean save(Customer c);
+
+    List<Customer> getCustomerListName(String aname);
 }

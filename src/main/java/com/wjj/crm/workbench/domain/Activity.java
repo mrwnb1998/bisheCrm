@@ -1,5 +1,7 @@
 package com.wjj.crm.workbench.domain;
 
+import java.sql.Timestamp;
+
 public class Activity {
  private String  id                   ;
  private String  owner                ;

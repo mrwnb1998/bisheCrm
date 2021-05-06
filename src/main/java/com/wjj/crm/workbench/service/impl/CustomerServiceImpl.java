@@ -43,4 +43,10 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return flag;
     }
+
+    @Override
+    public List<Customer> getCustomerListName(String aname) {
+        List<Customer> slist=customerDao.getCustomerListName(aname);
+        return slist;
+    }
 }

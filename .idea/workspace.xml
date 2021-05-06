@@ -7,107 +7,119 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b24b707-d79b-43e5-8abc-2de73039590a" name="默认更改列表" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskActivityRelationDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskActivityRelationDao.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskCustomerRelationDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskCustomerRelationDao.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskDao.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskRemarkDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskRemarkDao.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TranRemarkDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TranRemarkDao.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/Channel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/Task.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/TaskActivityRelation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/TaskCustomerRelation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/TaskRemark.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/TranRemark.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/ChannelService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/impl/ChannelServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/web/controller/ChannelController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/web/controller/CustomerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/ECharts/echarts.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/workbench/chart/transaction/index.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/workbench/dealer/dealerRank.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/workbench/dealer/detail.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/workbench/dealer/dismisson.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/workbench/dealer/edit.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/workbench/dealer/index.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/workbench/dealer/save.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/ChannelDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/ChannelDao.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/TaskService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/impl/TaskServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/web/controller/TaskController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/workbench/channel/index.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/workbench/task/index.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/META-INF/bishe.kotlin_module" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/ChannelDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/ChannelDao.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TaskActivityRelationDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TaskActivityRelationDao.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TaskCustomerRelationDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TaskCustomerRelationDao.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TaskDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TaskDao.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TaskRemarkDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TaskRemarkDao.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TranRemarkDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TranRemarkDao.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/domain/Channel.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/domain/Task.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/domain/TaskActivityRelation.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/domain/TaskCustomerRelation.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/domain/TaskRemark.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/domain/TranRemark.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/service/ChannelService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/service/impl/ChannelServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/web/controller/ChannelController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/web/controller/CustomerController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/ECharts/echarts.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/META-INF/bishe.kotlin_module" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/ChannelDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/ChannelDao.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TaskActivityRelationDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TaskActivityRelationDao.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TaskCustomerRelationDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TaskCustomerRelationDao.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TaskDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TaskDao.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TaskRemarkDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TaskRemarkDao.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TranRemarkDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TranRemarkDao.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/domain/Channel.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/domain/Task.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/domain/TaskActivityRelation.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/domain/TaskCustomerRelation.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/domain/TaskRemark.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/domain/TranRemark.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/service/ChannelService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/service/impl/ChannelServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/web/controller/ChannelController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/web/controller/CustomerController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/chart/activity/index.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/chart/clue/index.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/chart/customerAndContacts/index.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/chart/transaction/index.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/dealer/dealerRank.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/dealer/detail.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/dealer/dismisson.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/dealer/edit.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/dealer/index.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/dealer/save.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/utils/DateTimeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/utils/DateTimeUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/ClueDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/ClueDao.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/CustomerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/CustomerDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/CustomerDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/CustomerDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TranDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TranDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TranDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TranDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TranHistoryDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TranHistoryDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TranHistoryDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TranHistoryDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskRemarkDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskRemarkDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskRemarkDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao/TaskRemarkDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/Activity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/Activity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/Channel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/Channel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/Tran.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/Tran.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/TranHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/TranHistory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/domain/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/ChannelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/ChannelService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/CustomerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/TranService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/TranService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/impl/ChannelServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/impl/ChannelServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/impl/CustomerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/impl/CustomerServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/impl/TranServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/service/impl/TranServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/web/controller/TranController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/web/controller/TranController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/web/controller/ChannelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/web/controller/ChannelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/web/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/web/controller/CustomerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/teste.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/teste.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/chart/activity/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/chart/activity/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/chart/clue/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/chart/clue/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/chart/customerAndContacts/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/chart/customerAndContacts/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/clue/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/clue/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/customer/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/customer/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/dealer/dealerRank.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/dealer/dealerRank.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/dealer/detail.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/dealer/detail.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/transaction/detail.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/transaction/detail.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/visit/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/visit/detail.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/visit/editTask.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/visit/editTask.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/visit/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/visit/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/visit/saveTask.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/visit/saveTask.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/ClueDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/ClueDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/transaction/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/transaction/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/transaction/save.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/transaction/save.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/visit/detail.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/task/detail.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/visit/editTask.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/task/editTask.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/visit/index.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/workbench/visit/saveTask.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/workbench/task/saveTask.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/utils/DateTimeUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/utils/DateTimeUtil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/CustomerDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/CustomerDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/CustomerDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/CustomerDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TranDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TranDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TranDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TranDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TranHistoryDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TranHistoryDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TranHistoryDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/dao/TranHistoryDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/domain/Activity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/domain/Activity.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/domain/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/domain/Customer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/domain/Tran.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/domain/Tran.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/domain/TranHistory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/domain/TranHistory.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/service/CustomerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/service/CustomerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/service/TranService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/service/TranService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/service/impl/CustomerServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/service/impl/CustomerServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/service/impl/TranServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/service/impl/TranServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/web/controller/TranController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wjj/crm/workbench/web/controller/TranController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/ClueDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/ClueDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/utils/DateTimeUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/utils/DateTimeUtil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/CustomerDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/CustomerDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/CustomerDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/CustomerDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TranDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TranDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TranDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TranDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TranHistoryDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TranHistoryDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TranHistoryDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/dao/TranHistoryDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/domain/Activity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/domain/Activity.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/domain/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/domain/Customer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/domain/Tran.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/domain/Tran.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/domain/TranHistory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/domain/TranHistory.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/service/CustomerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/service/CustomerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/service/TranService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/service/TranService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/service/impl/CustomerServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/service/impl/CustomerServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/service/impl/TranServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/service/impl/TranServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/web/controller/TranController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/classes/com/wjj/crm/workbench/web/controller/TranController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/WEB-INF/web.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/teste.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/teste.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/chart/activity/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/chart/clue/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/chart/customerAndContacts/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/clue/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/clue/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/customer/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/customer/index.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/transaction/detail.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/transaction/detail.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/visit/detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/visit/editTask.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/visit/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/visit/saveTask.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/transaction/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/transaction/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/transaction/save.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/crm-1.0-SNAPSHOT/workbench/transaction/save.jsp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -173,7 +185,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/wjj/crm/workbench/dao" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp/workbench/channel" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Artifacts" />
@@ -182,21 +194,23 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="H:\bishe\src\main\webapp\workbench\dealer" />
-      <recent name="H:\bishe\src\main\webapp\workbench\customer" />
-      <recent name="H:\bishe\src\main\webapp" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.wjj.crm.workbench.dao" />
-      <recent name="com.wjj.crm.workbench.web.controller" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\bishe\src\main\webapp\workbench\channel" />
       <recent name="H:\bishe\src\main\java\com\wjj\crm\workbench\dao" />
       <recent name="H:\bishe\src\main\webapp" />
       <recent name="H:\bishe\src\main\resources" />
       <recent name="H:\bishe\src\main\webapp\jquery" />
-      <recent name="H:\bishe\src\main\java\com\wjj\crm\workbench\service\impl" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.wjj.crm.workbench.service.impl" />
+      <recent name="com.wjj.crm.workbench.service" />
+      <recent name="com.wjj.crm.workbench.dao" />
+      <recent name="com.wjj.crm.workbench.web.controller" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="H:\bishe\src\main\webapp\workbench\dealer" />
+      <recent name="H:\bishe\src\main\webapp\workbench\customer" />
+      <recent name="H:\bishe\src\main\webapp" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -454,7 +468,15 @@
       <workItem from="1619158305030" duration="16138000" />
       <workItem from="1619331443558" duration="977000" />
       <workItem from="1619402407913" duration="17298000" />
-      <workItem from="1619508527371" duration="5069000" />
+      <workItem from="1619508527371" duration="7972000" />
+      <workItem from="1619577623001" duration="14569000" />
+      <workItem from="1619608203328" duration="11053000" />
+      <workItem from="1619660675465" duration="13688000" />
+      <workItem from="1619763420653" duration="10704000" />
+      <workItem from="1619784368868" duration="731000" />
+      <workItem from="1619830966719" duration="4080000" />
+      <workItem from="1620107895200" duration="19313000" />
+      <workItem from="1620177709402" duration="16502000" />
     </task>
     <task id="LOCAL-00001" summary="crm项目">
       <created>1618925841365</created>
@@ -463,7 +485,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618925841365</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="未合并数据库之前的">
+      <created>1619515317050</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1619515317050</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -484,6 +513,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="crm项目" />
-    <option name="LAST_COMMIT_MESSAGE" value="crm项目" />
+    <MESSAGE value="未合并数据库之前的" />
+    <option name="LAST_COMMIT_MESSAGE" value="未合并数据库之前的" />
   </component>
 </project>

@@ -19,4 +19,6 @@ public interface CustomerDao {
     int getTotalByCondition(Map<String, Object> map);
 
     List<Customer> getCustomerListByCondition(Map<String, Object> map);
+
+    List<Customer> getCustomerListName(String aname);
 }

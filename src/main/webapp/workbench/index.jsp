@@ -167,7 +167,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				<li class="liClass">
 					<a href="#cell" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 销售管理</a>
 					<ul id="cell" class="nav nav-pills nav-stacked collapse">
-						<li class="liClass"><a href="workbench/visit/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 销售任务管理</a></li>
+						<li class="liClass"><a href="workbench/task/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 销售任务管理</a></li>
 						<li class="liClass"><a href="workbench/dealer/dealerRank.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 销售排行榜</a></li>
 						<li class="liClass"><a href="workbench/dealer/dismisson.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 离职交接</a></li>
 					</ul>
@@ -175,7 +175,12 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <%--				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-tag"></span> 动态</a></li>--%>
 <%--				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-time"></span> 审批</a></li>--%>
 <%--				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 客户公海</a></li>--%>
-				<li class="liClass"><a href="workbench/activity/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-play-circle"></span> 市场活动</a></li>
+				<li class="liClass">
+					<a href="workbench/activity/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-play-circle"></span> 市场活动</a>
+				</li>
+				<li class="liClass">
+					<a href="workbench/channel/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-play-circle"></span> 渠道</a>
+				</li>
 				<li class="liClass"><a href="workbench/clue/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-search"></span> 线索（潜在客户）</a></li>
 				<li class="liClass"><a href="workbench/customer/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 客户</a></li>
 				<li class="liClass"><a href="workbench/contacts/index.html" target="workareaFrame"><span class="glyphicon glyphicon-earphone"></span> 联系人</a></li>

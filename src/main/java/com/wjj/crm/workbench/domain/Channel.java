@@ -13,6 +13,33 @@ public class Channel {
     private String platform;
     private String address;
     private long  dream_sale;
+    private long  true_sale;
+    private Customer customer;
+    private  Contacts contacts;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Contacts getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(Contacts contacts) {
+        this.contacts = contacts;
+    }
+
+    public long getTrue_sale() {
+        return true_sale;
+    }
+
+    public void setTrue_sale(long true_sale) {
+        this.true_sale = true_sale;
+    }
 
     public long getId() {
         return id;
