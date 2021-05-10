@@ -4,6 +4,11 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wjj.crm.workbench.dao.ActivityDao">
+    <update id="hand">
+        update tbl_activity set
+        owner='40f6cdea0bd34aceb77492a1656d9fb3'
+        where owner=#{id}
+    </update>
 
     <select id="getActivityList" resultType="Activity">
 select

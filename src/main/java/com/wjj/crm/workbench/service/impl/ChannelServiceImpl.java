@@ -7,6 +7,8 @@ import com.wjj.crm.workbench.domain.Channel;
 import com.wjj.crm.workbench.domain.Customer;
 import com.wjj.crm.workbench.service.ChannelService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,5 +85,26 @@ return flag;
     public List<Channel> getChannelListByCid(String id) {
         List<Channel> clist=channelDao.getChannelListByCid(id);
         return clist;
+    }
+
+    @Override
+    public Map<String, Object> getSourceCharts(String id) {
+        Map<String, Object> data=new HashMap<String, Object>();
+        List<Map<String, Object>> dataList=channelDao.getSourceCharts(id);
+        List<String> data1=new ArrayList<String>();
+        List<Integer> data2=new ArrayList<Integer>();
+        List<Integer> data3=new ArrayList<Integer>();
+        //判断dataList是否为空。不为空则遍历
+        if(dataList!=null&&dataList.size()>0){
+            for(Map<String, Object> m:dataList) {
+                data1.add(m.get("name").toString());
+                data2.add(Integer.parseInt(m.get("dream_sale").toString()));
+                data3.add(Integer.parseInt(m.get("true_sale").toString()));
+            }
+        }
+        data.put("data1",data1);
+        data.put("data2",data2);
+        data.put("data3",data3);
+        return data;
     }
 }

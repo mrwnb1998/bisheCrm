@@ -55,6 +55,18 @@ public class ChannelController extends HttpServlet {
         else if ("/workbench/channel/rank.do".equals(path)) {
             rank(request, response);
         }
+        else if ("/workbench/channel/getSourceCharts.do".equals(path)) {
+            getSourceCharts(request, response);
+        }
+    }
+
+    private void getSourceCharts(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入渠道销售统计图表");
+        String id=request.getParameter("id");
+        ChannelService channelService= (ChannelService) ServiceFactory.getService(new ChannelServiceImpl());
+        Map<String,Object> data=channelService.getSourceCharts(id);
+        PrintJson.printJsonObj(response,data);
+
     }
 
     private void rank(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

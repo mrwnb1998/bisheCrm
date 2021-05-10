@@ -47,6 +47,13 @@
                             text: '交易阶段图',
                             subtext: '统计交易阶段数量的漏斗图'
                         },
+                        grid:{
+                            x:25,
+                            y:45,
+                            x2:5,
+                            y2:20,
+                            borderWidth:1
+                        },
                         tooltip: {
                             trigger: 'item',
                             formatter: "{a} <br/>{b} : {c}%"
@@ -140,6 +147,13 @@
                             subtext: '交易来源的饼图',
                             left: 'center'
                         },
+                        grid:{
+                            x:25,
+                            y:45,
+                            x2:5,
+                            y2:20,
+                            borderWidth:1
+                        },
                         tooltip: {
                             trigger: 'item'
                         },
@@ -186,9 +200,7 @@
 </head>
 <body>
 <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-<div id="main" style="width: 600px;height:400px;float: left"></div>
-<div id="source" style="width: 600px;height:400px;float: right"></div>
-<div id="test" style="width: 600px;height:400px;float: right"></div>
-
+<div id="main" style="width: 700px;height:700px;float: left;border: #f7f7f7  solid 1px;"></div>
+<div id="source" style="width: 700px;height:700px; float: right;border:#f7f7f7  solid 1px;"></div>
 </body>
 </html>

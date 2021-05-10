@@ -4,6 +4,13 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wjj.crm.workbench.dao.ChannelDao">
+    <select id="getSourceCharts" resultType="Map">
+         SELECT c.name,c.dream_sale,true_sale
+        FROM tbl_channel c
+        JOIN tbl_customer u
+        ON c.customer_id=u.id
+        WHERE u.id=#{id}
+    </select>
 
     <select id="getChannelListByCid" resultType="Channel">
         select id,name,type ,

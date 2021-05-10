@@ -21,7 +21,18 @@
     $.ajax({
     url:"",
     data:{
-
+        title: {
+            text: '客户销售图',
+            subtext: '统计客户的实际销售额',
+            left:'center'
+        },
+        grid:{
+            x:45,
+            y:65,
+            x2:5,
+            y2:20,
+            borderWidth:1
+        },
     },
     type:"",
     dataType:"json",

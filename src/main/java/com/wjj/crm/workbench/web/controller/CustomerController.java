@@ -32,8 +32,29 @@ public class CustomerController extends HttpServlet {
            pageList(request, response);
         } else if ("/workbench/customer/save.do".equals(path)) {
             save(request, response);
-
         }
+        else if ("/workbench/customer/detail.do".equals(path)) {
+            detail(request, response);
+        }
+        else if ("/workbench/customer/getSourceCharts.do".equals(path)) {
+            getSourceCharts(request, response);
+        }
+    }
+
+    private void getSourceCharts(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入客户销售图的操作");
+        CustomerService customerService= (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+        Map<String,Object> data=customerService.getSourceCharts();
+        PrintJson.printJsonObj(response,data);
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("进入顾客详情操作");
+        String id = request.getParameter("id");
+        CustomerService customerService= (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+        Customer a=customerService.detail(id);
+        request.setAttribute("a",a);
+        request.getRequestDispatcher("/workbench/customer/detail.jsp").forward(request,response);
     }
 
     private void save(HttpServletRequest request, HttpServletResponse response) {

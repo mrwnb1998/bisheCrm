@@ -20,107 +20,14 @@
     <script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
     <script>
         $(function () {
-            //页面加载完毕后绘制交易漏斗图统计图表
-            getCharts();
             //页面加载完毕后绘制交易来源图
-            getSource();
+            getCustomerArea();
 
         });
-        function getCharts() {
+
+        function getCustomerArea() {
             $.ajax({
-                url:"workbench/transaction/getCharts.do",
-                data:{
-
-                },
-                type:"get",
-                dataType:"json",
-                success:function (data) {
-                    /*
-                    data:{"total":?,"dataList":[{},{}]}
-
-                    */
-                    // 基于准备好的dom，初始化echarts实例
-                    var myChart = echarts.init(document.getElementById('main'));
-                    // 指定图表的配置项和数据
-                    var option = {
-                        title: {
-                            text: '交易阶段图',
-                            subtext: '统计交易阶段数量的漏斗图'
-                        },
-                        tooltip: {
-                            trigger: 'item',
-                            formatter: "{a} <br/>{b} : {c}%"
-                        },
-                        toolbox: {
-                            feature: {
-                                dataView: {readOnly: false},
-                                restore: {},
-                                saveAsImage: {}
-                            }
-                        },
-                        legend: {
-                            data: ['展现','点击','访问','咨询','订单']
-                        },
-
-                        series: [
-                            {
-                                name:'交易阶段图',
-                                type:'funnel',
-                                left: '10%',
-                                top: 60,
-                                //x2: 80,
-                                bottom: 60,
-                                width: '80%',
-                                // height: {totalHeight} - y - y2,
-                                min: 0,
-                                max: data.total,//总条数
-                                minSize: '0%',
-                                maxSize: '100%',
-                                sort: 'descending',
-                                gap: 2,
-                                label: {
-                                    show: true,
-                                    position: 'inside'
-                                },
-                                labelLine: {
-                                    length: 10,
-                                    lineStyle: {
-                                        width: 1,
-                                        type: 'solid'
-                                    }
-                                },
-                                itemStyle: {
-                                    borderColor: '#fff',
-                                    borderWidth: 1
-                                },
-                                emphasis: {
-                                    label: {
-                                        fontSize: 20
-                                    }
-                                },
-                                data: data.dataList
-                                // [
-                                //     {value: 60, name: '访问'},
-                                //     {value: 40, name: '咨询'},
-                                //     {value: 20, name: '订单'},
-                                //     {value: 80, name: '点击'},
-                                //     {value: 100, name: '展现'}
-                                // ]
-                            }
-                        ]
-                    };
-
-                    // 使用刚指定的配置项和数据显示图表。
-                    myChart.setOption(option);
-                }
-
-            });
-
-
-        }
-        function getSource() {
-            $.ajax({
-                url:"workbench/transaction/getSourceCharts.do",
+                url:"workbench/customer/getSourceCharts.do",
                 data:{
 
                 },
@@ -132,45 +39,45 @@
 
                     */
                     // 基于准备好的dom，初始化echarts实例
-                    var sourceChart = echarts.init(document.getElementById('source'));
+                    var sourceChart = echarts.init(document.getElementById('customerArea'));
                     // 指定图表的配置项和数据
                     var option = {
                         title: {
-                            text: '交易来源图',
-                            subtext: '交易来源的饼图',
-                            left: 'center'
+                            text: '客户区域图',
+                            subtext: '统计不同区域客户',
+                            left:'center'
                         },
-                        tooltip: {
-                            trigger: 'item'
+                        grid:{
+                            x:45,
+                            y:65,
+                            x2:5,
+                            y2:20,
+                            borderWidth:1
                         },
-                        legend: {
-                            orient: 'vertical',
-                            left: 'left',
+                        xAxis: {
+                            type: 'category',
+                            data: data.data1
                         },
-                        series: [
-                            {
-                                name: '访问来源',
-                                type: 'pie',
-                                radius: '50%',
-                                data: data,
-                                //     [
-                                //     {value: 1048, name: '搜索引擎'},
-                                //     {value: 735, name: '直接访问'},
-                                //     {value: 580, name: '邮件营销'},
-                                //     {value: 484, name: '联盟广告'},
-                                //     {value: 300, name: '视频广告'}
-                                // ],
-                                emphasis: {
-                                    itemStyle: {
-                                        shadowBlur: 10,
-                                        shadowOffsetX: 0,
-                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: [{
+                            data: data.data2,
+                            itemStyle: {
+                                normal: {
+                                    color: function(params) {
+                                        var colorList = ['#FC8D52','#5D9CEC','#64BD3D','#EE9201','#29AAE3', '#B74AE5','#0AAF9F','#E89589','#16A085','#4A235A','#C39BD3 ','#F9E79F','#BA4A00','#ECF0F1','#616A6B','#EAF2F8','#4A235A','#3498DB' ];
+                                        return colorList[params.dataIndex]
                                     }
                                 }
+                            },
+                            type: 'bar',
+                            showBackground: true,
+                            backgroundStyle: {
+                                color: 'rgba(180, 180, 180, 0.2)'
                             }
-                        ]
+                        }]
                     };
-
                     // 使用刚指定的配置项和数据显示图表。
                     sourceChart.setOption(option);
 
@@ -185,10 +92,8 @@
     </script>
 </head>
 <body>
-<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-<div id="main" style="width: 600px;height:400px;float: left"></div>
-<div id="source" style="width: 600px;height:400px;float: right"></div>
-<div id="test" style="width: 600px;height:400px;float: right"></div>
+<div id="customerArea" style="width: 1000px;height:700px;border:#f7f7f7  solid 1px;margin-left: 100px;float: left"></div>
+<div id="source" style="width: 1000px;height:700px;border:#f7f7f7  solid 1px;margin-right: 100px;"></div>
 
 </body>
 </html>

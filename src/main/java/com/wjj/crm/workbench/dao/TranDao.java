@@ -25,4 +25,6 @@ public interface TranDao {
     List<Map<String, Object>> getCharts();
 
     List<Map<String, Object>> getSourceCharts();
+
+    void hand(String id);
 }

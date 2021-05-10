@@ -24,4 +24,6 @@ public interface ChannelService {
     PaginationVo<Customer> sum(Map<String, Object> map);
 
     List<Channel> getChannelListByCid(String id);
+
+    Map<String, Object> getSourceCharts(String id);
 }

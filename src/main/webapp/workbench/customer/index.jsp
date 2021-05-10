@@ -439,82 +439,82 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<div class="btn-toolbar" role="toolbar" style="height: 80px;">
 				<form class="form-inline" role="form" style="position: relative;top: 8%; left: 5px;">
 
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">名称</div>
-				      <input class="form-control" type="text" id="search-name">
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">所有者</div>
-				      <input class="form-control" type="text" id="search-owner">
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">公司座机</div>
-				      <input class="form-control" type="text" id="search-phone">
-				    </div>
-				  </div>
-
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">公司网站</div>
-				      <input class="form-control" type="text" id="search-website">
-				    </div>
-				  </div>
-
-				  <button type="button" class="btn btn-default" id="searchBtn">查询</button>
-
-				</form>
-			</div>
-			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
-				<div class="btn-group" style="position: relative; top: 18%;">
-				  <button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
-				  <button type="button" class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
-				  <button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
-				</div>
-
-			</div>
-			<div style="position: relative;top: 10px;">
-				<table class="table table-hover">
-					<thead>
-						<tr style="color: #B3B3B3;">
-							<td><input type="checkbox" /></td>
-							<td>名称</td>
-							<td>所有者</td>
-							<td>公司座机</td>
-							<td>公司网站</td>
-						</tr>
-					</thead>
-					<tbody id="customerBody">
-<%--						<tr>--%>
-<%--							<td><input type="checkbox" /></td>--%>
-<%--							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">动力节点</a></td>--%>
-<%--							<td>zhangsan</td>--%>
-<%--							<td>010-84846003</td>--%>
-<%--							<td>http://www.bjpowernode.com</td>--%>
-<%--						</tr>--%>
-<%--                        <tr class="active">--%>
-<%--                            <td><input type="checkbox" /></td>--%>
-<%--                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">动力节点</a></td>--%>
-<%--                            <td>zhangsan</td>--%>
-<%--                            <td>010-84846003</td>--%>
-<%--                            <td>http://www.bjpowernode.com</td>--%>
-<%--                        </tr>--%>
-					</tbody>
-				</table>
-			</div>
-
-			<div style="height: 50px; position: relative;top: 30px;">
-				<div id="customerPage"></div>
-			</div>
-
-		</div>
-
+<div class="form-group">
+	<div class="input-group">
+		<div class="input-group-addon">名称</div>
+		<input class="form-control" type="text" id="search-name">
 	</div>
+</div>
+
+<div class="form-group">
+	<div class="input-group">
+		<div class="input-group-addon">所有者</div>
+		<input class="form-control" type="text" id="search-owner">
+	</div>
+</div>
+
+<div class="form-group">
+	<div class="input-group">
+		<div class="input-group-addon">公司座机</div>
+		<input class="form-control" type="text" id="search-phone">
+	</div>
+</div>
+
+<div class="form-group">
+	<div class="input-group">
+		<div class="input-group-addon">公司网站</div>
+		<input class="form-control" type="text" id="search-website">
+	</div>
+</div>
+
+<button type="button" class="btn btn-default" id="searchBtn">查询</button>
+
+</form>
+</div>
+<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
+	<div class="btn-group" style="position: relative; top: 18%;">
+		<button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
+		<button type="button" class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
+		<button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+	</div>
+
+</div>
+<div style="position: relative;top: 10px;">
+	<table class="table table-hover">
+		<thead>
+		<tr style="color: #B3B3B3;">
+			<td><input type="checkbox" /></td>
+			<td>名称</td>
+			<td>所有者</td>
+			<td>公司座机</td>
+			<td>公司网站</td>
+		</tr>
+		</thead>
+		<tbody id="customerBody">
+		<%--						<tr>--%>
+		<%--							<td><input type="checkbox" /></td>--%>
+		<%--							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">动力节点</a></td>--%>
+		<%--							<td>zhangsan</td>--%>
+		<%--							<td>010-84846003</td>--%>
+		<%--							<td>http://www.bjpowernode.com</td>--%>
+		<%--						</tr>--%>
+		<%--                        <tr class="active">--%>
+		<%--                            <td><input type="checkbox" /></td>--%>
+		<%--                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">动力节点</a></td>--%>
+		<%--                            <td>zhangsan</td>--%>
+		<%--                            <td>010-84846003</td>--%>
+		<%--                            <td>http://www.bjpowernode.com</td>--%>
+		<%--                        </tr>--%>
+		</tbody>
+	</table>
+</div>
+
+<div style="height: 50px; position: relative;top: 30px;">
+	<div id="customerPage"></div>
+</div>
+
+</div>
+
+</div>
 </body>
 </html>

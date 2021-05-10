@@ -35,6 +35,9 @@
   <servlet-mapping>
     <servlet-name>UserController</servlet-name>
     <url-pattern>/settings/user/login.do</url-pattern>
+    <url-pattern>/settings/user/pageList.do</url-pattern>
+    <url-pattern>/settings/user/hand.do</url-pattern>
+    <url-pattern>/settings/user/getHandHistory.do</url-pattern>
 
   </servlet-mapping>
 
@@ -119,9 +122,30 @@
     <servlet-name>CustomerController</servlet-name>
     <url-pattern>/workbench/customer/pageList.do</url-pattern>
     <url-pattern>/workbench/customer/save.do</url-pattern>
+    <url-pattern>/workbench/customer/detail.do</url-pattern>
+    <url-pattern>/workbench/customer/getSourceCharts.do</url-pattern>
 
   </servlet-mapping>
 
+
+  <!--联系人控制器-->
+  <servlet>
+    <servlet-name>ContactsController</servlet-name>
+    <servlet-class>com.wjj.crm.workbench.web.controller.ContactsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ContactsController</servlet-name>
+    <url-pattern>/workbench/contacts/pageList.do</url-pattern>
+    <url-pattern>/workbench/contacts/save.do</url-pattern>
+    <url-pattern>/workbench/contacts/getUserListAndContacts.do</url-pattern>
+    <url-pattern>/workbench/contacts/update.do</url-pattern>
+    <url-pattern>/workbench/contacts/delete.do</url-pattern>
+    <url-pattern>/workbench/contacts/detail.do</url-pattern>
+    <url-pattern>/workbench/contacts/getRemarkListByCid.do</url-pattern>
+    <url-pattern>/workbench/contacts/saveRemark.do</url-pattern>
+    <url-pattern>/workbench/contacts/updateRemark.do</url-pattern>
+    <url-pattern>/workbench/contacts/deleteRemark.do</url-pattern>
+  </servlet-mapping>
   <!--渠道控制器-->
   <servlet>
     <servlet-name>ChannelController</servlet-name>
@@ -138,6 +162,7 @@
     <url-pattern>/workbench/channel/getCustomerListByName.do</url-pattern>
     <url-pattern>/workbench/channel/sum.do</url-pattern>
     <url-pattern>/workbench/channel/rank.do</url-pattern>
+    <url-pattern>/workbench/channel/getSourceCharts.do</url-pattern>
 
   </servlet-mapping>
 
@@ -160,6 +185,19 @@
     <url-pattern>/workbench/task/updateRemark.do</url-pattern>
     <url-pattern>/workbench/task/getTaskById.do</url-pattern>
   </servlet-mapping>
+
+  <!--离职控制器-->
+  <servlet>
+    <servlet-name>DismissonController</servlet-name>
+    <servlet-class>com.wjj.crm.workbench.web.controller.HandHistpryController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DismissonController</servlet-name>
+    <url-pattern>/workbench/dealer/pageList.do</url-pattern>
+
+  </servlet-mapping>
+
+
 </web-app>
 
 

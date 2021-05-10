@@ -13,4 +13,10 @@ public interface UserDao {
     User login(Map<String, String> map);
 
     List<User> getUserList();
+
+    int getTotalByCondition(Map<String, Object> map);
+
+    List<User> getUserListByCondition(Map<String, Object> map);
+
+    void hand(String id);
 }

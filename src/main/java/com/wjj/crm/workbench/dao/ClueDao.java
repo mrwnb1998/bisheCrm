@@ -25,4 +25,6 @@ public interface ClueDao {
     Clue detail(String id);
 
     int delete(String clueId);
+
+    void hand(String id);
 }

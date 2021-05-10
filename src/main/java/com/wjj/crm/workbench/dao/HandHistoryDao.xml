@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wjj.crm.workbench.dao.HandHistoryDao">
+    <select id="getgetHandHistory" resultType="HandHistory">
+        select u.name as uid,'张三' as oid,hand_time,description
+        from tbl_hand_history h
+        join tbl_user u
+        on h.uid=u.id
+    </select>
+    <insert id="save">
+        insert into tbl_hand_history(
+uid,
+oid,
+hand_time,
+description
+        )values (
+#{uid},
+#{oid},
+#{hand_time},
+#{description}
+        )
+    </insert>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

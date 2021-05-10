@@ -1,17 +1,31 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
+<%
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 	request.getServerPort() + request.getContextPath() + "/";
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
+	<base href="<%=basePath%>">
 <meta charset="UTF-8">
 
-<link href="../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="../../jquery/jquery-1.11.1-min.js"></script>
-<script type="text/javascript" src="../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+	<link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+	<link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+
+	<script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
+	<script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+	<script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+	<link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
+	<script type="text/javascript" src="jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
+	<script type="text/javascript" src="jquery/bs_pagination/en.js"></script>
 
 <script type="text/javascript">
 
 	//默认情况下取消和保存按钮是隐藏的
 	var cancelAndSaveBtnDefault = true;
-	
+
 	$(function(){
 		$("#remark").focus(function(){
 			if(cancelAndSaveBtnDefault){
@@ -22,7 +36,7 @@
 				cancelAndSaveBtnDefault = false;
 			}
 		});
-		
+
 		$("#cancelBtn").click(function(){
 			//显示
 			$("#cancelAndSaveBtn").hide();
@@ -30,24 +44,24 @@
 			$("#remarkDiv").css("height","90px");
 			cancelAndSaveBtnDefault = true;
 		});
-		
+
 		$(".remarkDiv").mouseover(function(){
 			$(this).children("div").children("div").show();
 		});
-		
+
 		$(".remarkDiv").mouseout(function(){
 			$(this).children("div").children("div").hide();
 		});
-		
+
 		$(".myHref").mouseover(function(){
 			$(this).children("span").css("color","red");
 		});
-		
+
 		$(".myHref").mouseout(function(){
 			$(this).children("span").css("color","#E6E6E6");
 		});
 	});
-	
+
 </script>
 
 </head>
@@ -94,7 +108,7 @@
             </div>
         </div>
     </div>
-	
+
 	<!-- 创建联系人的模态窗口 -->
 	<div class="modal fade" id="createContactsModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 85%;">
@@ -107,7 +121,7 @@
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal" role="form">
-					
+
 						<div class="form-group">
 							<label for="create-contactsOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
@@ -138,7 +152,7 @@
 								</select>
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 							<label for="create-surname" class="col-sm-2 control-label">姓名<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
@@ -155,9 +169,9 @@
 								  <option>教授</option>
 								</select>
 							</div>
-							
+
 						</div>
-						
+
 						<div class="form-group">
 							<label for="create-job" class="col-sm-2 control-label">职位</label>
 							<div class="col-sm-10" style="width: 300px;">
@@ -168,7 +182,7 @@
 								<input type="text" class="form-control" id="create-mphone">
 							</div>
 						</div>
-						
+
 						<div class="form-group" style="position: relative;">
 							<label for="create-email" class="col-sm-2 control-label">邮箱</label>
 							<div class="col-sm-10" style="width: 300px;">
@@ -179,21 +193,21 @@
 								<input type="text" class="form-control" id="create-birth">
 							</div>
 						</div>
-						
+
 						<div class="form-group" style="position: relative;">
 							<label for="create-customerName" class="col-sm-2 control-label">客户名称</label>
 							<div class="col-sm-10" style="width: 300px;">
 								<input type="text" class="form-control" id="create-customerName" placeholder="支持自动补全，输入客户不存在则新建">
 							</div>
 						</div>
-						
+
 						<div class="form-group" style="position: relative;">
 							<label for="create-describe" class="col-sm-2 control-label">描述</label>
 							<div class="col-sm-10" style="width: 81%;">
 								<textarea class="form-control" rows="3" id="create-describe"></textarea>
 							</div>
 						</div>
-						
+
 						<div style="height: 1px; width: 103%; background-color: #D5D5D5; left: -13px; position: relative;"></div>
 
                         <div style="position: relative;top: 15px;">
@@ -222,7 +236,7 @@
                             </div>
                         </div>
 					</form>
-					
+
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -231,7 +245,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- 修改客户的模态窗口 -->
     <div class="modal fade" id="editCustomerModal" role="dialog">
         <div class="modal-dialog" role="document" style="width: 85%;">
@@ -320,7 +334,7 @@
 	<div style="position: relative; top: 35px; left: 10px;">
 		<a href="javascript:void(0);" onclick="window.history.back();"><span class="glyphicon glyphicon-arrow-left" style="font-size: 20px; color: #DDDDDD"></span></a>
 	</div>
-	
+
 	<!-- 大标题 -->
 	<div style="position: relative; left: 40px; top: -30px;">
 		<div class="page-header">
@@ -331,7 +345,7 @@
 			<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 		</div>
 	</div>
-	
+
 	<!-- 详细信息 -->
 	<div style="position: relative; top: -70px;">
 		<div style="position: relative; left: 40px; height: 30px;">
@@ -393,13 +407,13 @@
             <div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>
         </div>
 	</div>
-	
+
 	<!-- 备注 -->
 	<div style="position: relative; top: 10px; left: 40px;">
 		<div class="page-header">
 			<h4>备注</h4>
 		</div>
-		
+
 		<!-- 备注1 -->
 		<div class="remarkDiv" style="height: 60px;">
 			<img title="zhangsan" src="../../image/user-thumbnail.png" style="width: 30px; height:30px;">
@@ -413,7 +427,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- 备注2 -->
 		<div class="remarkDiv" style="height: 60px;">
 			<img title="zhangsan" src="../../image/user-thumbnail.png" style="width: 30px; height:30px;">
@@ -427,7 +441,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div id="remarkDiv" style="background-color: #E6E6E6; width: 870px; height: 90px;">
 			<form role="form" style="position: relative;top: 10px; left: 10px;">
 				<textarea id="remark" class="form-control" style="width: 850px; resize : none;" rows="2"  placeholder="添加备注..."></textarea>
@@ -438,7 +452,7 @@
 			</form>
 		</div>
 	</div>
-	
+
 	<!-- 交易 -->
 	<div>
 		<div style="position: relative; top: 20px; left: 40px;">
@@ -471,13 +485,13 @@
 					</tbody>
 				</table>
 			</div>
-			
+
 			<div>
 				<a href="../transaction/save.html" style="text-decoration: none;"><span class="glyphicon glyphicon-plus"></span>新建交易</a>
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- 联系人 -->
 	<div>
 		<div style="position: relative; top: 20px; left: 40px;">
@@ -504,13 +518,13 @@
 					</tbody>
 				</table>
 			</div>
-			
+
 			<div>
 				<a href="javascript:void(0);" data-toggle="modal" data-target="#createContactsModal" style="text-decoration: none;"><span class="glyphicon glyphicon-plus"></span>新建联系人</a>
 			</div>
 		</div>
 	</div>
-	
+
 	<div style="height: 200px;"></div>
 </body>
 </html>

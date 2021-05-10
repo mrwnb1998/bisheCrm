@@ -53,13 +53,13 @@
                       html+='	<td>'+n.dream_sale+'</td>';
                       html+='	<td>'+n.true_sale+'</td>';
                       html+='	</tr>';
-                  })
+                  });
                     $("#rankBody").html(html);
 
                 }
         });
         });
-        //获取url后面的参数
+        //获取url后面的参数id,通过id查看客户的渠道
         function GetRequest() {
             var url = location.search; //获取url中"?"符后的字串
             var theRequest = new Object();

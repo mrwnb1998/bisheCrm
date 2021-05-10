@@ -27,4 +27,6 @@ public interface ChannelDao {
     List<Customer> sum(Map<String, Object> map);
 
     List<Channel> getChannelListByCid(String id);
+
+    List<Map<String, Object>> getSourceCharts(String id);
 }

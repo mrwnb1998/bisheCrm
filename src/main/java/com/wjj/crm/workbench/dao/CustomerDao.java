@@ -21,4 +21,10 @@ public interface CustomerDao {
     List<Customer> getCustomerListByCondition(Map<String, Object> map);
 
     List<Customer> getCustomerListName(String aname);
+
+    void hand(String id);
+
+    Customer detail(String id);
+
+    List<Map<String, Object>> getSourceCharts();
 }

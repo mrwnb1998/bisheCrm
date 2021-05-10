@@ -4,6 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wjj.crm.workbench.dao.CustomerDao">
+    <select id="getSourceCharts" resultType="Map">
+          SELECT department,COUNT(1) AS total
+        FROM tbl_customer
+        GROUP BY department
+    </select>
+     <select id="detail" resultType="Customer">
+           select
+        a.id,a.name,u.name as owner,a.phone,a.label,a.level,a.department,a.dreamSale,a.trueSale,
+      a.website,a.createBy,a.createTime,a.editBy,a.editTime,a.description,a.contactSummary,a.nextContactTime,a.address
+        from tbl_customer a
+        join tbl_user u
+        on a.owner=u.id
+        where a.id=#{id};
+    </select>
+     <update id="hand">
+        update tbl_customer set
+        owner='40f6cdea0bd34aceb77492a1656d9fb3'
+        where owner=#{id}
+    </update>
      <select id="getCustomerListName" resultType="Customer">
           select id,name,phone,department,dreamSale
           from tbl_customer

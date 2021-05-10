@@ -6,6 +6,8 @@ import com.wjj.crm.workbench.dao.CustomerDao;
 import com.wjj.crm.workbench.domain.Customer;
 import com.wjj.crm.workbench.service.CustomerService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,5 +50,29 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> getCustomerListName(String aname) {
         List<Customer> slist=customerDao.getCustomerListName(aname);
         return slist;
+    }
+
+    @Override
+    public Customer detail(String id) {
+        Customer a=customerDao.detail(id);
+        return a;
+    }
+
+    @Override
+    public Map<String, Object> getSourceCharts() {
+        Map<String, Object> data=new HashMap<String, Object>();
+        List<Map<String, Object>> dataList=customerDao.getSourceCharts();
+        List<String> data1=new ArrayList<String>();
+        List<Integer> data2=new ArrayList<Integer>();
+        //判断dataList是否为空。不为空则遍历
+        if(dataList!=null&&dataList.size()>0){
+         for(Map<String, Object> m:dataList) {
+             data1.add(m.get("department").toString());
+             data2.add(Integer.parseInt(m.get("total").toString()));
+         }
+        }
+        data.put("data1",data1);
+        data.put("data2",data2);
+        return data;
     }
 }
