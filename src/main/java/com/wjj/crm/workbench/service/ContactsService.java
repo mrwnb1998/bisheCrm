@@ -34,4 +34,6 @@ public interface ContactsService {
     boolean updateRemark(ContactsRemark ar);
 
     boolean deleteRemark(String id);
+
+    List<Map<String, Object>> getContactsSource();
 }

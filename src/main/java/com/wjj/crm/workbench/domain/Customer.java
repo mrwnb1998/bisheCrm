@@ -4,26 +4,34 @@ import java.sql.Timestamp;
 
 public class Customer {
 
-	private String id;
+	private long id;
 	private String owner;
 	private String name;
 	private String website;
 	private String phone;
-	private String createBy;
-	private String createTime;
-	private String editBy;
-	private String editTime;
-	private String contactSummary;
-	private String nextContactTime;
+	private long create_by;
+	private Timestamp create_time;
+	private long update_by;
+	private Timestamp update_time;
+	private String contact_summary;
+	private String next_contactTime;
 	private String description;
 	private String address;
 	private String label;
 	private String level;
 	private String department;
-	private String dreamSale;
-	private String trueSale;
+	private String dream_sale;
+	private String true_sale;
+	private String is_dealer;
      private int is_deleted;
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getOwner() {
 		return owner;
@@ -57,62 +65,52 @@ public class Customer {
 		this.phone = phone;
 	}
 
-
-
-	public String getCreateTime() {
-		return createTime;
+	public long getCreate_by() {
+		return create_by;
 	}
 
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
+	public void setCreate_by(long create_by) {
+		this.create_by = create_by;
 	}
 
-	public String getId() {
-		return id;
+	public Timestamp getCreate_time() {
+		return create_time;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setCreate_time(Timestamp create_sime) {
+		this.create_time = create_sime;
 	}
 
-	public String getCreateBy() {
-		return createBy;
+	public long getUpdate_by() {
+		return update_by;
 	}
 
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
+	public void setUpdate_by(long update_by) {
+		this.update_by = update_by;
 	}
 
-	public String getEditBy() {
-		return editBy;
+	public Timestamp getUpdate_time() {
+		return update_time;
 	}
 
-	public void setEditBy(String editBy) {
-		this.editBy = editBy;
+	public void setUpdate_time(Timestamp update_time) {
+		this.update_time = update_time;
 	}
 
-	public String getEditTime() {
-		return editTime;
+	public String getContact_summary() {
+		return contact_summary;
 	}
 
-	public void setEditTime(String editTime) {
-		this.editTime = editTime;
+	public void setContact_summary(String contact_summary) {
+		this.contact_summary = contact_summary;
 	}
 
-	public String getContactSummary() {
-		return contactSummary;
+	public String getNext_contactTime() {
+		return next_contactTime;
 	}
 
-	public void setContactSummary(String contactSummary) {
-		this.contactSummary = contactSummary;
-	}
-
-	public String getNextContactTime() {
-		return nextContactTime;
-	}
-
-	public void setNextContactTime(String nextContactTime) {
-		this.nextContactTime = nextContactTime;
+	public void setNext_contactTime(String next_contactTime) {
+		this.next_contactTime = next_contactTime;
 	}
 
 	public String getDescription() {
@@ -155,20 +153,28 @@ public class Customer {
 		this.department = department;
 	}
 
-	public String getDreamSale() {
-		return dreamSale;
+	public String getDream_sale() {
+		return dream_sale;
 	}
 
-	public void setDreamSale(String dreamSale) {
-		this.dreamSale = dreamSale;
+	public void setDream_sale(String dream_sale) {
+		this.dream_sale = dream_sale;
 	}
 
-	public String getTrueSale() {
-		return trueSale;
+	public String getTrue_sale() {
+		return true_sale;
 	}
 
-	public void setTrueSale(String trueSale) {
-		this.trueSale = trueSale;
+	public void setTrue_sale(String true_sale) {
+		this.true_sale = true_sale;
+	}
+
+	public String getIs_dealer() {
+		return is_dealer;
+	}
+
+	public void setIs_dealer(String is_dealer) {
+		this.is_dealer = is_dealer;
 	}
 
 	public int getIs_deleted() {

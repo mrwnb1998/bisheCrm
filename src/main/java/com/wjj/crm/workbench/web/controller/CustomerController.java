@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingDeque;
@@ -73,7 +74,11 @@ public class CustomerController extends HttpServlet {
         String level=request.getParameter("level");
         String department=request.getParameter("department");
         String createTime= DateTimeUtil.getSysTime();//获取当前时间
-        String createBy=((User)request.getSession().getAttribute("user")).getname();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp create_time=new Timestamp(System.currentTimeMillis());
+        create_time=Timestamp.valueOf(createTime);
+        String createBy=((User)request.getSession().getAttribute("user")).getId();
+        long create_by=Long.parseLong(createBy);
         Customer c=new Customer();
         //c.setId(id);
         c.setOwner(owner);
@@ -81,19 +86,18 @@ public class CustomerController extends HttpServlet {
         c.setPhone(phone);
         c.setWebsite(website);
         c.setDescription(description);
-        c.setContactSummary(contactSummary);
-        c.setNextContactTime(nextContactTime);
+        c.setContact_summary(contactSummary);
+        c.setNext_contactTime(nextContactTime);
         c.setAddress(address);
         c.setLabel(label);
         c.setLevel(level);
         c.setDepartment(department);
-        c.setCreateTime(createTime);
-        c.setCreateBy(createBy);
+        c.setCreate_time(create_time);
+        c.setCreate_by(create_by);
         CustomerService customerService= (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
         boolean success=customerService.save(c);
         System.out.println(success);
         PrintJson.printJsonFlag(response,success);
-
     }
 
     private void pageList(HttpServletRequest request, HttpServletResponse response) {

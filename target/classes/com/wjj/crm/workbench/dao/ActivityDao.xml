@@ -6,7 +6,7 @@
 <mapper namespace="com.wjj.crm.workbench.dao.ActivityDao">
     <update id="hand">
         update tbl_activity set
-        owner='40f6cdea0bd34aceb77492a1656d9fb3'
+        owner='2'
         where owner=#{id}
     </update>
 

@@ -88,4 +88,20 @@ throw new LoginException("账号密码错误");
        contactDao.hand(id);
        return flag;
     }
+
+    @Override
+    public boolean updatePwd(User u) {
+        boolean flag=true;
+        int count=userdao.updatePwd(u);
+        if(count!=1){
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public User getUserById(String id) {
+        User u=userdao.getUserById(id);
+        return u;
+    }
 }

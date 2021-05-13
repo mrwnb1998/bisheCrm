@@ -22,7 +22,7 @@
         $(function () {
             //页面加载完毕后绘制交易来源图
             getCustomerArea();
-
+            getSource();
         });
 
         function getCustomerArea() {
@@ -86,14 +86,86 @@
 
 
         }
+        function getSource() {
+            $.ajax({
+                url:"workbench/contacts/getContactsSource.do",
+                data:{
 
+                },
+                type:"get",
+                dataType:"json",
+                success:function (data) {
+                    /*
+                    data:[{},{}]
+
+                    */
+                    // 基于准备好的dom，初始化echarts实例
+                    var sourceChart = echarts.init(document.getElementById('source'));
+                    // 指定图表的配置项和数据
+                    var option = {
+                        title: {
+                            text: '客户来源图',
+                            left: 'center'
+                        },
+                        grid:{
+                            x:45,
+                            y:65,
+                            x2:15,
+                            y2:20,
+                            borderWidth:1
+                        },
+                        tooltip: {
+                            trigger: 'item'
+                        },
+                        legend: {
+                            top: '5%',
+                            left: 'center'
+                        },
+                        series: [
+                            {
+                                name: '客户来源',
+                                type: 'pie',
+                                radius: ['40%', '70%'],
+                                avoidLabelOverlap: false,
+                                itemStyle: {
+                                    borderRadius: 10,
+                                    borderColor: '#fff',
+                                    borderWidth: 2
+                                },
+                                label: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    label: {
+                                        show: true,
+                                        fontSize: '40',
+                                        fontWeight: 'bold'
+                                    }
+                                },
+                                labelLine: {
+                                    show: false
+                                },
+                                data: data,
+                            }
+                        ]
+                    };
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    sourceChart.setOption(option);
+
+                }
+            });
+
+
+        }
 
 
     </script>
 </head>
 <body>
-<div id="customerArea" style="width: 1000px;height:700px;border:#f7f7f7  solid 1px;margin-left: 100px;float: left"></div>
-<div id="source" style="width: 1000px;height:700px;border:#f7f7f7  solid 1px;margin-right: 100px;"></div>
+<div id="customerArea" style="width: 700px;height:700px;border:#f7f7f7  solid 1px;margin-left: 50px;float: left"></div>
+<div id="source" style="width: 700px;height:700px; float: right;border:#f7f7f7  solid 1px;"></div>
 
 </body>
 </html>

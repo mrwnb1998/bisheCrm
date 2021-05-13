@@ -17,7 +17,7 @@ public interface ClueService {
 
     boolean update(Clue clue);
 
-    Clue detail(String id);
+    Map<String, Object> detail(String id);
 
     List<ClueRemark> getRemarkListByCid(String clueId);
 
@@ -33,4 +33,6 @@ public interface ClueService {
 
 
     boolean convert(String clueId, Tran t, String createBy);
+
+    boolean delete(String[] ids);
 }

@@ -8,6 +8,8 @@ import com.wjj.crm.workbench.dao.*;
 import com.wjj.crm.workbench.domain.*;
 import com.wjj.crm.workbench.service.TranService;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,18 +41,20 @@ public class TranServiceImpl implements TranService {
         Customer customer=customerDao.getCustomerByName(customerName);
         if(customer==null){
             customer=new Customer();
-            customer.setId(UUIDUtil.getUUID());
             customer.setName(customerName);
-            customer.setCreateBy(t.getCreateBy());
-            customer.setCreateTime(t.getCreateTime());
-            customer.setNextContactTime(t.getNextContactTime());
+            customer.setCreate_by(Long.parseLong(t.getCreateBy()));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Timestamp create_time=new Timestamp(System.currentTimeMillis());
+            create_time=Timestamp.valueOf(t.getCreateTime());
+            customer.setCreate_time(create_time);
+            customer.setNext_contactTime(t.getNextContactTime());
             customer.setOwner(t.getOwner());
             int count1=customerDao.save(customer);
             if(count1!=1){
                 flag=false;
             }
         }
-        t.setCustomerId(customer.getId());
+        t.setCustomerId(Long.toString(customer.getId()));
         int count2=tranDao.save(t);
         if(count2!=1){
             flag=false;

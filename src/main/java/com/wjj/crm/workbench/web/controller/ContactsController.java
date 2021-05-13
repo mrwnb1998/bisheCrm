@@ -58,6 +58,16 @@ public class ContactsController extends HttpServlet {
         else if ("/workbench/contacts/deleteRemark.do".equals(path)) {
             deleteRemark(request, response);
         }
+        else if ("/workbench/contacts/getContactsSource.do".equals(path)) {
+            getContactsSource(request, response);
+        }
+    }
+
+    private void getContactsSource(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("取得联系人来源统计图表的数据");
+        ContactsService contactsService= (ContactsService) ServiceFactory.getService(new ContactsServiceImpl());
+        List<Map<String,Object>> dataList=contactsService.getContactsSource();
+        PrintJson.printJsonObj(response,dataList);
     }
 
     private void deleteRemark(HttpServletRequest request, HttpServletResponse response) {
@@ -204,7 +214,7 @@ public class ContactsController extends HttpServlet {
         String contactSummary=request.getParameter("contactSummary");
         String nextContactTime=request.getParameter("nextContactTime");
         String address=request.getParameter("address");
-        String createBy=((User)request.getSession().getAttribute("user")).getname();
+        String createBy=((User)request.getSession().getAttribute("user")).getId();
         String createTime= DateTimeUtil.getSysTime();
         Contacts t=new Contacts();
         t.setId(id);

@@ -13,6 +13,8 @@ import com.wjj.crm.workbench.domain.ContactsRemark;
 import com.wjj.crm.workbench.domain.Customer;
 import com.wjj.crm.workbench.service.ContactsService;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,18 +55,20 @@ public class ContactsServiceImpl implements ContactsService {
         Customer customer=customerDao.getCustomerByName(customerName);
         if(customer==null){
             customer=new Customer();
-            customer.setId(UUIDUtil.getUUID());
             customer.setName(customerName);
-            customer.setCreateBy(t.getCreateBy());
-            customer.setCreateTime(t.getCreateTime());
-            customer.setNextContactTime(t.getNextContactTime());
+            customer.setCreate_by(Long.parseLong(t.getCreateBy()));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Timestamp create_time=new Timestamp(System.currentTimeMillis());
+            create_time=Timestamp.valueOf(t.getCreateTime());
+            customer.setCreate_time(create_time);
+            customer.setNext_contactTime(t.getNextContactTime());
             customer.setOwner(t.getOwner());
             int count1=customerDao.save(customer);
             if(count1!=1){
                 flag=false;
             }
         }
-        t.setCustomerId(customer.getId());
+        t.setCustomerId(Long.toString(customer.getId()));
         int count2=contactsDao.save(t);
         if(count2!=1){
             flag=false;
@@ -143,5 +147,11 @@ public class ContactsServiceImpl implements ContactsService {
             flag=false;
         }
         return flag;
+    }
+
+    @Override
+    public List<Map<String, Object>> getContactsSource() {
+        List<Map<String, Object>>  dataList= contactsDao.getContactsSource();
+        return dataList;
     }
 }

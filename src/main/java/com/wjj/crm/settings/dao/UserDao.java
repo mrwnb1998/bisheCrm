@@ -19,4 +19,8 @@ public interface UserDao {
     List<User> getUserListByCondition(Map<String, Object> map);
 
     void hand(String id);
+
+    User getUserById(String owner);
+
+    int updatePwd(User u);
 }

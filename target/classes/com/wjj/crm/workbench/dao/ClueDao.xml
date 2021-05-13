@@ -4,9 +4,18 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wjj.crm.workbench.dao.ClueDao">
+    <delete id="deletes">
+        delete from tbl_clue
+        where id in
+        <foreach collection="array" item="ids" open="(" close=")" separator=",">
+
+            #{ids}
+
+        </foreach>
+    </delete>
     <update id="hand">
         update tbl_clue set
-        owner='40f6cdea0bd34aceb77492a1656d9fb3'
+        owner='2'
         where owner=#{id}
     </update>
     <delete id="delete">
@@ -15,7 +24,7 @@
 <insert id="save">
     insert into tbl_clue(
 id,
-fullname,
+full_name,
 appellation,
 owner,
 company,
@@ -26,16 +35,16 @@ website,
 mphone,
 state,
 source,
-createBy,
-createTime,
+create_by,
+create_time,
 description,
-contactSummary,
-nextContactTime,
+contact_summary,
+next_contact_time,
 address
 
     ) values(
 #{id},
-#{fullname},
+#{full_name},
 #{appellation},
 #{owner},
 #{company},
@@ -46,11 +55,11 @@ address
 #{mphone},
 #{state},
 #{source},
-#{createBy},
-#{createTime},
+#{create_by},
+#{create_time},
 #{description},
-#{contactSummary},
-#{nextContactTime},
+#{contact_summary},
+#{next_contact_time},
 #{address}
     )
 </insert>
@@ -62,7 +71,7 @@ address
         on a.owner=u.id
         <where>
             <if test="fullname!=null and fullname!=''">
-                a.fullname like '%' #{fullname} '%'
+                a.full_name like '%' #{full_name} '%'
             </if>
             <if test="owner!=null and owner!=''">
                 and u.name like '%' #{owner} '%'
@@ -88,13 +97,13 @@ address
 
     <select id="getClueListByCondition" resultType="Clue">
         select
-        a.id,a.fullname,u.name as owner,a.company,a.source,a.state,a.phone,a.mphone
+        a.id,a.full_name,u.name as owner,a.company,a.source,a.state,a.phone,a.mphone
         from tbl_clue a
         join tbl_user u
         on a.owner=u.id
         <where>
             <if test="fullname!=null and fullname!=''">
-                a.fullname like '%' #{fullname} '%'
+                a.full_name like '%' #{fullname} '%'
             </if>
             <if test="owner!=null and owner!=''">
                 and u.name like '%' #{owner} '%'
@@ -119,8 +128,8 @@ address
     </select>
     <select id="getById" resultType="Clue">
         select
-        a.id,a.fullname,a.owner,a.company,a.source,a.state,a.phone,a.mphone,a.appellation,
-        a.job,a.email,a.website,a.createBy,a.createTime,a.editBy,a.editTime,a.description,a.contactSummary,a.nextContactTime,a.address
+        a.id,a.full_name,u.name as owner,a.company,a.source,a.state,a.phone,a.mphone,a.appellation,
+        a.job,a.email,a.website,a.create_by,a.create_time,a.update_by,a.update_time,a.description,a.contact_summary,a.next_contact_time,a.address
         from tbl_clue a
         join tbl_user u
         on a.owner=u.id
@@ -128,7 +137,7 @@ address
     </select>
     <update id="update">
 update tbl_clue set
-fullname=#{fullname},
+full_name=#{full_name},
 appellation=#{appellation},
 owner=#{owner},
 company=#{company},
@@ -139,19 +148,19 @@ website=#{website},
 mphone=#{mphone},
 state=#{state},
 source=#{source},
-editBy=#{editBy},
-editTime=#{editTime},
+update_by=#{update_by},
+update_time=#{update_time},
 description=#{description},
-contactSummary=#{contactSummary},
-nextContactTime=#{nextContactTime},
+contact_summary=#{contact_summary},
+next_Contact_time=#{next_Contact_time},
 address=#{address}
 where id=#{id}
 
     </update>
     <select id="detail" resultType="Clue">
        select
-        a.id,a.fullname,u.name as owner,a.company,a.source,a.state,a.phone,a.mphone,a.appellation,
-        a.job,a.email,a.website,a.createBy,a.createTime,a.editBy,a.editTime,a.description,a.contactSummary,a.nextContactTime,a.address
+       a.id,a.full_name,a.owner,a.company,a.source,a.state,a.phone,a.mphone,a.appellation,
+        a.job,a.email,a.website,a.create_by,a.create_time,a.update_by,a.update_time,a.description,a.contact_summary,a.next_contact_time,a.address
         from tbl_clue a
         join tbl_user u
         on a.owner=u.id

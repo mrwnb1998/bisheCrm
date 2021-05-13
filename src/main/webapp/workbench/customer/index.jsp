@@ -97,6 +97,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					success: function (data) {
                        //data:{"success":true/false}
 						//alert(data.success);
+                        console.log(data.success);
 						if(data.success){
 							pageList(1, $("#customerPage").bs_pagination('getOption','rowsPerPage'));
 							//清空添加操作的模态窗口

@@ -90,6 +90,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					返回信息成功返回true，失败false
 					data:{"success":true/false}
 					* */
+					console.log(typeof data);
 					if(data.success){
 						//添加成功后，刷新市场活动信息列表（）,这里刷新页面要回到第一页才能看见新添加的记录
 						//$("#activityPage").bs_pagination('getOption','currentPage'):

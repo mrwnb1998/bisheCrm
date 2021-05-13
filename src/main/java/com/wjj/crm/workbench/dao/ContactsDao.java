@@ -27,4 +27,6 @@ public interface ContactsDao {
     int delete(String[] ids);
 
     Contacts detail(String id);
+
+    List<Map<String, Object>> getContactsSource();
 }

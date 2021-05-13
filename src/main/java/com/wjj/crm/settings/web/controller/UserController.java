@@ -44,6 +44,37 @@ public class UserController extends HttpServlet {
          else if("/settings/user/getHandHistory.do".equals(path)){
              getHandHistory(request,response);
          }
+         else if("/settings/user/updatePwd.do".equals(path)){
+             updatePwd(request,response);
+         }
+         else if("/settings/user/getUserById.do".equals(path)){
+             getUserById(request,response);
+         }
+    }
+
+    private void getUserById(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到根据id获取用户信息");
+        String id=request.getParameter("id");
+        UserService us= (UserService)ServiceFactory.getService(new UserServiceImpl());
+        User u=new User();
+        u=us.getUserById(id);
+        System.out.println(u.getLoginPwd());
+        PrintJson.printJsonObj(response,u);
+    }
+
+    private void updatePwd(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入修改用户密码的操作");
+         String id=request.getParameter("id");
+         String newPwd=request.getParameter("newPwd");
+        System.out.println(newPwd);
+         String pwd=MD5Util.getMD5(newPwd);
+         User u=new User();
+         u.setId(id);
+         u.setLoginPwd(pwd);
+        UserService us= (UserService)ServiceFactory.getService(new UserServiceImpl());
+        boolean flag=us.updatePwd(u);
+        PrintJson.printJsonFlag(response,flag);
+
     }
 
     private void getHandHistory(HttpServletRequest request, HttpServletResponse response) {

@@ -11,6 +11,8 @@ import com.wjj.crm.workbench.dao.*;
 import com.wjj.crm.workbench.domain.*;
 import com.wjj.crm.workbench.service.ClueService;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,8 +85,16 @@ public class ClueServiceImpl implements ClueService {
     }
 
     @Override
-    public Clue detail(String id) {
-        Clue a=clueDao.detail(id);
+    public  Map<String, Object> detail(String id) {
+        Clue c=clueDao.getById(id);
+        long create_by =c.getCreate_by();
+        long update_by =c.getUpdate_by();
+        User u1=userDao.getUserById(Long.toString(create_by));
+        User u2=userDao.getUserById(Long.toString(update_by));
+        Map<String, Object> a=new HashMap<String, Object>();
+        a.put("c",c);
+        a.put("u1",u1);
+        a.put("u2",u2);
         return a;
     }
 
@@ -157,6 +167,9 @@ public class ClueServiceImpl implements ClueService {
     @Override
     public boolean convert(String clueId, Tran t, String createBy) {
         String createTime= DateTimeUtil.getSysTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp create_time=new Timestamp(System.currentTimeMillis());
+        create_time=Timestamp.valueOf(createTime);
         boolean flag=true;
 //        (1) 获取到线索id，通过线索id获取线索对象（线索对象当中封装了线索的信息）
            Clue c=clueDao.getById(clueId);
@@ -166,17 +179,16 @@ public class ClueServiceImpl implements ClueService {
            //如果customer为空，说明以前没有这个客户，需要新建一个,将线索的信息转为客户的信息
            if(customer==null){
                customer=new Customer();
-               customer.setId(UUIDUtil.getUUID());
                customer.setAddress(c.getAddress());
                customer.setWebsite(c.getWebsite());
                customer.setPhone(c.getPhone());
                customer.setOwner(c.getOwner());
-               customer.setNextContactTime(c.getNextContactTime());
+               customer.setNext_contactTime(c.getNext_contact_time());
                customer.setName(company);
                customer.setDescription(c.getDescription());
-               customer.setCreateTime(createTime);
-               customer.setCreateBy(createBy);
-               customer.setContactSummary(c.getContactSummary());
+               customer.setCreate_time(create_time);
+               customer.setCreate_by(Long.parseLong(createBy));
+               customer.setContact_summary(c.getContact_summary());
                //添加客户
                int count1=customerDao.save(customer);
                if(count1!=1){
@@ -188,16 +200,16 @@ public class ClueServiceImpl implements ClueService {
             con.setId(UUIDUtil.getUUID());
             con.setSource(c.getSource());
             con.setOwner(c.getOwner());
-            con.setNextContactTime(c.getNextContactTime());
+            con.setNextContactTime(c.getNext_contact_time());
             con.setMphone(c.getMphone());
             con.setJob(c.getJob());
-            con.setFullname(c.getFullname());
+            con.setFullname(c.getFull_name());
             con.setEmail(c.getEmail());
             con.setDescription(c.getDescription());
-            con.setCustomerId(customer.getId());
+            con.setCustomerId(Long.toString(customer.getId()));
             con.setCreateTime(createTime);
             con.setCreateBy(createBy);
-            con.setContactSummary(c.getContactSummary());
+            con.setContactSummary(c.getContact_summary());
             con.setAppellation(c.getAppellation());
             con.setAddress(c.getAddress());
             //添加联系人
@@ -215,7 +227,7 @@ public class ClueServiceImpl implements ClueService {
                   customerRemark.setId(UUIDUtil.getUUID());
                   customerRemark.setCreateBy(createBy);
                   customerRemark.setCreateTime(createTime);
-                  customerRemark.setCustomerId(customer.getId());
+                  customerRemark.setCustomerId(Long.toString(customer.getId()));
                   customerRemark.setEditFlag("0");
                   customerRemark.setNoteContent(noteContent);
                   int count3=customerRemarkDao.save(customerRemark);
@@ -261,10 +273,10 @@ public class ClueServiceImpl implements ClueService {
                        //接下来可以通过第一步生成的线索对象c,取出一些信息，继续完成t对象的封装
                        t.setSource(c.getSource());
                        t.setOwner(c.getOwner());
-                       t.setNextContactTime(c.getNextContactTime());
+                       t.setNextContactTime(c.getNext_contact_time());
                        t.setDescription(c.getDescription());
-                       t.setCustomerId(customer.getId());
-                       t.setContactSummary(c.getContactSummary());
+                       t.setCustomerId(Long.toString(customer.getId()));
+                       t.setContactSummary(c.getContact_summary());
                        t.setContactsId(con.getId());
                        int count6=tranDao.save(t);
                        if(count6!=1){
@@ -308,6 +320,17 @@ public class ClueServiceImpl implements ClueService {
                      }
 
 
+
+        return flag;
+    }
+
+    @Override
+    public boolean delete(String[] ids) {
+        boolean flag=true;
+        int count3=clueDao.deletes(ids);
+        if(count3!=ids.length){
+            flag=false;
+        }
 
         return flag;
     }

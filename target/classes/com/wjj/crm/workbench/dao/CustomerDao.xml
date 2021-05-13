@@ -11,8 +11,8 @@
     </select>
      <select id="detail" resultType="Customer">
            select
-        a.id,a.name,u.name as owner,a.phone,a.label,a.level,a.department,a.dreamSale,a.trueSale,
-      a.website,a.createBy,a.createTime,a.editBy,a.editTime,a.description,a.contactSummary,a.nextContactTime,a.address
+        a.id,a.name,u.name as owner,a.phone,a.label,a.level,a.department,a.dream_sale,a.true_sale,
+      a.website,u.name as create_by,a.create_time,u.name as update_by,a.update_time,a.description,a.contact_summary,a.next_contactTime,a.address
         from tbl_customer a
         join tbl_user u
         on a.owner=u.id
@@ -20,11 +20,11 @@
     </select>
      <update id="hand">
         update tbl_customer set
-        owner='40f6cdea0bd34aceb77492a1656d9fb3'
+        owner='2'
         where owner=#{id}
     </update>
      <select id="getCustomerListName" resultType="Customer">
-          select id,name,phone,department,dreamSale
+          select id,name,phone,department,dream_sale
           from tbl_customer
           where name like #{aname}
      </select>
@@ -69,7 +69,7 @@
                     and a.website like '%' #{website} '%'
                </if>
           </where>
-          order by a.createTime desc
+          order by a.create_time desc
           limit #{skipCount},#{pageSize}
 
      </select>
@@ -78,30 +78,28 @@
 </select>
 <insert id="save">
      insert into tbl_customer(
-     id,
      owner,
      name,
      website,
      phone,
-     createBy,
-     createTime,
-     contactSummary,
-     nextContactTime,
+     create_by,
+     create_time,
+     contact_summary,
+     next_contactTime,
      description,
      address,
      label,
      level,
      department
      )values (
-     #{id},
      #{owner},
      #{name},
      #{website},
      #{phone},
-     #{createBy},
-     #{createTime},
-     #{contactSummary},
-     #{nextContactTime},
+     #{create_by},
+     #{create_time},
+     #{contact_summary},
+     #{next_contactTime},
      #{description},
      #{address},
      #{label},
@@ -111,7 +109,6 @@
 </insert>
      <select id="getCustomerName" resultType="String">
 select name from tbl_customer where name like #{name};
-
      </select>
 </mapper>
 

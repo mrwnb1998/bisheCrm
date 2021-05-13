@@ -4,6 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wjj.crm.workbench.dao.ContactsDao">
+    <select id="getContactsSource" resultType="Map">
+         select
+        count(*) as value ,source as name
+        from tbl_contacts
+        group by source
+    </select>
     <select id="detail" resultType="Contacts">
          select
         a.id,a.fullname,u.name as owner,c.name as customerId,a.source,a.birth,a.mphone,a.appellation,

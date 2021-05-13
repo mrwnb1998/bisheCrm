@@ -23,6 +23,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <script type="text/javascript">
 
 	$(function(){
+		var flag;
 
 		//为收缩按钮绑定事件
 		$("#searchBtn").click(function () {
@@ -44,6 +45,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 			$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
 		});
+
 
 		//为创建线索按钮绑定事件，打开创建的模态窗口，获取拥有者用户列表
   $("#addBtn").click(function () {
@@ -79,8 +81,11 @@ $("#create-owner").val(id);
 	});
 	$("#createClueModal").modal("show");
 	  //为保存按钮绑定事件，实现线索添加
+
 	  $("#saveBtn").click(function () {
+
 		  $.ajax({
+			  //async:false,
 			  url: "workbench/clue/save.do",
 			  data:{
 				  "fullname":$.trim($("#create-fullname").val()),
@@ -98,12 +103,13 @@ $("#create-owner").val(id);
 				  "contactSummary":$.trim($("#create-contactSummary").val()),
 				  "nextContactTime":$.trim($("#create-nextContactTime").val()),
 				  "address":$.trim($("#create-address").val())
-
 			  },
 			  type: "post",
 			  datatype: "json",
 			  success: function (data) {
 //data:{"success":true/false}
+				  console.log(JSON.parse(data));
+				  data = JSON.parse(data);
 				  if(data.success){
 					  //添加成功后，刷新市场活动信息列表（）,这里刷新页面要回到第一页才能看见新添加的记录
 					  //$("#activityPage").bs_pagination('getOption','currentPage'):
@@ -116,10 +122,10 @@ $("#create-owner").val(id);
 					  //方法一是每个输入框的val设为空字符串，如$("#create-owner").val("")
 					  //方法二是reset方法，但idea中reset可以不全，但对jquery对象却是失效的
 					  // 所以要将jQuery对象转为dom对象，采用数组下标的方式。
-					  $("#createCLueAdd")[0].reset();
-
+					  //$("#createCLueAdd")[0].reset();
 					  //关闭添加操作的模态窗口
 					  $("#createClueModal").modal("hide");
+
 				  }else {
 					  alert("添加线索失败")
 				  }
@@ -226,6 +232,7 @@ $("#create-owner").val(id);
                         返回信息成功返回true，失败false
                         data:{"success":true/false}
                         * */
+
 						if(data.success){
 							//修改成功后，刷新市场活动信息列表（局部刷新），应该停留在当前页,并维持每页展现的记录数
 
@@ -247,6 +254,45 @@ $("#create-owner").val(id);
 
 			});
 
+		});
+		//为删除按钮绑定事件
+		$("#deleteBtn").click(function () {
+			var $xz = $("input[name=xz]:checked");
+			if($xz.length===0)
+			{
+				alert("请选择要删除的记录");
+			}else{
+				if(confirm("确定删除所选择的记录吗")){
+					var param ="";
+					for(var i=0;i<$xz.length;i++){
+						param+="id="+$($($xz[i])).val();
+						//如果不是最后一个元素，需要在最后追加一个&符
+						if(i<$xz.length-1){
+							param+="&";
+						}
+					}
+					//alert(param);
+					$.ajax({
+						url:"workbench/clue/delete.do",
+						data:param,
+						type:"post",
+						dataType:"json",
+						success:function (data) {
+							if(data.success){
+								//删除成功后，局部刷新活动列表，回到第一页，维持每页展现的记录数
+								pageList(1,$("#cluePage").bs_pagination('getOption','rowsPerPage'));
+							}else{
+								alert("删除失败")
+							}
+						}
+
+					})
+
+				}
+				//拼接参数
+
+
+			}
 		});
 
 
@@ -290,7 +336,7 @@ function pageList(pageNo,pageSize){
 				$.each(data.dataList,function (i,n) {
 					html+='<tr class="active">';
 					html+='	<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
-					html+='	<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/clue/detail.do?id='+n.id+'\';">'+n.fullname+'</a></td>';
+					html+='	<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/clue/detail.do?id='+n.id+'\';">'+n.full_name+'</a></td>';
 					html+='	<td>'+n.company+'</td>';
 					html+='	<td>'+n.phone+'</td>';
 					html+='	<td>'+n.mphone+'</td>';
@@ -658,7 +704,7 @@ function pageList(pageNo,pageSize){
 				    <div class="input-group">
 				      <div class="input-group-addon">线索来源</div>
 					  <select class="form-control" id="search-source">
-					  	  <option></option>
+					  	  <option>基金会会员</option>
 					  	  <option>广告</option>
 						  <option>推销电话</option>
 						  <option>员工介绍</option>

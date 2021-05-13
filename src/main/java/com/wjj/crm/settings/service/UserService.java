@@ -18,4 +18,8 @@ public interface UserService {
     PaginationVo<User> pageList(Map<String, Object> map);
 
     boolean hand(String id);
+
+    boolean updatePwd(User u);
+
+    User getUserById(String id);
 }

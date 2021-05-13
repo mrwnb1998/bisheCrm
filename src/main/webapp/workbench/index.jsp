@@ -37,7 +37,67 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		});
 
 
-		window.open("workbench/main/index.html","workareaFrame");
+		window.open("workbench/main/index.jsp","workareaFrame");
+
+		//修改密码
+		$("#updatePwdBtn").click(function () {
+               var tPwd="";
+			$.ajax({
+				url:"settings/user/getUserById.do",
+				data:{
+					"id":"${sessionScope.user.id}",
+				},
+				type:"get",
+				dataType:"json",
+				success:function (data) {
+					tPwd=data.loginPwd;
+				}
+
+			});
+			var oldPwd=$("#oldPwd").val();
+			var newPwd=$("#newPwd").val();
+			var confirmPwd=$("#confirmPwd").val();
+			if(oldPwd!=tPwd){
+				alert("旧密码不正确");
+				$("#oldPwd").val("");
+				$("#editPwdModal").modal("show");
+			}else if(oldPwd===newPwd){
+				alert("新密码不能与旧密码相同");
+				$("#oldPwd").val("");
+				$("#newPwd").val("");
+				$("#confirmPwd").val("");
+				$("#editPwdModal").modal("show");
+			}else if(newPwd!=confirmPwd){
+				alert("确认密码与新密码不一致！");
+				$("#confirmPwd").val("");
+				$("#editPwdModal").modal("show");
+			}else {
+				if(confirm("确认修改密码吗")){
+					$.ajax({
+						url:"settings/user/updatePwd.do",
+						data:{
+							"id":"${sessionScope.user.id}",
+							"newPwd":$.trim($("#newPwd").val())
+						},
+						type:"post",
+						dataType:"json",
+						success:function (data) {
+							/*data:{"success":true/false}
+                             */
+							if (data.success) {
+								window.location.href="login.jsp";
+							} else {
+								alert("修改密码失败")
+							}
+						}
+					})
+				}
+
+			}
+
+
+
+		})
 
 	});
 
@@ -45,6 +105,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 </head>
 <body>
+<input type="hidden" id="hide-oldPwd">
 
 	<!-- 我的资料 -->
 	<div class="modal fade" id="myInformation" role="dialog">
@@ -58,12 +119,12 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				</div>
 				<div class="modal-body">
 					<div style="position: relative; left: 40px;">
-						姓名：<b>张三</b><br><br>
-						登录帐号：<b>zhangsan</b><br><br>
-						组织机构：<b>1005，市场部，二级部门</b><br><br>
-						邮箱：<b>zhangsan@bjpowernode.com</b><br><br>
-						失效时间：<b>2017-02-14 10:10:10</b><br><br>
-						允许访问IP：<b>127.0.0.1,192.168.100.2</b>
+						姓名：<b>${sessionScope.user.name}</b><br><br>
+						登录帐号：<b>${sessionScope.user.loginAct}</b><br><br>
+<%--						组织机构：<b>1005，市场部，二级部门</b><br><br>--%>
+						邮箱：<b>${sessionScope.user.email}</b><br><br>
+						失效时间：<b>${sessionScope.user.expireTime}</b><br><br>
+						允许访问IP：<b>${sessionScope.user.allowIps}</b>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -109,7 +170,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.location.href='login.html';">更新</button>
+					<button type="button" class="btn btn-primary" id="updatePwdBtn">更新</button>
 				</div>
 			</div>
 		</div>
@@ -147,7 +208,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="settings/index.html"><span class="glyphicon glyphicon-wrench"></span> 系统设置</a></li>
+<%--						<li><a href="settings/index.html"><span class="glyphicon glyphicon-wrench"></span> 系统设置</a></li>--%>
 						<li><a href="javascript:void(0)" data-toggle="modal" data-target="#myInformation"><span class="glyphicon glyphicon-file"></span> 我的资料</a></li>
 						<li><a href="javascript:void(0)" data-toggle="modal" data-target="#editPwdModal"><span class="glyphicon glyphicon-edit"></span> 修改密码</a></li>
 						<li><a href="javascript:void(0);" data-toggle="modal" data-target="#exitModal"><span class="glyphicon glyphicon-off"></span> 退出</a></li>
@@ -170,29 +231,40 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						<li class="liClass"><a href="workbench/task/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 销售任务管理</a></li>
 						<li class="liClass"><a href="workbench/dealer/dealerRank.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 销售排行榜</a></li>
 						<li class="liClass"><a href="workbench/dealer/dismisson.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 离职交接</a></li>
+						<li class="liClass"><a href="workbench/transaction/index.jsp" target="workareaFrame">  &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span>交易(商机)</a></li>
 					</ul>
 				</li>
 <%--				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-tag"></span> 动态</a></li>--%>
 <%--				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-time"></span> 审批</a></li>--%>
 <%--				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 客户公海</a></li>--%>
 				<li class="liClass">
-					<a href="#activityManger" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 活动运营系统</a>
+					<a href="#activityManger" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 活动运营</a>
 					<ul id="activityManger" class="nav nav-pills nav-stacked collapse">
 				<li class="liClass">
-					<a href="workbench/activity/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-play-circle"></span> 活动管理</a>
+					<a href="workbench/activity/index.jsp" target="workareaFrame"> &nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 活动管理</a>
 				</li>
 				<li class="liClass">
-					<a href="workbench/channel/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-play-circle"></span> 渠道管理</a>
+					<a href="workbench/channel/index.jsp" target="workareaFrame"> &nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 渠道管理</a>
 				</li>
+                        <li class="liClass">
+                            <a href="workbench/activity/material.jsp" target="workareaFrame"> &nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 素材管理</a>
+                        </li>
 					</ul>
 				</li>
-				<li class="liClass"><a href="workbench/clue/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-search"></span> 线索（潜在客户）</a></li>
-				<li class="liClass"><a href="workbench/customer/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 客户</a></li>
-				<li class="liClass"><a href="workbench/contacts/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-earphone"></span> 联系人</a></li>
-				<li class="liClass"><a href="workbench/transaction/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-usd"></span> 交易（商机）</a></li>
+
+				<li class="liClass">
+					<a href="#customerManger" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 客户管理</a>
+					<ul id="customerManger" class="nav nav-pills nav-stacked collapse">
+				<li class="liClass"><a href="workbench/clue/index.jsp" target="workareaFrame"> &nbsp;&nbsp;<span class="glyphicon  glyphicon-chevron-right"></span> 线索（潜在客户）</a></li>
+				<li class="liClass"><a href="workbench/customer/index.jsp" target="workareaFrame"> &nbsp;&nbsp;<span class="glyphicon  glyphicon-chevron-right"></span> 客户</a></li>
+						<li class="liClass"><a href="workbench/contacts/index.jsp" target="workareaFrame">&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 联系人</a></li>
+					</ul>
+				</li>
+
+
 <%--				<li class="liClass"><a href="workbench/visit/index.html" target="workareaFrame"><span class="glyphicon glyphicon-phone-alt"></span> 售后回访</a></li>--%>
 				<li class="liClass">
-					<a href="#no2" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 销售看板</a>
+					<a href="#no2" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 看板系统</a>
 					<ul id="no2" class="nav nav-pills nav-stacked collapse">
 <%--						<li class="liClass"><a href="workbench/chart/activity/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 市场活动统计图表</a></li>--%>
 						<li class="liClass"><a href="workbench/chart/clue/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 销售数据</a></li>

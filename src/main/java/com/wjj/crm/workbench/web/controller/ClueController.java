@@ -24,6 +24,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Array;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +71,18 @@ public class ClueController extends HttpServlet {
             getActivityListByName(request, response);
         }else if ("/workbench/clue/convert.do".equals(path)) {
             convert(request, response);
+        }else if ("/workbench/clue/delete.do".equals(path)) {
+            delete(request, response);
         }
+    }
+
+    private void delete(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到删除线索列表");
+        String ids[] =request.getParameterValues("id");
+        System.out.println(Arrays.toString(ids));
+        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        boolean flag=clueService.delete(ids);
+        PrintJson.printJsonFlag(response,flag);
     }
 
     private void convert(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -77,7 +91,7 @@ public class ClueController extends HttpServlet {
         //接收是否需要创建交易的标记
         String flag=request.getParameter("flag");
         Tran t=null;
-        String createBy=((User)request.getSession().getAttribute("user")).getname();
+        String createBy=((User)request.getSession().getAttribute("user")).getId();
         if("a".equals(flag)){
             t=new Tran();
             //如果需要创建交易,接收交易表单的参数
@@ -135,6 +149,7 @@ public class ClueController extends HttpServlet {
         System.out.println("关联活动模态窗口，根据名称,线索id模糊查询市场活动");
         String aname=request.getParameter("aname");
         String clueId=request.getParameter("clueId");
+        System.out.println(clueId);
         Map<String,String> map=new HashMap<String, String>();
         map.put("aname","%"+aname+"%");
         map.put("clueId",clueId);
@@ -156,6 +171,7 @@ public class ClueController extends HttpServlet {
     private void getActivityListByClueId(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("根据线索id查询关联的市场活动列表");
         String clueId=request.getParameter("clueId");
+        System.out.println(clueId);
         ActivityService activityService= (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
         List<Activity> aList=activityService.getActivityListByClueId(clueId);
         PrintJson.printJsonObj(response,aList);
@@ -225,7 +241,8 @@ public class ClueController extends HttpServlet {
         System.out.println("进入线索详情操作");
         String id = request.getParameter("id");
         ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
-       Clue a=clueService.detail(id);
+        Map<String,Object> a=new HashMap<String, Object>();
+        a=clueService.detail(id);
         request.setAttribute("a",a);
         request.getRequestDispatcher("/workbench/clue/detail.jsp").forward(request,response);
 
@@ -247,20 +264,23 @@ public class ClueController extends HttpServlet {
         String mphone=request.getParameter("mphone");
         String state=request.getParameter("state");
         String  source=request.getParameter("source");
-        String editTime= DateTimeUtil.getSysTime();//获取当前时间
-        String editBy=((User)request.getSession().getAttribute("user")).getname();
+        String updateTime= DateTimeUtil.getSysTime();//获取当前时间
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp update_time=new Timestamp(System.currentTimeMillis());
+        update_time=Timestamp.valueOf(updateTime);
+        String update_by=((User)request.getSession().getAttribute("user")).getId();
         String description=request.getParameter("description");
         String contactSummary=request.getParameter("contactSummary");
         String nextContactTime=request.getParameter("nextContactTime");
         String address=request.getParameter("address");
         Clue clue=new Clue();
-        clue.setId(id);
+        clue.setId(Long.parseLong(id));
         clue.setAddress(address);
-        clue.setNextContactTime(nextContactTime);
-        clue.setContactSummary(contactSummary);
+        clue.setNext_contact_time(nextContactTime);
+        clue.setContact_summary(contactSummary);
         clue.setDescription(description);
-        clue.setEditTime(editTime);
-        clue.setEditBy(editBy);
+        clue.setUpdate_time(update_time);
+        clue.setUpdate_by(Long.parseLong(update_by));
         clue.setSource(source);
         clue.setState(state);
         clue.setMphone(mphone);
@@ -271,7 +291,7 @@ public class ClueController extends HttpServlet {
         clue.setCompany(company);
         clue.setOwner(owner);
         clue.setAppellation(appellation);
-        clue.setFullname(fullname);
+        clue.setFull_name(fullname);
         ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
         boolean flag=clueService.update(clue);
         System.out.println(flag);
@@ -355,7 +375,6 @@ public class ClueController extends HttpServlet {
 
     private void save(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("进入到线索添加操作");
-       String id= UUIDUtil.getUUID();
        String fullname=request.getParameter("fullname");
        String appellation=request.getParameter("appellation");
         //System.out.println(appellation);
@@ -369,20 +388,23 @@ public class ClueController extends HttpServlet {
        String mphone=request.getParameter("mphone");
        String state=request.getParameter("state");
        String  source=request.getParameter("source");
-       String createBy=((User)request.getSession().getAttribute("user")).getname();
-       String createTime= DateTimeUtil.getSysTime();
+        String createTime= DateTimeUtil.getSysTime();//获取当前时间
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp create_time=new Timestamp(System.currentTimeMillis());
+        create_time=Timestamp.valueOf(createTime);
+        String createBy=((User)request.getSession().getAttribute("user")).getId();
+        long create_by=Long.parseLong(createBy);
        String description=request.getParameter("description");
        String contactSummary=request.getParameter("contactSummary");
        String nextContactTime=request.getParameter("nextContactTime");
        String address=request.getParameter("address");
        Clue clue=new Clue();
-       clue.setId(id);
        clue.setAddress(address);
-       clue.setNextContactTime(nextContactTime);
-       clue.setContactSummary(contactSummary);
+       clue.setNext_contact_time(nextContactTime);
+       clue.setContact_summary(contactSummary);
        clue.setDescription(description);
-       clue.setCreateTime(createTime);
-       clue.setCreateBy(createBy);
+       clue.setCreate_time(create_time);
+       clue.setCreate_by(create_by);
        clue.setSource(source);
        clue.setState(state);
        clue.setMphone(mphone);
@@ -393,7 +415,7 @@ public class ClueController extends HttpServlet {
        clue.setCompany(company);
        clue.setOwner(owner);
        clue.setAppellation(appellation);
-       clue.setFullname(fullname);
+       clue.setFull_name(fullname);
        ClueService clueService= (ClueService) ServiceFactory.getService(new ClueServiceImpl());
        boolean flag=clueService.save(clue);
         System.out.println(flag);
