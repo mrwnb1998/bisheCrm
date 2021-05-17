@@ -105,12 +105,12 @@ public class Customer {
 		this.contact_summary = contact_summary;
 	}
 
-	public String getNext_contactTime() {
+	public String getNext_contact_time() {
 		return next_contactTime;
 	}
 
-	public void setNext_contactTime(String next_contactTime) {
-		this.next_contactTime = next_contactTime;
+	public void setNext_contact_time(String next_contact_time) {
+		this.next_contactTime = next_contact_time;
 	}
 
 	public String getDescription() {

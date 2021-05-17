@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wjj.crm.workbench.dao.ChannelRemarkDao">
+    <delete id="deleteRemarkById">
+        delete from tbl_channel_remark where id=#{id};
+    </delete>
+    <select id="getRemarkListByCid" resultType="ChannelRemark">
+         select * from tbl_channel_remark where channelId=#{channelId}
+    </select>
+<update id="updateRemark">
+     update tbl_channel_remark set noteContent=#{noteContent},editBy=#{editBy},editTime=#{editTime},editFlag=#{editFlag}
+        where id=#{id}
+</update>
+    <insert id="saveRemark">
+          insert into tbl_channel_remark (
+id,
+noteContent,
+createTime,
+createBy,
+editFlag,
+channelId
+
+        )
+        values(
+#{id},
+#{noteContent},
+#{createTime},
+#{createBy},
+#{editFlag},
+#{channelId}
+        )
+    </insert>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

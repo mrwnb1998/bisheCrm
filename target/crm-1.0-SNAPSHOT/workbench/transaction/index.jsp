@@ -33,6 +33,70 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			pageList(1,2);
 		});
 		//
+		//为修改按钮绑定事件
+		$("#editBtn").click(function (){
+			var $xz =$("input[name=xz]:checked");
+			if($xz.length==0){
+				alert("请选择需要修改的记录")
+			}else if($xz.length>1){
+				alert("只能选择一条记录修改")
+			}else {
+				var id = $xz.val();
+				window.location.href='workbench/transaction/edit.do?id='+id;
+				// $.ajax({
+				//     url: "workbench/channel/edit.do",
+				//     data: {
+				//         "id": id
+				//     },
+				//     type: "post",
+				//     dataType: "json",
+				//     success: function (data) {
+				//
+				//     }
+				// })
+			}
+		});
+
+		//为删除按钮绑定事件
+		$("#deleteBtn").click(function () {
+			var $xz = $("input[name=xz]:checked");
+			if($xz.length===0)
+			{
+				alert("请选择要删除的记录");
+			}else{
+				if(confirm("确定删除所选择的记录吗")){
+					var param ="";
+					for(var i=0;i<$xz.length;i++){
+						param+="id="+$($($xz[i])).val();
+						//如果不是最后一个元素，需要在最后追加一个&符
+						if(i<$xz.length-1){
+							param+="&";
+						}
+					}
+					//alert(param);
+					$.ajax({
+						url:"workbench/transaction/delete.do",
+						data:param,
+						type:"post",
+						dataType:"json",
+						success:function (data) {
+							if(data.success){
+								//删除成功后，局部刷新活动列表，回到第一页，维持每页展现的记录数
+								pageList(1,$("#tranPage").bs_pagination('getOption','rowsPerPage'));
+							}else{
+								alert("删除失败")
+							}
+						}
+
+					})
+
+				}
+				//拼接参数
+
+
+			}
+		});
+
 
 		pageList(1,2);
 		function pageList(pageNo,pageSize){
@@ -220,8 +284,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 10px;">
 				<div class="btn-group" style="position: relative; top: 18%;">
 				  <button type="button" class="btn btn-primary" onclick="window.location.href='workbench/transaction/add.do';"><span class="glyphicon glyphicon-plus"></span> 创建</button>
-				  <button type="button" class="btn btn-default" onclick="window.location.href='workbench/transaction/edit.do';"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
-				  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+				  <button type="button" class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
+				  <button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
 
 

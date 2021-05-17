@@ -1,9 +1,13 @@
 package com.wjj.crm.workbench.web.controller;
 
+import com.wjj.crm.settings.domain.User;
+import com.wjj.crm.utils.DateTimeUtil;
 import com.wjj.crm.utils.PrintJson;
 import com.wjj.crm.utils.ServiceFactory;
+import com.wjj.crm.utils.UUIDUtil;
 import com.wjj.crm.vo.PaginationVo;
 import com.wjj.crm.workbench.domain.Channel;
+import com.wjj.crm.workbench.domain.ChannelRemark;
 import com.wjj.crm.workbench.domain.Clue;
 import com.wjj.crm.workbench.domain.Customer;
 import com.wjj.crm.workbench.service.ChannelService;
@@ -58,6 +62,89 @@ public class ChannelController extends HttpServlet {
         else if ("/workbench/channel/getSourceCharts.do".equals(path)) {
             getSourceCharts(request, response);
         }
+        else if ("/workbench/channel/detail.do".equals(path)) {
+            detail(request, response);
+        }
+        else if ("/workbench/channel/getRemarkListByCid.do".equals(path)) {
+            getRemarkListByCid(request, response);
+        } else if ("/workbench/channel/deleteRemark.do".equals(path)) {
+            deleteRemark(request, response);
+        }
+        else if ("/workbench/channel/saveRemark.do".equals(path)) {
+            saveRemark(request, response);
+        }
+        else if ("/workbench/channel/updateRemark.do".equals(path)) {
+            updateRemark(request, response);
+        }
+    }
+
+    private void updateRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入修改备注的操作");
+        String noteContent = request.getParameter("noteContent");
+        String id = request.getParameter("id");
+        ChannelService channelService= (ChannelService) ServiceFactory.getService(new ChannelServiceImpl());
+        String editTime = DateTimeUtil.getSysTime();//获取当前时间
+        String editBy = ((User) request.getSession().getAttribute("user")).getname();
+        String editFlag = "1";
+        ChannelRemark ar=new ChannelRemark();
+        ar.setId(id);
+        ar.setEditBy(editBy);
+        ar.setEditTime(editTime);
+        ar.setNoteContent(noteContent);
+        ar.setEditFlag(editFlag);
+        boolean flag = channelService.updateRemark(ar);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("success", flag);
+        map.put("ar", ar);
+        PrintJson.printJsonObj(response, map);
+    }
+
+    private void saveRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入添加备注的操作");
+        String noteContent =request.getParameter("noteContent");
+        String channelId =request.getParameter("channelId");
+        String id= UUIDUtil.getUUID();
+        String createTime= DateTimeUtil.getSysTime();//获取当前时间
+        String createBy=((User)request.getSession().getAttribute("user")).getname();
+        String editFlag="0";
+        ChannelRemark ar=new ChannelRemark();
+        ar.setId(id);
+        ar.setChannelId(Long.parseLong(channelId));
+        ar.setCreateBy(createBy);
+        ar.setCreateTime(createTime);
+        ar.setNoteContent(noteContent);
+        ar.setEditFlag(editFlag);
+        ChannelService channelService= (ChannelService) ServiceFactory.getService(new ChannelServiceImpl());
+        boolean flag=channelService.saveRemark(ar);
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("success",flag);
+        map.put("ar",ar);
+        PrintJson.printJsonObj(response,map);
+    }
+
+    private void deleteRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入删除备注操作");
+        String id=request.getParameter("id");
+        ChannelService channelService= (ChannelService) ServiceFactory.getService(new ChannelServiceImpl());
+        boolean flag=channelService.deleteRemark(id);
+        PrintJson.printJsonFlag(response,flag);
+    }
+
+    private void getRemarkListByCid(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到线索备注信息列表");
+        String channelId =request.getParameter("channelId");
+        ChannelService channelService= (ChannelService) ServiceFactory.getService(new ChannelServiceImpl());
+        List<ChannelRemark> arList=channelService.getRemarkListByCid(channelId);
+        PrintJson.printJsonObj(response,arList);
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("进入渠道详情的列表");
+        String id = request.getParameter("id");
+        ChannelService channelService= (ChannelService) ServiceFactory.getService(new ChannelServiceImpl());
+        Channel a=channelService.detail(id);
+        request.setAttribute("a",a);
+        request.getRequestDispatcher("/workbench/channel/detail.jsp").forward(request,response);
     }
 
     private void getSourceCharts(HttpServletRequest request, HttpServletResponse response) {

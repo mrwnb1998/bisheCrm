@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,65 @@ public class TranController extends HttpServlet {
             updateRemark(request, response);
         }else if("/workbench/transaction/saveRemark.do".equals(path)) {
             saveRemark(request, response);
+        }else if("/workbench/transaction/update.do".equals(path)) {
+            update(request, response);
+        }
+        else if("/workbench/transaction/delete.do".equals(path)) {
+            delete(request, response);
+        }
+    }
+
+    private void delete(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到删除交易列表");
+        String ids[] =request.getParameterValues("id");
+        System.out.println(Arrays.toString(ids));
+        TranService ts= (TranService) ServiceFactory.getService(new TranServiceImpl());
+        boolean flag=ts.delete(ids);
+        PrintJson.printJsonFlag(response,flag);
+    }
+
+    private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("进入交易更新操作");
+        String id=request.getParameter("id");
+        String owner=request.getParameter("owner");
+        String money=request.getParameter("money");
+        System.out.println(id);
+        String name=request.getParameter("name");
+        System.out.println(request.getParameter("activityId"));
+        System.out.println(request.getParameter("contactsId"));
+        String activityId=request.getParameter("activityId");
+        String contactsId=request.getParameter("contactsId");
+        String  type=request.getParameter("type");
+        String source=request.getParameter("source");
+        String stage=request.getParameter("stage");
+        String expectedDate=request.getParameter("expectedDate");
+        String contactSummary=request.getParameter("contactSummary");
+        String description=request.getParameter("description");
+        String nextContactTime=request.getParameter("nextContactTime");
+        String editBy=Long.toString(((User)request.getSession().getAttribute("user")).getId());
+        String editTime= DateTimeUtil.getSysTime();//获取当前时间--%>
+       Tran c=new Tran();
+        c.setId(id);
+        c.setName(name);
+        c.setOwner(owner);
+        c.setMoney(money);
+        c.setActivityId(activityId);
+        c.setContactsId(contactsId);
+        c.setType(type);
+        c.setSource(source);
+        c.setStage(stage);
+        c.setExpectedDate(expectedDate);
+        c.setContactSummary(contactSummary);
+        c.setNextContactTime(nextContactTime);
+        c.setDescription(description);
+        c.setEditBy(editBy);
+        c.setEditTime(editTime);
+        TranService ts= (TranService) ServiceFactory.getService(new TranServiceImpl());
+        boolean flag=ts.update(c);
+        if(flag){
+            //如果添加交易成功，跳转到列表页
+            //request.getRequestDispatcher("/workbench/transaction/index.jsp").forward(request,response);
+            response.sendRedirect(request.getContextPath()+"/workbench/transaction/index.jsp");
         }
     }
 
@@ -340,12 +400,21 @@ public class TranController extends HttpServlet {
         request.getRequestDispatcher("/workbench/transaction/save.jsp").forward(request,response);
 
     }
+//    ContactsService con= (ContactsService) ServiceFactory.getService(new ContactsServiceImpl());
+//    ActivityService activityService= (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
     private void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("到跳转到交易修改页的操作");
         UserService us= (UserService) ServiceFactory.getService(new UserServiceImpl());
         List<User> uList=us.getUserList();
+        String id=request.getParameter("id");
+        System.out.println(id);
+        TranService ts= (TranService) ServiceFactory.getService(new TranServiceImpl());
+        Map<String,Object> map=ts.getTranById(id);
+        request.setAttribute("map",map);
         //之前是ajax请求，传递json格式，现在是点击事件的传统请求，传值，打转发
         request.setAttribute("uList",uList);
+//        request.setAttribute("contactsName",contactsName);
+//        request.setAttribute("activityName",activityName);
         request.getRequestDispatcher("/workbench/transaction/edit.jsp").forward(request,response);
     }
 

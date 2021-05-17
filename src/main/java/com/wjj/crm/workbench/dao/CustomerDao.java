@@ -27,4 +27,8 @@ public interface CustomerDao {
     Customer detail(String id);
 
     List<Map<String, Object>> getSourceCharts();
+
+    int update(Customer clue);
+
+    int delete(String[] ids);
 }

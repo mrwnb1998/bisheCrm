@@ -17,7 +17,7 @@ public interface ContactsService {
 
     PaginationVo<Contacts> pageList(Map<String, Object> map);
 
-    boolean save(Contacts t, String customerName);
+    boolean save(Contacts t, String customerName, long customerCreateBy);
 
     boolean update(Contacts clue);
 
@@ -36,4 +36,8 @@ public interface ContactsService {
     boolean deleteRemark(String id);
 
     List<Map<String, Object>> getContactsSource();
+
+    List<Contacts> getContactsListByCustomerId(String customerId);
+
+    boolean deleteContactsById(String id);
 }

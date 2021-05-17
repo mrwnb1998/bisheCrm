@@ -101,7 +101,7 @@
 
 					</div>
 					<button id="loginButton" type="button" class="btn btn-primary btn-lg btn-block"  style="width: 350px; position: relative;top: 45px;">登录</button>
-					<button id="registButton" type="button" class="btn btn-primary btn-lg btn-block"  style="width: 350px; position: relative;top: 45px;">注册</button>
+<%--					<button id="registButton" type="button" class="btn btn-primary btn-lg btn-block"  style="width: 350px; position: relative;top: 45px;">注册</button>--%>
 				</div>
 			</form>
 		</div>

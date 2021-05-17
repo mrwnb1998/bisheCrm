@@ -3,7 +3,9 @@ package com.wjj.crm.workbench.service.impl;
 import com.wjj.crm.utils.SqlSessionUtil;
 import com.wjj.crm.vo.PaginationVo;
 import com.wjj.crm.workbench.dao.ChannelDao;
+import com.wjj.crm.workbench.dao.ChannelRemarkDao;
 import com.wjj.crm.workbench.domain.Channel;
+import com.wjj.crm.workbench.domain.ChannelRemark;
 import com.wjj.crm.workbench.domain.Customer;
 import com.wjj.crm.workbench.service.ChannelService;
 
@@ -15,6 +17,8 @@ import java.util.Map;
 public class ChannelServiceImpl implements ChannelService {
 
     private ChannelDao channelDao= SqlSessionUtil.getSqlSession().getMapper(ChannelDao.class);
+    private ChannelRemarkDao channelRemarkDao= SqlSessionUtil.getSqlSession().getMapper(ChannelRemarkDao.class);
+
 
     @Override
     public boolean save(Channel c) {
@@ -106,5 +110,47 @@ return flag;
         data.put("data2",data2);
         data.put("data3",data3);
         return data;
+    }
+
+    @Override
+    public Channel detail(String id) {
+        Channel a=channelDao.getChannelById(id);
+        return a;
+    }
+
+    @Override
+    public List<ChannelRemark> getRemarkListByCid(String customerId) {
+        List<ChannelRemark> arlist=channelRemarkDao.getRemarkListByCid(customerId);
+        return arlist;
+    }
+
+    @Override
+    public boolean deleteRemark(String id) {
+        boolean flag=true;
+        int count=channelRemarkDao.deleteRemarkById(id);
+        if(count!=1){
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean saveRemark(ChannelRemark ar) {
+        boolean flag=true;
+        int count=channelRemarkDao.saveRemark(ar);
+        if(count!=1){
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean updateRemark(ChannelRemark ar) {
+        boolean flag=true;
+        int count=channelRemarkDao.updateRemark(ar);
+        if(count!=1){
+            flag=false;
+        }
+        return flag;
     }
 }

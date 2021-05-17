@@ -104,4 +104,24 @@ throw new LoginException("账号密码错误");
         User u=userdao.getUserById(id);
         return u;
     }
+
+    @Override
+    public boolean getUserByloginAct(String loginAct) {
+        User u=userdao.getUserByloginAct(loginAct);
+        boolean flag=true;
+        if(u==null){
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean regist(User u) {
+        boolean flag=true;
+        int count=userdao.regist(u);
+        if(count!=1){
+            flag=false;
+        }
+        return flag;
+    }
 }

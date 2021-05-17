@@ -49,26 +49,26 @@ public class ContactsServiceImpl implements ContactsService {
     }
 
     @Override
-    public boolean save(Contacts t, String customerName) {
+    public boolean save(Contacts t, String customerName,long customerCreateBy) {
         boolean flag=true;
 
         Customer customer=customerDao.getCustomerByName(customerName);
         if(customer==null){
             customer=new Customer();
             customer.setName(customerName);
-            customer.setCreate_by(Long.parseLong(t.getCreateBy()));
+            customer.setCreate_by(customerCreateBy);
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Timestamp create_time=new Timestamp(System.currentTimeMillis());
             create_time=Timestamp.valueOf(t.getCreateTime());
             customer.setCreate_time(create_time);
-            customer.setNext_contactTime(t.getNextContactTime());
+            customer.setNext_contact_time(t.getNextContactTime());
             customer.setOwner(t.getOwner());
             int count1=customerDao.save(customer);
             if(count1!=1){
                 flag=false;
             }
         }
-        t.setCustomerId(Long.toString(customer.getId()));
+        t.setCustomerId(Long.toString(customerDao.getCustomerByName(customerName).getId()));
         int count2=contactsDao.save(t);
         if(count2!=1){
             flag=false;
@@ -153,5 +153,21 @@ public class ContactsServiceImpl implements ContactsService {
     public List<Map<String, Object>> getContactsSource() {
         List<Map<String, Object>>  dataList= contactsDao.getContactsSource();
         return dataList;
+    }
+
+    @Override
+    public List<Contacts> getContactsListByCustomerId(String customerId) {
+        List<Contacts> aList=contactsDao.getContactsListByCustomerId(customerId);
+        return aList;
+    }
+
+    @Override
+    public boolean deleteContactsById(String id) {
+        boolean flag=true;
+        int count=contactsDao.deleteContactsById(id);
+        if(count!=1){
+            flag=false;
+        }
+        return flag;
     }
 }

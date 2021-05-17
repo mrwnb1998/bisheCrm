@@ -22,4 +22,8 @@ public interface UserService {
     boolean updatePwd(User u);
 
     User getUserById(String id);
+
+    boolean getUserByloginAct(String loginAct);
+
+    boolean regist(User u);
 }

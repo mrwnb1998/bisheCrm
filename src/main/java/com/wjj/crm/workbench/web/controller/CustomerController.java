@@ -6,10 +6,18 @@ import com.wjj.crm.utils.PrintJson;
 import com.wjj.crm.utils.ServiceFactory;
 import com.wjj.crm.utils.UUIDUtil;
 import com.wjj.crm.vo.PaginationVo;
+import com.wjj.crm.workbench.domain.Contacts;
 import com.wjj.crm.workbench.domain.Customer;
+import com.wjj.crm.workbench.domain.CustomerRemark;
+import com.wjj.crm.workbench.domain.Tran;
+import com.wjj.crm.workbench.service.ContactsService;
 import com.wjj.crm.workbench.service.CustomerService;
+import com.wjj.crm.workbench.service.TranService;
+import com.wjj.crm.workbench.service.impl.ContactsServiceImpl;
 import com.wjj.crm.workbench.service.impl.CustomerServiceImpl;
+import com.wjj.crm.workbench.service.impl.TranServiceImpl;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingDeque;
 
@@ -40,6 +50,181 @@ public class CustomerController extends HttpServlet {
         else if ("/workbench/customer/getSourceCharts.do".equals(path)) {
             getSourceCharts(request, response);
         }
+        else if ("/workbench/customer/getRemarkListByCid.do".equals(path)) {
+            getRemarkListByCid(request, response);
+        }
+        else if ("/workbench/customer/deleteRemark.do".equals(path)) {
+            deleteRemark(request, response);
+        }
+        else if ("/workbench/customer/updateRemark.do".equals(path)) {
+            updateRemark(request, response);
+        }
+        else if ("/workbench/customer/saveRemark.do".equals(path)) {
+            saveRemark(request, response);
+        }
+        else if ("/workbench/customer/getTranListByCustomerId.do".equals(path)) {
+            getTranListByCustomerId(request, response);
+        }
+        else if ("/workbench/customer/getContactsListByCustomerId.do".equals(path)) {
+            getContactsListByCustomerId(request, response);
+        }
+        else if ("/workbench/customer/getUserListAndCustomer.do".equals(path)) {
+            getUserListAndCustomer(request, response);
+        }
+        else if ("/workbench/customer/update.do".equals(path)) {
+            update(request, response);
+        }
+        else if ("/workbench/customer/delete.do".equals(path)) {
+            delete(request, response);
+        }
+    }
+
+    private void delete(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到删除任务列表");
+        String ids[] =request.getParameterValues("id");
+        System.out.println(Arrays.toString(ids));
+        CustomerService customerService= (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+        boolean flag=customerService.delete(ids);
+        PrintJson.printJsonFlag(response,flag);
+    }
+
+    private void update(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到线索更新操作");
+        String id= request.getParameter("id");
+        String name=request.getParameter("name");
+        String owner=request.getParameter("owner");
+        String website=request.getParameter("website");
+        String phone=request.getParameter("phone");
+        String updateTime= DateTimeUtil.getSysTime();//获取当前时间
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp update_time=new Timestamp(System.currentTimeMillis());
+        update_time=Timestamp.valueOf(updateTime);
+        long update_by=((User)request.getSession().getAttribute("user")).getId();
+        String description=request.getParameter("description");
+        String contact_summary=request.getParameter("contact_summary");
+        String next_contactTime=request.getParameter("next_contactTime");
+        String address=request.getParameter("address");
+        String level=request.getParameter("level");
+        String label=request.getParameter("label");
+        String department =request.getParameter("department");
+        String dream_sale =request.getParameter("dream_sale");
+        String true_sale =request.getParameter("true_sale");
+        Customer clue=new Customer();
+        clue.setId(Long.parseLong(id));
+        clue.setAddress(address);
+        clue.setNext_contact_time(next_contactTime);
+        clue.setContact_summary(contact_summary);
+        clue.setDescription(description);
+        clue.setUpdate_time(update_time);
+        clue.setUpdate_by(update_by);
+        clue.setName(name);
+        clue.setWebsite(website);
+        clue.setPhone(phone);
+        clue.setOwner(owner);
+        clue.setLevel(level);
+        clue.setLabel(label);
+        clue.setDepartment(department);
+        clue.setDream_sale(dream_sale);
+        clue.setTrue_sale(true_sale);
+        CustomerService customerService= (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+        boolean flag=customerService.update(clue);
+        System.out.println(flag);
+        PrintJson.printJsonFlag(response,flag);
+    }
+
+    private void getUserListAndCustomer(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到修改客户信息列表");
+        String id=request.getParameter("id");
+        CustomerService customerService= (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+        Map<String,Object> map= customerService.getUserListAndContacts(id);
+        PrintJson.printJsonObj(response,map);
+    }
+
+    private void getContactsListByCustomerId(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("根据客户id查询关联的联系人列表");
+        String customerId=request.getParameter("customerId");
+        System.out.println(customerId);
+        ContactsService contactsService= (ContactsService) ServiceFactory.getService(new ContactsServiceImpl());
+        List<Contacts> aList=contactsService.getContactsListByCustomerId(customerId);
+        PrintJson.printJsonObj(response,aList);
+    }
+
+    private void getTranListByCustomerId(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("根据客户id查询关联的交易列表");
+        String customerId=request.getParameter("customerId");
+        System.out.println(customerId);
+        TranService tranService= (TranService) ServiceFactory.getService(new TranServiceImpl());
+        List<Tran> aList=tranService.getTranListByCustomerId(customerId);
+        ServletContext application=request.getServletContext();//获取上下文域对象
+        Map<String,String> pmap= (Map<String, String>) application.getAttribute("pmap");
+        //处理可能性
+        for(int i=0;i<aList.size();i++){
+            Tran t=aList.get(i);
+            String stage=t.getStage();
+            String possibility=pmap.get(stage);
+            t.setPossibility(possibility);
+        }
+        PrintJson.printJsonObj(response,aList);
+    }
+
+    private void saveRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入添加备注的操作");
+        String noteContent =request.getParameter("noteContent");
+        String customerId =request.getParameter("customerId");
+        String id= UUIDUtil.getUUID();
+        String createTime= DateTimeUtil.getSysTime();//获取当前时间
+        String createBy=((User)request.getSession().getAttribute("user")).getname();
+        String editFlag="0";
+        CustomerRemark ar=new CustomerRemark();
+        ar.setId(id);
+        ar.setCustomerId(customerId);
+        ar.setCreateBy(createBy);
+        ar.setCreateTime(createTime);
+        ar.setNoteContent(noteContent);
+        ar.setEditFlag(editFlag);
+        CustomerService customerService= (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+        boolean flag=customerService.saveRemark(ar);
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("success",flag);
+        map.put("ar",ar);
+        PrintJson.printJsonObj(response,map);
+    }
+
+    private void updateRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入修改备注的操作");
+        String noteContent = request.getParameter("noteContent");
+        String id = request.getParameter("id");
+        CustomerService customerService= (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+        String editTime = DateTimeUtil.getSysTime();//获取当前时间
+        String editBy = ((User) request.getSession().getAttribute("user")).getname();
+        String editFlag = "1";
+        CustomerRemark ar=new CustomerRemark();
+        ar.setId(id);
+        ar.setEditBy(editBy);
+        ar.setEditTime(editTime);
+        ar.setNoteContent(noteContent);
+        ar.setEditFlag(editFlag);
+        boolean flag = customerService.updateRemark(ar);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("success", flag);
+        map.put("ar", ar);
+        PrintJson.printJsonObj(response, map);
+    }
+
+    private void deleteRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入删除备注操作");
+        String id=request.getParameter("id");
+        CustomerService customerService= (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+        boolean flag=customerService.deleteRemark(id);
+        PrintJson.printJsonFlag(response,flag);
+    }
+
+    private void getRemarkListByCid(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到线索备注信息列表");
+        String customerId =request.getParameter("customerId");
+        CustomerService customerService= (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+        List<CustomerRemark> arList=customerService.getRemarkListByCid(customerId);
+        PrintJson.printJsonObj(response,arList);
     }
 
     private void getSourceCharts(HttpServletRequest request, HttpServletResponse response) {
@@ -53,7 +238,7 @@ public class CustomerController extends HttpServlet {
         System.out.println("进入顾客详情操作");
         String id = request.getParameter("id");
         CustomerService customerService= (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
-        Customer a=customerService.detail(id);
+        Map<String, Object> a=customerService.detail(id);
         request.setAttribute("a",a);
         request.getRequestDispatcher("/workbench/customer/detail.jsp").forward(request,response);
     }
@@ -73,12 +258,14 @@ public class CustomerController extends HttpServlet {
         String label=request.getParameter("label");
         String level=request.getParameter("level");
         String department=request.getParameter("department");
+        String dream_sale =request.getParameter("dream_sale");
+        String true_sale =request.getParameter("true_sale");
         String createTime= DateTimeUtil.getSysTime();//获取当前时间
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Timestamp create_time=new Timestamp(System.currentTimeMillis());
         create_time=Timestamp.valueOf(createTime);
-        String createBy=((User)request.getSession().getAttribute("user")).getId();
-        long create_by=Long.parseLong(createBy);
+        long create_by=((User)request.getSession().getAttribute("user")).getId();
+       // long create_by=Long.parseLong(createBy);
         Customer c=new Customer();
         //c.setId(id);
         c.setOwner(owner);
@@ -87,13 +274,15 @@ public class CustomerController extends HttpServlet {
         c.setWebsite(website);
         c.setDescription(description);
         c.setContact_summary(contactSummary);
-        c.setNext_contactTime(nextContactTime);
+        c.setNext_contact_time(nextContactTime);
         c.setAddress(address);
         c.setLabel(label);
         c.setLevel(level);
         c.setDepartment(department);
         c.setCreate_time(create_time);
         c.setCreate_by(create_by);
+        c.setDream_sale(dream_sale);
+        c.setTrue_sale(true_sale);
         CustomerService customerService= (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
         boolean success=customerService.save(c);
         System.out.println(success);

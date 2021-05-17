@@ -18,4 +18,8 @@ public interface MaterialDao {
     List<Material> getMaterialListByCondition(Map<String, Object> map);
 
     int delete(String[] ids);
+
+    Material getMaterialById(String id);
+
+    int update(Material m);
 }

@@ -2,6 +2,7 @@ package com.wjj.crm.workbench.service;
 
 import com.wjj.crm.vo.PaginationVo;
 import com.wjj.crm.workbench.domain.Customer;
+import com.wjj.crm.workbench.domain.CustomerRemark;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,21 @@ public interface CustomerService {
 
     List<Customer> getCustomerListName(String aname);
 
-    Customer detail(String id);
+    Map<String, Object> detail(String id);
 
     Map<String, Object> getSourceCharts();
+
+    List<CustomerRemark> getRemarkListByCid(String customerId);
+
+    boolean deleteRemark(String id);
+
+    boolean saveRemark(CustomerRemark ar);
+
+    boolean updateRemark(CustomerRemark ar);
+
+    Map<String, Object> getUserListAndContacts(String id);
+
+    boolean update(Customer clue);
+
+    boolean delete(String[] ids);
 }

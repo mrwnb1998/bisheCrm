@@ -1,12 +1,10 @@
 package com.wjj.crm.settings.web.controller;
 
+import com.wjj.crm.settings.dao.UserDao;
 import com.wjj.crm.settings.domain.User;
 import com.wjj.crm.settings.service.UserService;
 import com.wjj.crm.settings.service.impl.UserServiceImpl;
-import com.wjj.crm.utils.DateTimeUtil;
-import com.wjj.crm.utils.MD5Util;
-import com.wjj.crm.utils.PrintJson;
-import com.wjj.crm.utils.ServiceFactory;
+import com.wjj.crm.utils.*;
 import com.wjj.crm.vo.PaginationVo;
 import com.wjj.crm.workbench.domain.HandHistory;
 import com.wjj.crm.workbench.service.HandHistoryService;
@@ -50,6 +48,46 @@ public class UserController extends HttpServlet {
          else if("/settings/user/getUserById.do".equals(path)){
              getUserById(request,response);
          }
+         else if("/settings/user/getUserByloginAct.do".equals(path)){
+             getUserByloginAct(request,response);
+         }
+         else if("/settings/user/regist.do".equals(path)){
+            regist(request,response);
+         }
+    }
+
+    private void regist(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到注册账号的操作");
+        String name=request.getParameter("name");
+        String loginAct=request.getParameter("loginAct");
+        String loginPwd=request.getParameter("loginPwd");
+        String email=request.getParameter("email");
+        String expireTime=request.getParameter("expireTime");
+        String allowIps="127.0.0.1,0:0:0:0:0:0:0:1,"+request.getParameter("allowIps");
+        String createTime= DateTimeUtil.getSysTime();//获取当前时间
+        String createBy=((User)request.getSession().getAttribute("user")).getname();
+        User u=new User();
+        u.setName(name);
+        u.setLoginAct(loginAct);
+        u.setLoginPwd(MD5Util.getMD5(loginPwd));
+        u.setEmail(email);
+        u.setCreateBy(createBy);
+        u.setCreateTime(createTime);
+        u.setLockState("1");
+        u.setExpireTime(expireTime);
+        u.setAllowIps(allowIps);
+          UserService us= (UserService)ServiceFactory.getService(new UserServiceImpl());
+          boolean flag=us.regist(u);
+          PrintJson.printJsonFlag(response,flag);
+
+    }
+
+    private void getUserByloginAct(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到根据账户获取用户信息");
+        String loginAct=request.getParameter("loginAct");
+        UserService us= (UserService)ServiceFactory.getService(new UserServiceImpl());
+        boolean flag=us.getUserByloginAct(loginAct);
+        PrintJson.printJsonFlag(response,flag);
     }
 
     private void getUserById(HttpServletRequest request, HttpServletResponse response) {
@@ -69,7 +107,7 @@ public class UserController extends HttpServlet {
         System.out.println(newPwd);
          String pwd=MD5Util.getMD5(newPwd);
          User u=new User();
-         u.setId(id);
+         u.setId(Long.parseLong(id));
          u.setLoginPwd(pwd);
         UserService us= (UserService)ServiceFactory.getService(new UserServiceImpl());
         boolean flag=us.updatePwd(u);

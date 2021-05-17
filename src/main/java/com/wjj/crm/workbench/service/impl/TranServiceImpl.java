@@ -22,6 +22,7 @@ public class TranServiceImpl implements TranService {
           private TranHistoryDao tranHistoryDao= SqlSessionUtil.getSqlSession().getMapper(TranHistoryDao.class);
           private CustomerDao customerDao=SqlSessionUtil.getSqlSession().getMapper(CustomerDao.class);
           private ContactsDao contactsDao=SqlSessionUtil.getSqlSession().getMapper(ContactsDao.class);
+    private ActivityDao activityDao=SqlSessionUtil.getSqlSession().getMapper(ActivityDao.class);
     private TranRemarkDao tranRemarkDao= SqlSessionUtil.getSqlSession().getMapper(TranRemarkDao.class);
 
     @Override
@@ -47,7 +48,7 @@ public class TranServiceImpl implements TranService {
             Timestamp create_time=new Timestamp(System.currentTimeMillis());
             create_time=Timestamp.valueOf(t.getCreateTime());
             customer.setCreate_time(create_time);
-            customer.setNext_contactTime(t.getNextContactTime());
+            customer.setNext_contact_time(t.getNextContactTime());
             customer.setOwner(t.getOwner());
             int count1=customerDao.save(customer);
             if(count1!=1){
@@ -184,4 +185,44 @@ public class TranServiceImpl implements TranService {
         }
         return flag;
     }
+
+    @Override
+    public List<Tran> getTranListByCustomerId(String customerId) {
+        List<Tran> aList=tranDao.getTranListByCustomerId(customerId);
+        return aList;
+    }
+
+    @Override
+    public Map<String,Object> getTranById(String id) {
+        Map<String,Object> map=new HashMap<String, Object>();
+        Tran tran=tranDao.getTranById(id);
+        Contacts contacts=contactsDao.detail(tran.getContactsId());
+        Activity activity=activityDao.detail(tran.getActivityId());
+        map.put("tran",tran);
+        map.put("contacts",contacts);
+        map.put("activity",activity);
+        return map;
+    }
+
+    @Override
+    public boolean update(Tran c) {
+        boolean flag=true;
+        int count=tranDao.update(c);
+        if(count!=1){
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean delete(String[] ids) {
+        boolean flag=true;
+        int count3=tranDao.delete(ids);
+        if(count3!=ids.length){
+            flag=false;
+        }
+        return flag;
+    }
+
+
 }

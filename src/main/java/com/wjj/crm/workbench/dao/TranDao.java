@@ -27,4 +27,12 @@ public interface TranDao {
     List<Map<String, Object>> getSourceCharts();
 
     void hand(String id);
+
+    List<Tran> getTranListByCustomerId(String customerId);
+
+    Tran getTranById(String id);
+
+    int update(Tran c);
+
+    int delete(String[] ids);
 }

@@ -11,9 +11,11 @@
 
 	<link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 	<link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+	<link href="jquery/bs-chinese/bootstrap-chinese-region/bootstrap-chinese-region.css" type="text/css" rel="stylesheet" />
 
 	<script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
 	<script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="jquery/bs-chinese/bootstrap-chinese-region/bootstrap-chinese-region.js"></script>
 	<script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
 	<script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
 	<link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
@@ -30,23 +32,24 @@
 			//防止下拉菜单消失
 	        e.stopPropagation();
 	    });
-      // $("#create-customerName").typeahead({
-		// 	source:function (query,process) {
-		// 		$.ajax({
-		// 			url:"workbench/transaction/getCustomerName.do",
-		// 			data:{
-		// 				"name":query
-		// 			},
-		// 			type:"get",
-		// 			dataType:"json",
-		// 			success:function (data) {
-		// 				process(data)
-		// 			}
-		// 		})
-	  //
-		// 	},
-		// 	delay:1500
-		// });
+		$.getJSON('jquery/bs-chinese/bootstrap-chinese-region/sql_areas.json',function(data){
+
+			/**重定义数据结构**/
+			//id 键,name 名字,level 层级,parentId 父级
+
+			for (var i = 0; i < data.length; i++) {
+				var area = {id:data[i].id,name:data[i].cname,level:data[i].level,parentId:data[i].upid};
+				data[i] = area;
+			}
+
+			$('.bs-chinese-region').chineseRegion('source',data);//导入数据并实例化
+			$('.bs-chinese-region').chineseRegion('source',data).on('completed.bs.chinese-region',function(e,areas){
+				//areas是已选择的地区数据，按先选择的在最前的方式排序。
+
+				console.log(e);
+				console.log(areas);
+			});
+		});
 
 		//为创建客户绑定事件
 		$("#addBtn").click(function () {
@@ -491,7 +494,31 @@
                             <div class="form-group">
                                 <label for="create-address" class="col-sm-2 control-label">详细地址</label>
                                 <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="1" id="create-address"></textarea>
+									<div class="col-sm-10" style="width: 81%;">
+										<div class="bs-chinese-region flat dropdown col-sm-6" data-submit-type="id" data-min-level="1" data-max-level="3">
+											<input type="text" class="form-control" name="create-address" id="create-address" placeholder="选择你的地区" data-toggle="dropdown"  value="{$detail['addressnum']}">
+											<div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+												<div>
+													<ul class="nav nav-tabs" role="tablist">
+														<li role="presentation" class="active">
+															<a href="#province" data-next="city" role="tab" data-toggle="tab">省份</a>
+														</li>
+														<li role="presentation">
+															<a href="#city" data-next="district" role="tab" data-toggle="tab">城市</a>
+														</li>
+														<li role="presentation">
+															<a href="#district" data-next="street" role="tab" data-toggle="tab">县区</a>
+														</li>
+													</ul>
+													<div class="tab-content">
+														<div role="tabpanel" class="tab-pane active" id="province">--</div>
+														<div role="tabpanel" class="tab-pane" id="city">--</div>
+														<div role="tabpanel" class="tab-pane" id="district">--</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
                                 </div>
                             </div>
                         </div>
@@ -518,7 +545,7 @@
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal" role="form">
-
+						<input type="hidden" id="edit-id"/>
 						<div class="form-group">
 							<label for="edit-contactsOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">

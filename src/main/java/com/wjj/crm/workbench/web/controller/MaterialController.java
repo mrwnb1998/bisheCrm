@@ -8,6 +8,7 @@ import com.wjj.crm.utils.UUIDUtil;
 import com.wjj.crm.vo.PaginationVo;
 import com.wjj.crm.workbench.dao.MaterialDao;
 import com.wjj.crm.workbench.domain.Material;
+import com.wjj.crm.workbench.domain.MaterialRemark;
 import com.wjj.crm.workbench.service.MaterialService;
 import com.wjj.crm.workbench.service.impl.MaterialServiceImpl;
 import org.apache.commons.fileupload.FileItem;
@@ -52,6 +53,209 @@ public class MaterialController extends HttpServlet {
         }else if ("/workbench/material/delete.do".equals(path)) {
             delete(request, response);
         }
+        else if ("/workbench/material/detail.do".equals(path)) {
+            detail(request, response);
+        }
+        else if ("/workbench/material/getRemarkListByAid.do".equals(path)) {
+            getRemarkListByAid(request, response);
+        }
+        else if ("/workbench/material/deleteRemark.do".equals(path)) {
+            deleteRemark(request, response);
+        }
+        else if ("/workbench/material/saveRemark.do".equals(path)) {
+            saveRemark(request, response);
+        }
+        else if ("/workbench/material/updateRemark.do".equals(path)) {
+            updateRemark(request, response);
+        }
+        else if ("/workbench/material/getMaterialById.do".equals(path)) {
+            getMaterialById(request, response);
+        }
+        else if ("/workbench/material/updateMaterial.do".equals(path)) {
+            try {
+                updateMaterial(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void updateMaterial(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        System.out.println("进入上传素材的操作");
+        request.setCharacterEncoding("utf-8");
+        // 检测是否为多媒体上传
+        if (!ServletFileUpload.isMultipartContent(request)) {
+            // 如果不是则停止
+            PrintWriter writer = response.getWriter();
+            writer.println("Error: 表单必须包含 enctype=multipart/form-data");
+            writer.flush();
+            return;
+        }
+        //配置上传参数
+        //1.创建工厂
+        // 配置上传参数
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        // 设置内存临界值 - 超过后将产生临时文件并存储于临时目录中
+        factory.setSizeThreshold(MEMORY_THRESHOLD);
+        // 设置临时存储目录
+        factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        // 设置最大文件上传值
+        upload.setFileSizeMax(MAX_FILE_SIZE);
+        // 设置最大请求值 (包含文件和表单数据)
+        upload.setSizeMax(MAX_REQUEST_SIZE);
+        // 中文处理
+        upload.setHeaderEncoding("UTF-8");
+        // 构造临时路径来存储上传的文件
+        // 这个路径相对当前应用的目录
+        String uploadPath = request.getSession().getServletContext().getRealPath("./") + File.separator + UPLOAD_DIRECTORY;
+        System.out.println(uploadPath);
+        // 如果目录不存在则创建
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+        //map用来存放非文件的文本参数
+        Map<String,String> map=new HashMap<String,String>();
+        //文件路径，url
+        String filepath="";
+        String fileExname="";
+        //解析请求的内容，提取文件数据
+        List<FileItem> fileitems=upload.parseRequest(request);
+        //遍历集合
+        for(FileItem fileitem:fileitems){
+            if(fileitem.isFormField()) {
+                //获得字段和字段的值
+                map.put(fileitem.getFieldName(), fileitem.getString("utf-8"));
+                System.out.println("name:" + fileitem.getFieldName());
+                System.out.println("value:" + fileitem.getString("utf-8"));
+            }
+        }
+
+        for(FileItem fileitem:fileitems){
+            if(!fileitem.isFormField()&&fileitem.getSize()!=0) {
+                //获取上传文件的路径
+                String filename=fileitem.getName();
+                System.out.println("文件来源："+filename);
+                //截取文件名
+                fileExname=filename.substring(filename.lastIndexOf("/")+1);
+                System.out.println("截取的文件名："+fileExname);
+                //是文件名保持唯一
+//                filename= UUIDUtil.getUUID()+"_"+filename;
+//                String webpath="/material/";
+//                filepath=getServletContext().getRealPath(webpath+filename);
+                filepath=uploadPath+File.separator +filename;
+                File storefile=new File(filepath);
+                //确保文件路径和父路径没有问题
+                System.out.println(filepath);
+                storefile.getParentFile().mkdirs();
+                storefile.createNewFile();
+                fileitem.write(storefile);
+                System.out.println("文件上传成功");
+
+            }
+        }
+
+        String updateTime= DateTimeUtil.getSysTime();//获取当前时间
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp update_time=new Timestamp(System.currentTimeMillis());
+        update_time=Timestamp.valueOf(updateTime);
+        String updateBy=Long.toString(((User)request.getSession().getAttribute("user")).getId());
+        long update_by=Long.parseLong(updateBy);
+        String url="material/"+fileExname;
+        Material m=new Material();
+        System.out.println(map.get("id"));
+        m.setId(Long.parseLong(map.get("id")));
+        m.setTitle(map.get("title"));
+        m.setDescription(map.get("description"));
+        m.setUrl(url);
+        m.setUpdate_by(update_by);
+        m.setUpdate_time(update_time);
+        MaterialService materialService= (MaterialService) ServiceFactory.getService(new MaterialServiceImpl());
+        boolean flag=materialService.update(m);
+        if(flag){
+            request.getRequestDispatcher("/workbench/activity/material.jsp").forward(request,response);
+        }
+
+    }
+
+    private void getMaterialById(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("根据id获取素材");
+        String id=request.getParameter("id");
+        MaterialService materialService= (MaterialService) ServiceFactory.getService(new MaterialServiceImpl());
+        Material m=materialService.getMaterialById(id);
+        PrintJson.printJsonObj(response,m);
+
+    }
+
+    private void updateRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入修改备注的操作");
+        String noteContent = request.getParameter("noteContent");
+        String id = request.getParameter("id");
+        MaterialService materialService= (MaterialService) ServiceFactory.getService(new MaterialServiceImpl());
+        String editTime = DateTimeUtil.getSysTime();//获取当前时间
+        String editBy = ((User) request.getSession().getAttribute("user")).getname();
+        String editFlag = "1";
+        MaterialRemark ar=new MaterialRemark();
+        ar.setId(id);
+        ar.setEditBy(editBy);
+        ar.setEditTime(editTime);
+        ar.setNoteContent(noteContent);
+        ar.setEditFlag(editFlag);
+        boolean flag = materialService.updateRemark(ar);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("success", flag);
+        map.put("ar", ar);
+        PrintJson.printJsonObj(response, map);
+    }
+
+    private void saveRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入添加备注的操作");
+        String noteContent =request.getParameter("noteContent");
+        String materialId =request.getParameter("materialId");
+        String id= UUIDUtil.getUUID();
+        String createTime= DateTimeUtil.getSysTime();//获取当前时间
+        String createBy=((User)request.getSession().getAttribute("user")).getname();
+        String editFlag="0";
+        MaterialRemark ar=new MaterialRemark();
+        ar.setId(id);
+        ar.setMaterialId(Long.parseLong(materialId));
+        ar.setCreateBy(createBy);
+        ar.setCreateTime(createTime);
+        ar.setNoteContent(noteContent);
+        ar.setEditFlag(editFlag);
+        MaterialService materialService= (MaterialService) ServiceFactory.getService(new MaterialServiceImpl());
+        boolean flag=materialService.saveRemark(ar);
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("success",flag);
+        map.put("ar",ar);
+        PrintJson.printJsonObj(response,map);
+    }
+
+    private void deleteRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入删除备注操作");
+        String id=request.getParameter("id");
+        MaterialService materialService= (MaterialService) ServiceFactory.getService(new MaterialServiceImpl());
+        boolean flag=materialService.deleteRemark(id);
+        PrintJson.printJsonFlag(response,flag);
+    }
+
+    private void getRemarkListByAid(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到素材备注信息列表");
+        String materialId =request.getParameter("materialId");
+        MaterialService materialService= (MaterialService) ServiceFactory.getService(new MaterialServiceImpl());
+        List<MaterialRemark> arList=materialService.getRemarkListByCid(materialId);
+        PrintJson.printJsonObj(response,arList);
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("进入素材详情的操作");
+        String id=request.getParameter("id");
+        MaterialService materialService= (MaterialService) ServiceFactory.getService(new MaterialServiceImpl());
+        Map<String,Object> map=materialService.detail(id);
+        request.setAttribute("map",map);
+        request.getRequestDispatcher("/workbench/activity/materialDetail.jsp").forward(request,response);
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) {
@@ -163,7 +367,7 @@ public class MaterialController extends HttpServlet {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Timestamp create_time=new Timestamp(System.currentTimeMillis());
         create_time=Timestamp.valueOf(createTime);
-        String createBy=((User)request.getSession().getAttribute("user")).getId();
+        String createBy=Long.toString(((User)request.getSession().getAttribute("user")).getId());
         long create_by=Long.parseLong(createBy);
         String url="material/"+fileExname;
         Material m=new Material();

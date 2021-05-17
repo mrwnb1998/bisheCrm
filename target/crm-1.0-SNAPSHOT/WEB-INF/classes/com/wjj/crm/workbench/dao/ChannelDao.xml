@@ -160,7 +160,7 @@ where id=#{id}
         </foreach>
     </delete>
     <select id="sum" resultType="Customer">
-SELECT u.id,u.name,u.department,u.dreamSale,SUM(c.true_sale) AS trueSale
+SELECT u.id,u.name,u.department,u.dream_sale,SUM(c.true_sale) AS true_sale
 FROM tbl_customer u
 JOIN tbl_channel c
 ON u.id=c.customer_id

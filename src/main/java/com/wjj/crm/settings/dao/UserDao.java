@@ -23,4 +23,8 @@ public interface UserDao {
     User getUserById(String owner);
 
     int updatePwd(User u);
+
+    User getUserByloginAct(String loginAct);
+
+    int regist(User u);
 }

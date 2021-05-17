@@ -4,6 +4,54 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wjj.crm.workbench.dao.TranDao">
+    <delete id="delete">
+        delete from tbl_tran
+        where id in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+    <update id="update">
+        update tbl_tran set
+owner=#{owner},
+money=#{money},
+name=#{name},
+expectedDate=#{expectedDate},
+stage=#{stage},
+type=#{type},
+source=#{source},
+activityId=#{activityId},
+contactsId=#{contactsId},
+editBy=#{editBy},
+editTime=#{editTime},
+description=#{description},
+contactSummary=#{contactSummary},
+nextContactTime=#{nextContactTime}
+where id=#{id}
+    </update>
+    <select id="getTranById" resultType="Tran">
+           select
+        a.id,a.name,u.name as owner,a.type,a.source,a.stage,c.name as customerId,a.contactsId,a.money,a.expectedDate,a.createBy,
+        a.createTime,a.editBy,a.editTime,a.description,a.contactSummary,a.nextContactTime,a.activityId
+        from tbl_tran a
+        join tbl_user u
+        on a.owner=u.id
+        join tbl_customer c
+        on a.customerId=c.id
+        left join tbl_activity act
+        on a.activityId=act.id
+        left join tbl_contacts t
+        on a.contactsId=t.id
+        where a.id=#{id}
+    </select>
+    <select id="getTranListByCustomerId" resultType="Tran">
+        select
+        a.id,a.name,u.name as owner,a.type,a.source,a.stage,a.expectedDate,a.money
+        from tbl_tran a
+        join tbl_user u
+        on a.owner = u.id
+        where a.customerId =#{customerId}
+    </select>
     <update id="hand">
         update tbl_tran set
         owner='2'

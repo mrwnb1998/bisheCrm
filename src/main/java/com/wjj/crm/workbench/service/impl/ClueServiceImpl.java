@@ -183,7 +183,7 @@ public class ClueServiceImpl implements ClueService {
                customer.setWebsite(c.getWebsite());
                customer.setPhone(c.getPhone());
                customer.setOwner(c.getOwner());
-               customer.setNext_contactTime(c.getNext_contact_time());
+               customer.setNext_contact_time(c.getNext_contact_time());
                customer.setName(company);
                customer.setDescription(c.getDescription());
                customer.setCreate_time(create_time);
@@ -197,7 +197,6 @@ public class ClueServiceImpl implements ClueService {
            }
 //        (3) 通过线索对象提取联系人信息，保存联系人
             Contacts con=new Contacts();
-            con.setId(UUIDUtil.getUUID());
             con.setSource(c.getSource());
             con.setOwner(c.getOwner());
             con.setNextContactTime(c.getNext_contact_time());
@@ -239,7 +238,7 @@ public class ClueServiceImpl implements ClueService {
                   contactsRemark.setId(UUIDUtil.getUUID());
                   contactsRemark.setCreateBy(createBy);
                   contactsRemark.setCreateTime(createTime);
-                  contactsRemark.setContactsId(con.getId());
+                  contactsRemark.setContactsId(Long.toString(con.getId()));
                   contactsRemark.setEditFlag("0");
                   contactsRemark.setNoteContent(noteContent);
                   int count4=contactsRemarkDao.save(contactsRemark);
@@ -259,7 +258,7 @@ public class ClueServiceImpl implements ClueService {
                   ContactsActivityRelation contactsActivityRelation=new ContactsActivityRelation();
                   contactsActivityRelation.setId(UUIDUtil.getUUID());
                   contactsActivityRelation.setActivityId(activityId);
-                  contactsActivityRelation.setContactsId(con.getId());
+                  contactsActivityRelation.setContactsId(Long.toString(con.getId()));
                   int count5=contactsActivityRelationDao.save(contactsActivityRelation);
                   if(count5!=1){
                       flag=false;
@@ -277,7 +276,7 @@ public class ClueServiceImpl implements ClueService {
                        t.setDescription(c.getDescription());
                        t.setCustomerId(Long.toString(customer.getId()));
                        t.setContactSummary(c.getContact_summary());
-                       t.setContactsId(con.getId());
+                       t.setContactsId(Long.toString(con.getId()));
                        int count6=tranDao.save(t);
                        if(count6!=1){
                            flag=false;
@@ -331,7 +330,6 @@ public class ClueServiceImpl implements ClueService {
         if(count3!=ids.length){
             flag=false;
         }
-
         return flag;
     }
 

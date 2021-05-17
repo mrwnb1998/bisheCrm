@@ -2,7 +2,7 @@ package com.wjj.crm.workbench.domain;
 
 public class Contacts {
 
-	private String id;
+	private long id;
 	private String owner;
 	private String source;
 	private String customerId;
@@ -21,12 +21,14 @@ public class Contacts {
 	private String nextContactTime;
 	private String address;
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(String id) {
+
+	public void setId(long id) {
 		this.id = id;
 	}
+
 	public String getOwner() {
 		return owner;
 	}

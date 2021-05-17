@@ -4,6 +4,33 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wjj.crm.workbench.dao.CustomerDao">
+    <delete id="delete">
+        delete from tbl_customer
+        where id in
+        <foreach collection="array" item="ids" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </delete>
+    <update id="update">
+        update tbl_customer set
+owner=#{owner},
+name=#{name},
+website=#{website},
+phone=#{phone},
+contact_summary=#{contact_summary},
+next_contactTime=#{next_contactTime},
+description=#{description},
+address=#{address},
+update_time=#{update_time},
+update_by=#{update_by},
+label=#{label},
+level=#{level},
+department=#{department},
+true_sale=#{true_sale},
+dream_sale=#{dream_sale}
+where id=#{id}
+
+    </update>
     <select id="getSourceCharts" resultType="Map">
           SELECT department,COUNT(1) AS total
         FROM tbl_customer
@@ -12,7 +39,7 @@
      <select id="detail" resultType="Customer">
            select
         a.id,a.name,u.name as owner,a.phone,a.label,a.level,a.department,a.dream_sale,a.true_sale,
-      a.website,u.name as create_by,a.create_time,u.name as update_by,a.update_time,a.description,a.contact_summary,a.next_contactTime,a.address
+      a.website,a.create_by,a.create_time,a.update_by,a.update_time,a.description,a.contact_summary,a.next_contactTime,a.address
         from tbl_customer a
         join tbl_user u
         on a.owner=u.id
@@ -90,7 +117,9 @@
      address,
      label,
      level,
-     department
+     department,
+     dream_sale,
+     true_sale
      )values (
      #{owner},
      #{name},
@@ -104,7 +133,9 @@
      #{address},
      #{label},
      #{level},
-     #{department}
+     #{department},
+     #{dream_sale},
+     #{true_sale}
      )
 </insert>
      <select id="getCustomerName" resultType="String">

@@ -10,6 +10,9 @@ import com.wjj.crm.workbench.domain.TranRemark;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author wjj
+ */
 public interface TranService {
     boolean save(Tran t, String customerName);
 
@@ -33,4 +36,12 @@ public interface TranService {
     boolean updateRemark(TranRemark ar);
 
     boolean saveRemark(TranRemark ar);
+
+    List<Tran> getTranListByCustomerId(String customerId);
+
+    Map<String,Object> getTranById(String id);
+
+    boolean update(Tran c);
+
+    boolean delete(String[] ids);
 }

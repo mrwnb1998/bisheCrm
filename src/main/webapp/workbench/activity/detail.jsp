@@ -88,7 +88,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                        html+=	'<h5 id="e'+data.ar.id+'">'+data.ar.noteContent+'</h5>';
                        html+=	'<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small id="s'+data.ar.id+'" style="color: gray;"> '+data.ar.createTime+' 由'+data.ar.createBy+'</small>';
                        html+=	'<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
-                       html+=	'<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
+                       html+=	'<a class="myHref" href="javascript:void(0);" onclick="editRemark(\''+data.ar.id+'\')" ><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
                        html+=	'	&nbsp;&nbsp;&nbsp;&nbsp;';
                        //动态生成的sql语句，当应用n.id时必须是包含在字符串中，因为外层是双引号，
                        // 所以内层使用单引号，而字符串拼接需要使用单引号，所以第二层的单引号需要使用转义字符
@@ -326,8 +326,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<h3>市场活动-${a.name}<small>${a.startDate}~${a.endDate}</small></h3>
 		</div>
 		<div style="position: relative; height: 50px; width: 250px;  top: -72px; left: 700px;">
-			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editActivityModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>
-			<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+<%--			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editActivityModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>--%>
+<%--			<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>--%>
 		</div>
 	</div>
 

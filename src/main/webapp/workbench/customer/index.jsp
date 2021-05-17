@@ -12,9 +12,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 	<link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 	<link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+	<link href="jquery/bs-chinese/bootstrap-chinese-region/bootstrap-chinese-region.css" type="text/css" rel="stylesheet" />
 
 	<script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
 	<script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="jquery/bs-chinese/bootstrap-chinese-region/bootstrap-chinese-region.js"></script>
 	<script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
 	<script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
 	<link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
@@ -29,6 +31,25 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			//防止下拉菜单消失
 	        e.stopPropagation();
 	    });
+
+		$.getJSON('jquery/bs-chinese/bootstrap-chinese-region/sql_areas.json',function(data){
+
+			/**重定义数据结构**/
+			//id 键,name 名字,level 层级,parentId 父级
+
+			for (var i = 0; i < data.length; i++) {
+				var area = {id:data[i].id,name:data[i].cname,level:data[i].level,parentId:data[i].upid};
+				data[i] = area;
+			}
+
+			$('.bs-chinese-region').chineseRegion('source',data);//导入数据并实例化
+			$('.bs-chinese-region').chineseRegion('source',data).on('completed.bs.chinese-region',function(e,areas){
+				//areas是已选择的地区数据，按先选择的在最前的方式排序。
+
+				console.log(e);
+				console.log(areas);
+			});
+		});
 
 		//为创建客户绑定事件
 		$("#addBtn").click(function () {
@@ -89,7 +110,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						"address":$.trim($("#create-address").val()),
 						"label":$.trim($("#create-label").val()),
 						"level":$.trim($("#create-level").val()),
-						"department":$.trim($("#create-department").val())
+						"department":$.trim($("#create-department").val()),
+						"dream_sale":$.trim($("#create-dream_sale").val()),
+						"true_sale":$.trim($("#create-true_sale").val()),
 
 					},
 					type: "post",
@@ -140,6 +163,158 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
 		});
 
+		//为修改按钮绑定事件
+		$("#editBtn").click(function () {
+			$(".time").datetimepicker({
+				minView:"month",
+				language:'zh-CN',
+				format:'yyyy-mm-dd',
+				autoclose:true,
+				todayBtn:true,
+				pickerPosition:"bottom-left"
+			});
+			var $xz =$("input[name=xz]:checked");
+			if($xz.length==0){
+				alert("请选择需要修改的记录")
+			}else if($xz.length>1){
+				alert("只能选择一条记录修改")
+			}else{
+				var id=$xz.val();
+				$.ajax({
+					url:"workbench/customer/getUserListAndCustomer.do",
+					data:{
+						"id":id
+					},
+					type:"get",
+					dataType:"json",
+					success:function (data) {
+						/**
+						 * data:用户列表，市场活动信息
+						 * {"uLIst":[{},{}],"AList":{}
+						 *
+						 */
+								//处理修改模态窗口的拥有者下拉框的值
+						var html ="";
+						$.each(data.uList,function (i,n) {
+							html+="<option value='"+n.id+"'>"+n.name+"</option>";
+						});
+
+						$("#edit-owner").html(html);
+						//处理修改模态窗口的活动信息的值
+						$("#edit-owner").val(data.a.owner);
+						$("#edit-name").val(data.a.name);
+						$("#edit-website").val(data.a.website);
+						$("#edit-description").val(data.a.description);
+						$("#edit-phone").val(data.a.phone);
+						$("#edit-contact_summary").val(data.a.contact_summary);
+						$("#edit-next_contactTime").val(data.a.next_contactTime);
+						$("#edit-id").val(data.a.id);
+						$("#edit-address").val(data.a.address);
+						$("#edit-level").val(data.a.level);
+						$("#edit-label").val(data.a.label);
+						$("#edit-department").val(data.a.department);
+						$("#edit-dream_sale").val(data.a.dream_sale);
+						$("#edit-true_sale").val(data.a.true_sale);
+
+						$("#editCustomerModal").modal("show");
+
+
+					}
+
+
+				})
+			}
+			//为更新按钮绑定事件，执行市场活动的操作
+			$("#updateBtn").click(function () {
+
+				$.ajax({
+					url:"workbench/customer/update.do",
+					data:{
+						"name":$.trim($("#edit-name").val()),
+						"owner":$.trim($("#edit-owner").val()),
+						"website":$.trim($("#edit-website").val()),
+						"description":$.trim($("#edit-description").val()),
+						"phone":$.trim($("#edit-phone").val()),
+						"address":$.trim($("#edit-address").val()),
+						"contactSummary":$.trim($("#edit-contactSummary").val()),
+						"nextContactTime":$.trim($("#edit-nextContactTime").val()),
+						"level":$.trim($("#edit-level").val()),
+						"label":$.trim($("#edit-label").val()),
+						"department":$.trim($("#edit-department").val()),
+						"dream_sale":$.trim($("#edit-dream_sale").val()),
+						"true_sale":$.trim($("#edit-true_sale").val()),
+						"id":$.trim($("#edit-id").val())
+
+					},
+					type:"post",
+					dataType:"json",
+					success:function (data) {
+						/*
+                        返回信息成功返回true，失败false
+                        data:{"success":true/false}
+                        * */
+						if(data.success){
+							//修改成功后，刷新市场活动信息列表（局部刷新），应该停留在当前页,并维持每页展现的记录数
+
+							pageList($("#customerPage").bs_pagination('getOption','currentPage'),
+									$("#customerPage").bs_pagination('getOption','rowsPerPage'));
+
+							//关闭添加操作的模态窗口
+							$("#editCustomerModal").modal("hide");
+
+
+						}else{
+							alert("修改失败");
+						}
+
+					}
+
+
+				})
+
+			});
+
+		});
+
+		//为删除按钮绑定事件
+		$("#deleteBtn").click(function () {
+			var $xz = $("input[name=xz]:checked");
+			if($xz.length===0)
+			{
+				alert("请选择要删除的记录");
+			}else{
+				if(confirm("确定删除所选择的记录吗")){
+					var param ="";
+					for(var i=0;i<$xz.length;i++){
+						param+="id="+$($($xz[i])).val();
+						//如果不是最后一个元素，需要在最后追加一个&符
+						if(i<$xz.length-1){
+							param+="&";
+						}
+					}
+					//alert(param);
+					$.ajax({
+						url:"workbench/customer/delete.do",
+						data:param,
+						type:"post",
+						dataType:"json",
+						success:function (data) {
+							if(data.success){
+								//删除成功后，局部刷新活动列表，回到第一页，维持每页展现的记录数
+								pageList(1,$("#customerPage").bs_pagination('getOption','rowsPerPage'));
+							}else{
+								alert("删除失败")
+							}
+						}
+
+					})
+
+				}
+				//拼接参数
+
+
+			}
+		});
 
 		//分页操作
 		function pageList(pageNo,pageSize) {
@@ -290,7 +465,29 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                             <div class="form-group">
                                 <label for="create-address" class="col-sm-2 control-label">详细地址</label>
                                 <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="1" id="create-address"></textarea>
+									<div class="bs-chinese-region flat dropdown col-sm-6" data-submit-type="id" data-min-level="1" data-max-level="3">
+										<input type="text" class="form-control" name="address" id="create-address" placeholder="选择你的地区" data-toggle="dropdown"  value="{$detail['addressnum']}">
+										<div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+											<div>
+												<ul class="nav nav-tabs" role="tablist">
+													<li role="presentation" class="active">
+														<a href="#province" data-next="city" role="tab" data-toggle="tab">省份</a>
+													</li>
+													<li role="presentation">
+														<a href="#city" data-next="district" role="tab" data-toggle="tab">城市</a>
+													</li>
+													<li role="presentation">
+														<a href="#district" data-next="street" role="tab" data-toggle="tab">县区</a>
+													</li>
+												</ul>
+												<div class="tab-content">
+													<div role="tabpanel" class="tab-pane active" id="province">--</div>
+													<div role="tabpanel" class="tab-pane" id="city">--</div>
+													<div role="tabpanel" class="tab-pane" id="district">--</div>
+												</div>
+											</div>
+										</div>
+									</div>
                                 </div>
                             </div>
                         </div>
@@ -321,7 +518,32 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							<div class="form-group">
 								<label for="create-department" class="col-sm-2 control-label">所属区域</label>
 								<div class="col-sm-10" style="width: 81%;">
-									<input type="text" class="form-control" id="create-department">
+									<select class="form-control" id="create-department">
+											<option >华南地区</option>
+										<option >华北地区</option>
+										<option >华中地区</option>
+										<option >华动地区</option>
+										<option >总部</option>
+										<option >门店</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div style="position: relative;top: 20px;">
+							<div class="form-group">
+								<label for="create-dream_sale" class="col-sm-2 control-label">目标销售额</label>
+								<div class="col-sm-10" style="width: 81%;">
+									<input type="text" class="form-control" id="create-dream_sale">
+								</div>
+							</div>
+						</div>
+
+						<div style="position: relative;top: 20px;">
+							<div class="form-group">
+								<label for="create-true_sale" class="col-sm-2 control-label">实际销售额</label>
+								<div class="col-sm-10" style="width: 81%;">
+									<input type="text" class="form-control" id="create-true_sale">
 								</div>
 							</div>
 						</div>
@@ -350,30 +572,28 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal" role="form">
-
+						<input type="hidden" id="edit-id"/>
 						<div class="form-group">
-							<label for="edit-customerOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
+							<label for="edit-owner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
-								<select class="form-control" id="edit-customerOwner">
-								  <option>zhangsan</option>
-								  <option>lisi</option>
-								  <option>wangwu</option>
+								<select class="form-control" id="edit-owner">
+
 								</select>
 							</div>
-							<label for="edit-customerName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
+							<label for="edit-name" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-customerName" value="动力节点">
+								<input type="text" class="form-control" id="edit-name">
 							</div>
 						</div>
 
 						<div class="form-group">
                             <label for="edit-website" class="col-sm-2 control-label">公司网站</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-website" value="http://www.bjpowernode.com">
+                                <input type="text" class="form-control" id="edit-website">
                             </div>
 							<label for="edit-phone" class="col-sm-2 control-label">公司座机</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-phone" value="010-84846003">
+								<input type="text" class="form-control" id="edit-phone">
 							</div>
 						</div>
 
@@ -388,15 +608,15 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
                         <div style="position: relative;top: 15px;">
                             <div class="form-group">
-                                <label for="edit-contactSummary" class="col-sm-2 control-label">联系纪要</label>
+                                <label for="edit-contact_summary" class="col-sm-2 control-label">联系纪要</label>
                                 <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="3" id="edit-contactSummary"></textarea>
+                                    <textarea class="form-control" rows="3" id="edit-contact_summary"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="edit-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
+                                <label for="edit-next_ContactTime" class="col-sm-2 control-label">下次联系时间</label>
                                 <div class="col-sm-10" style="width: 300px;">
-                                    <input type="text" class="form-control" id="edit-nextContactTime">
+                                    <input type="text" class="form-control time" id="edit-next_contactTime">
                                 </div>
                             </div>
                         </div>
@@ -407,10 +627,93 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                             <div class="form-group">
                                 <label for="edit-address" class="col-sm-2 control-label">详细地址</label>
                                 <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="1" id="edit-address">北京大兴大族企业湾</textarea>
+									<textarea class="form-control" rows="1" id="edit-address"></textarea>
+<%--									<div class="col-sm-10" style="width: 81%;">--%>
+<%--										<div class="bs-chinese-region flat dropdown col-sm-6" data-submit-type="id" data-min-level="1" data-max-level="3">--%>
+<%--											<input type="text" class="form-control" name="address" id="edit-address" placeholder="选择你的地区" data-toggle="dropdown"  value="{$detail['addressnum']}">--%>
+<%--											<div class="dropdown-menu" role="menu" aria-labelledby="dLabel">--%>
+<%--												<div>--%>
+<%--													<ul class="nav nav-tabs" role="tablist">--%>
+<%--														<li role="presentation" class="active">--%>
+<%--															<a href="#province" data-next="city" role="tab" data-toggle="tab">省份</a>--%>
+<%--														</li>--%>
+<%--														<li role="presentation">--%>
+<%--															<a href="#city" data-next="district" role="tab" data-toggle="tab">城市</a>--%>
+<%--														</li>--%>
+<%--														<li role="presentation">--%>
+<%--															<a href="#district" data-next="street" role="tab" data-toggle="tab">县区</a>--%>
+<%--														</li>--%>
+<%--													</ul>--%>
+<%--													<div class="tab-content">--%>
+<%--														<div role="tabpanel" class="tab-pane active" id="province">--</div>--%>
+<%--														<div role="tabpanel" class="tab-pane" id="city">--</div>--%>
+<%--														<div role="tabpanel" class="tab-pane" id="district">--</div>--%>
+<%--													</div>--%>
+<%--												</div>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--									</div>--%>
                                 </div>
                             </div>
                         </div>
+
+
+						<div style="position: relative;top: 20px;">
+							<div class="form-group">
+								<label for="edit-label" class="col-sm-2 control-label">标签</label>
+								<div class="col-sm-10" style="width: 81%;">
+									<input type="text" class="form-control" id="edit-label">
+								</div>
+							</div>
+						</div>
+
+						<div style="position: relative;top: 20px;">
+							<div class="form-group">
+								<label for="edit-label" class="col-sm-2 control-label">级别</label>
+								<div class="col-sm-10" style="width: 81%;">
+									<select class="form-control" id="edit-level">
+										<c:forEach items="${levelList}" var="a">
+											<option value="${a.value}">${a.text}</option>
+										</c:forEach>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div style="position: relative;top: 20px;">
+							<div class="form-group">
+								<label for="edit-department" class="col-sm-2 control-label">所属区域</label>
+								<div class="col-sm-10" style="width: 81%;">
+									<select class="form-control" id="edit-department">
+										<option >华南地区</option>
+										<option >华北地区</option>
+										<option >华中地区</option>
+										<option >华动地区</option>
+										<option >总部</option>
+										<option >门店</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div style="position: relative;top: 20px;">
+							<div class="form-group">
+								<label for="edit-dream_sale" class="col-sm-2 control-label">目标销售额</label>
+								<div class="col-sm-10" style="width: 81%;">
+									<input type="text" class="form-control" id="edit-dream_sale">
+								</div>
+							</div>
+						</div>
+
+						<div style="position: relative;top: 20px;">
+							<div class="form-group">
+								<label for="edit-true_sale" class="col-sm-2 control-label">实际销售额</label>
+								<div class="col-sm-10" style="width: 81%;">
+									<input type="text" class="form-control" id="edit-true_sale">
+								</div>
+							</div>
+						</div>
+
 					</form>
 
 				</div>

@@ -4,6 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wjj.crm.workbench.dao.ContactsDao">
+    <select id="getContactsListByCustomerId" resultType="Contacts">
+        select id,fullname,email,mphone
+        from tbl_contacts
+        where customerId=#{customerId}
+    </select>
     <select id="getContactsSource" resultType="Map">
          select
         count(*) as value ,source as name
@@ -13,7 +18,7 @@
     <select id="detail" resultType="Contacts">
          select
         a.id,a.fullname,u.name as owner,c.name as customerId,a.source,a.birth,a.mphone,a.appellation,
-        a.job,a.email,a.createBy,a.createTime,a.editBy,a.editTime,a.description,a.contactSummary,a.nextContactTime,a.address
+        a.job,a.email,a.createBy,a.createTime, a.editBy,a.editTime,a.description,a.contactSummary,a.nextContactTime,a.address
         from tbl_contacts a
         join tbl_user u
         on a.owner=u.id
@@ -29,6 +34,10 @@
             #{ids}
 
         </foreach>
+    </delete>
+    <delete id="deleteContactsById">
+        delete from tbl_contacts
+        where id=#{id}
     </delete>
     <update id="update">
         update tbl_contacts set

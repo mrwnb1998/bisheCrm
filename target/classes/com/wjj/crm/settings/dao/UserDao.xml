@@ -4,6 +4,33 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wjj.crm.settings.dao.UserDao">
+    <insert id="regist">
+        insert into tbl_user(
+loginAct,
+name,
+loginPwd,
+email,
+lockState,
+expireTime,
+allowIps,
+createTime,
+createBy
+
+        )values (
+#{loginAct},
+#{name},
+#{loginPwd},
+#{email},
+#{lockState},
+#{expireTime},
+#{allowIps},
+#{createTime},
+#{createBy}
+        )
+    </insert>
+    <select id="getUserByloginAct" resultType="User">
+         select * from tbl_user where loginAct=#{loginAct}
+    </select>
     <update id="updatePwd">
         update tbl_user set
         loginPwd=#{loginPwd}

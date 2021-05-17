@@ -60,7 +60,19 @@ public class ContactsController extends HttpServlet {
         }
         else if ("/workbench/contacts/getContactsSource.do".equals(path)) {
             getContactsSource(request, response);
+        } else if ("/workbench/contacts/deleteContactsById.do".equals(path)) {
+            deleteContactsById(request, response);
         }
+    }
+
+    private void deleteContactsById(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入根据id删除联系人的操作");
+        String id =request.getParameter("id");
+        System.out.println(id);
+        ContactsService contactsService= (ContactsService) ServiceFactory.getService(new ContactsServiceImpl());
+        boolean flag=contactsService.deleteContactsById(id);
+        PrintJson.printJsonFlag(response,flag);
+
     }
 
     private void getContactsSource(HttpServletRequest request, HttpServletResponse response) {
@@ -168,7 +180,7 @@ public class ContactsController extends HttpServlet {
         String nextContactTime=request.getParameter("nextContactTime");
         String address=request.getParameter("address");
         Contacts clue=new Contacts();
-        clue.setId(id);
+        clue.setId(Long.parseLong(id));
         clue.setAddress(address);
         clue.setNextContactTime(nextContactTime);
         clue.setContactSummary(contactSummary);
@@ -214,10 +226,10 @@ public class ContactsController extends HttpServlet {
         String contactSummary=request.getParameter("contactSummary");
         String nextContactTime=request.getParameter("nextContactTime");
         String address=request.getParameter("address");
-        String createBy=((User)request.getSession().getAttribute("user")).getId();
+        String createBy=(((User)request.getSession().getAttribute("user")).getname());
+        long customerCreateBy=((User)request.getSession().getAttribute("user")).getId();
         String createTime= DateTimeUtil.getSysTime();
         Contacts t=new Contacts();
-        t.setId(id);
         t.setOwner(owner);
         t.setAddress(address);
         t.setFullname(fullname);
@@ -233,7 +245,7 @@ public class ContactsController extends HttpServlet {
         t.setContactSummary(contactSummary);
         t.setNextContactTime(nextContactTime);
         ContactsService ts= (ContactsService) ServiceFactory.getService(new ContactsServiceImpl());
-        boolean flag=ts.save(t,customerName);
+        boolean flag=ts.save(t,customerName,customerCreateBy);
         PrintJson.printJsonFlag(response,flag);
         System.out.println(flag);
     }

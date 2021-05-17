@@ -91,7 +91,7 @@ public class ClueController extends HttpServlet {
         //接收是否需要创建交易的标记
         String flag=request.getParameter("flag");
         Tran t=null;
-        String createBy=((User)request.getSession().getAttribute("user")).getId();
+        long createBy=((User)request.getSession().getAttribute("user")).getId();
         if("a".equals(flag)){
             t=new Tran();
             //如果需要创建交易,接收交易表单的参数
@@ -109,7 +109,7 @@ public class ClueController extends HttpServlet {
              t.setExpectedDate(expectedDate);
              t.setStage(stage);
              t.setActivityId(activityId);
-             t.setCreateBy(createBy);
+             t.setCreateBy(Long.toString(createBy));
              t.setCreateTime(createTime);
 
         }
@@ -118,7 +118,7 @@ public class ClueController extends HttpServlet {
         1.必须传递的参数clueId,有了clueId我们才知道要转换那条记录
         2.必须传递的参数t,因为在线索转换的过程中，有可能会临时创建交易，也有可能为空
         * */
-        boolean flag1=clueService.convert(clueId,t,createBy);
+        boolean flag1=clueService.convert(clueId,t,Long.toString(createBy));
         if(flag1){
             response.sendRedirect(request.getContextPath()+"/workbench/clue/index.jsp");
         }
@@ -268,7 +268,7 @@ public class ClueController extends HttpServlet {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Timestamp update_time=new Timestamp(System.currentTimeMillis());
         update_time=Timestamp.valueOf(updateTime);
-        String update_by=((User)request.getSession().getAttribute("user")).getId();
+        long update_by=((User)request.getSession().getAttribute("user")).getId();
         String description=request.getParameter("description");
         String contactSummary=request.getParameter("contactSummary");
         String nextContactTime=request.getParameter("nextContactTime");
@@ -280,7 +280,7 @@ public class ClueController extends HttpServlet {
         clue.setContact_summary(contactSummary);
         clue.setDescription(description);
         clue.setUpdate_time(update_time);
-        clue.setUpdate_by(Long.parseLong(update_by));
+        clue.setUpdate_by(update_by);
         clue.setSource(source);
         clue.setState(state);
         clue.setMphone(mphone);
@@ -392,8 +392,8 @@ public class ClueController extends HttpServlet {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Timestamp create_time=new Timestamp(System.currentTimeMillis());
         create_time=Timestamp.valueOf(createTime);
-        String createBy=((User)request.getSession().getAttribute("user")).getId();
-        long create_by=Long.parseLong(createBy);
+        long create_by=((User)request.getSession().getAttribute("user")).getId();
+        //long create_by=Long.parseLong(createBy);
        String description=request.getParameter("description");
        String contactSummary=request.getParameter("contactSummary");
        String nextContactTime=request.getParameter("nextContactTime");
